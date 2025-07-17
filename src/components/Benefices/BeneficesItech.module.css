@@ -1,0 +1,93 @@
+.section {
+  background: linear-gradient(135deg, #171b2a 0%, #23264a 100%);
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.itechTitle {
+  color: rgb(139, 233, 253);
+  letter-spacing: 0.02em;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 2.2em;
+  font-weight: 800;
+  display: flex;
+  /* Optionnel : ombre douce pour plus de relief */
+  text-shadow: 0 2px 12px #3c8ce755;
+}
+
+.card {
+  background: rgba(28, 32, 54, 0.82);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px 0 rgba(60, 140, 231, 0.12), 0 1.5px 6px 0 rgba(0,0,0,0.07);
+  padding: 2rem 1rem 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  min-height: 180px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  backdrop-filter: blur(4px);
+}
+.card:focus-visible,
+.card:hover {
+  border-color: #7f5fff;
+  box-shadow: 0 12px 36px 0 rgba(60, 140, 231, 0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+  background: rgba(28, 32, 54, 0.95);
+  outline: none;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: #22243a;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 12px #3c8ce799;
+  transition: transform 0.2s;
+}
+.card:hover .iconWrapper,
+.card:focus-visible .iconWrapper {
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px #7f5fff99;
+}
+
+.iconWrapper svg {
+  filter: drop-shadow(0 2px 12px #3c8ce799);
+}
+
+.cardTitle {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #f2f6fa;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.01em;
+}
+
+.cardDesc {
+  color: #d1d7e0;
+  font-size: 1rem;
+  opacity: 0.92;
+}
+
+.highlight {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0.4rem;
+  background: linear-gradient(90deg, #7f5fff 0%, #3c8ce7 100%);
+  border-radius: 0 0 1.5rem 1.5rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.card:hover .highlight,
+.card:focus-visible .highlight {
+  opacity: 1;
+}

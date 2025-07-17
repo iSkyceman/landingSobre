@@ -1,0 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+/* ANIMATIONS ITECH */
+@keyframes itechPop {
+  0% { transform: scale(0.89) translateY(44px); opacity: 0.08; filter: blur(2px);}
+  70% { filter: blur(0.3px);}
+  100% { transform: scale(1) translateY(0); opacity: 1; filter: none;}
+}
+@keyframes itechLift {
+  0% { transform: translateY(14px); opacity: 0.5; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes buttonPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(144,72,255,0.13);}
+  75% { box-shadow: 0 0 0 12px rgba(144,72,255,0.07); }
+}
+
+/********** LISÉRÉ VIOLET ANIMÉ **********/
+.container,
+.tunnelModal,
+.fullscreenModal {
+  border: 2.2px solid transparent;
+  border-radius: 21px;
+  /* Liséré violet invisible de base */
+  border-image: linear-gradient(90deg,#e3d6fe,#9048ff 38%,#0098e9 100%) 1;
+  transition:
+    border-color 0.34s cubic-bezier(.6,.2,.31,1.47),
+    border-image 0.4s cubic-bezier(.83,-0.24,.37,1.21),
+    box-shadow 0.31s;
+  box-shadow: 0 4px 24px 0 rgba(100,79,215,0.12);
+  position: relative;
+}
+.container:hover,
+.tunnelModal:hover,
+.fullscreenModal:hover {
+  border-image: linear-gradient(90deg,#b692e6 9%,#9048ff 40%,#0098e9 97%) 1;
+  box-shadow: 0 8px 46px #9330ff3c, 0 1px 0px 10px #d5c2fd2e;
+}
+
+/********** FOND GLOBAL **********/
+.container {
+  background: linear-gradient(120deg, #142D4C 70%, #0098E9 100%);
+  padding: 2.8rem 1.5rem;
+  margin: 40px auto;
+  max-width: 840px;
+  font-family: 'Montserrat', Arial, sans-serif;
+  animation: itechPop 0.95s cubic-bezier(.29,1.46,.65,1);
+}
+.title {
+  font-size: 2.05em;
+  color: #8be9fd; /* Bleu ciel */
+  text-align: center;
+  font-weight: 700;
+  text-shadow: 0 2px 24px #1a0936ad, 0 1px 0 #fff2;
+  letter-spacing: 2px;
+  margin-bottom: 1.6em;
+}
+.bulletIcon {
+  color: #9048ff;
+  margin-right: 10px;
+  font-size: 1.28em;
+  vertical-align: -2px;
+}
+
+/********** DESCRIPTION **********/
+.text {
+  text-align: center;
+  color: #e4eefa;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 0 auto 1.3rem;
+  padding-bottom: 0.7em;
+}
+/********** NOTE VIOLET LEFT **********/
+.noteLeft {
+  background: linear-gradient(90deg,#ede9fb 70%,#9048ff 100%);
+  color: #53308d;
+  border-left: 6px solid #9048ff;
+  padding: 1.2rem;
+  margin: 1.6rem 0 2rem 0;
+  font-size: 1.03em;
+  font-weight: 500;
+  border-radius: 11px;
+  box-shadow: 0 1px 8px rgba(144,72,255,0.08);
+}
+
+/********** INPUT CODE **********/
+.centerCodeBox {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2.3rem 1.5rem 1.3rem;
+  box-shadow: 0 3px 36px #9048ff06;
+  margin: 0 auto 2.8rem;
+  max-width: 440px;
+  text-align: center;
+  animation: itechLift 1s;
+}
+.select {
+  font-size: 1.07rem;
+  padding: 0.68rem 1rem;
+  border: 1.8px solid #9048ff;
+  margin: 0.6rem 0 1.2rem;
+  border-radius: 7px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  background: #f3f6fe;
+  transition: border 0.2s;
+  color: #22305a;
+}
+.select:focus {
+  border-color: #9048ff;
+  outline: none;
+  background: #f7edfd;
+}
+.codeMessage {
+  font-size: 0.97rem;
+  color: #9048ff;
+  margin-top: 0.3rem;
+  min-height: 1.2rem;
+}
+
+/********** BOUTONS **********/
+.buttonOrange {
+  background: linear-gradient(90deg,#9048ff 60%,#97a9fd 120%);
+  color: #fff;
+  border: none;
+  padding: 13px 32px;
+  font-size: 1.15em;
+  border-radius: 22px;
+  font-weight: 600;
+  margin-bottom: 0.8em;
+  box-shadow: 0 2px 13px #9048ff3d;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  animation: buttonPulse 3s infinite;
+  transition: box-shadow 0.11s, background 0.21s;
+}
+.buttonOrange:hover, .buttonOrange:focus {
+  background: linear-gradient(90deg,#7a20d9 40%,#b6acff 103%);
+  box-shadow: 0 2px 32px #9048ff89;
+  color: #fff;
+}
+.buttonBlue {
+  background-color: #9048ff;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  padding: 12px 30px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 1.07em;
+  box-shadow: 0 2px 10px #7a20d93a;
+  margin-bottom: 0.8em;
+}
+.buttonBlue:hover, .buttonBlue:focus {
+  background: #4b1eab;
+  color: #fff;
+}
+.buttonOutline {
+  background: none;
+  border: 2px solid #9048ff;
+  color: #9048ff;
+  padding: 9px 22px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.18s, color 0.18s;
+}
+.buttonOutline:hover {
+  background: #ede9fb;
+  color: #342063;
+}
+
+/********** MODAL & TUNNEL **********/
+.tunnelModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  background: rgba(40, 10, 80, 0.57);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.31s;
+}
+.fullscreenModal, .tunnelModal {
+  background: linear-gradient(131deg,#fff 90%,#ede9fb 100%);
+  border-radius: 21px;
+  border: 2.2px solid transparent;
+  box-shadow: 0 10px 44px #9048ff1b;
+  padding: 2.4rem 2rem 1.7rem 2rem;
+  max-width: 560px;
+  width: 97%;
+  position: relative;
+  animation: itechPop 0.7s cubic-bezier(.47,1.34,.4,1);
+}
+.fullscreenModal:hover, .tunnelModal:hover {
+  border-image: linear-gradient(91deg,#b692e6 9%,#9048ff 40%,#0098e9 97%) 1;
+  box-shadow: 0 8px 44px #8f6dff52, 0 px 0px 10px #a890ed29;
+}
+
+/* Modal titre */
+.modalTitle {
+  font-size: 1.27em;
+  font-weight: 600;
+  color: #9048ff;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 1.1rem;
+  font-family: inherit;
+  text-shadow: 0 1px 0 #fff4;
+}
+
+/* MODAL CONTENT */
+.modalContentItech {
+  color: #22305a; /* bleu foncé moderne */
+  font-size: 1.07em;
+  line-height: 1.56;
+  text-align: left;
+  max-width: 510px;
+  margin: 0 auto 1.1em;
+}
+
+/********** AUTRES **********/
+.closeBtn {
+  background: transparent;
+  border: none;
+  font-size: 2em;
+  position: absolute;
+  top: 18px;
+  right: 30px;
+  cursor: pointer;
+  color: #9048ff;
+  opacity: 0.77;
+  z-index: 100;
+  transition: color 0.2s;
+}
+.closeBtn:hover { color: #0098E9; opacity: 1; }
+
+/* ProgressBar */
+.progressBar {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  padding: 0 0 1.1rem 0;
+  margin: 0 0 1.8em 0;
+}
+.stepTodo { color: #d0baff; }
+.stepDone { color: #49f3ea; }
+.stepActive { font-weight: 600; color: #9048ff; text-shadow: 0 1px 6px #fff7; }
+.progressBar li { position: relative; flex: 1 1 50px; }
+.progressBar span {
+  display: inline-block;
+  background: #ede9fb;
+  color: #9048ff;
+  width: 2.1em;
+  height: 2.1em;
+  line-height: 2.1em;
+  border-radius: 99px;
+  box-shadow: 0 2px 10px #7153e917;
+  margin-right: 8px;
+  font-weight: bold;
+  border: 2.5px solid #9048ff;
+  position: relative;
+  top: 3px;
+}
+
+/* CONTRACT dropdown and zone: violet */
+.contractMenu { margin-bottom: 1.3em; }
+.contractDropdownBtn {
+  background: #f3f0fa;
+  font-size: 1.06em;
+  border: 1.8px solid #9048ff;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 9px;
+  font-weight: 600;
+  color: #9048ff;
+  margin-bottom: 0.7em;
+  box-shadow: 0 1px 8px #9048ff10;
+  transition: background 0.18s, color 0.18s;
+}
+.contractDropdownBtn:hover {
+  background: #e8e3f7;
+  color: #342063;
+}
+.contractZone {
+  background: #fff;
+  border: 1.2px solid #9048ff2b;
+  padding: 1.1rem;
+  margin-top: 0.5em;
+  max-height: 290px;
+  overflow-y: auto;
+  border-radius: 8px;
+  font-size: 1em;
+}
+.contractTitle {
+  font-weight: 600;
+  color: #9048ff;
+  font-size: 1.18em;
+  margin-bottom: 1.1em;
+}
+.checkboxLabel {
+  display: block;
+  margin-top: 1rem;
+  font-size: 1em;
+  color: #22305a;
+}
+.loader { color: #9048ff; font-weight: bold; margin-top: 1.4rem;}
+.emailNotif { color: #12C572; font-size: 1em; margin-top: 0.8em; letter-spacing: 0.5px;}
+.link {
+  color: #9048ff;
+  text-decoration: underline;
+  font-weight: 600;
+  margin-top: 1.5em;
+  display: inline-block;
+  transition: color 0.17s;
+}
+.link:hover { color: #181c2f; background: linear-gradient(90deg, #00ffd6 20%, #8be9fd 100%);}
+
+/* Responsive */
+@media (max-width:650px){
+  .container { padding: 1.6rem 0.5rem; }
+  .fullscreenModal, .tunnelModal { padding: 1.5rem 0.6rem 1.2rem 0.6rem; }
+}
+.info {
+  text-align: center;
+  margin-top: 2.1rem;
+  color: #fff;           /* <-- TEXTE EN BLANC PUR partout */
+  font-size: 1.09em;
+}

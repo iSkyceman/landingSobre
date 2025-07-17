@@ -1,0 +1,434 @@
+:root {
+  --itech-cyan: #00eaff;
+  --itech-blue: #0051ff;
+  --itech-bg: linear-gradient(120deg, #0a1832 0%, #0f294a 100%);
+  --itech-glow: 0 0 32px 6px #00eaff99, 0 2px 18px #0051ff55, 0 1.5px 8px #0002;
+}
+
+/* SECTION & BACKGROUND */
+.calculateur-ia-section.i-tech-bg {
+  background: var(--itech-bg);
+  min-height: 600px;
+  padding: 2em 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.itech-animated-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  filter: blur(1.3px) brightness(1.08) saturate(1.1);
+  animation: itech-bg-fade 18s ease-in-out infinite alternate;
+}
+@keyframes itech-bg-fade {
+  0% { opacity: 0.7; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+.itech-circuit-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: url("/images/itech-circuit.webp") repeat;
+  opacity: 0.40;
+  mix-blend-mode: lighten;
+  z-index: 2;
+}
+
+/* HEADER */
+.calculateur-ia-header.itech-header {
+  max-width: 700px;
+  margin: 0 0 3em 2vw; /* aligné à gauche avec une petite marge */
+  text-align: left;
+  position: relative;
+  z-index: 2;
+  padding: 2em 3.5em 2.2em 3.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.6em;
+  background: linear-gradient(120deg, #0c2340cc 60%, #00eaff22 100%);
+  backdrop-filter: blur(18px) saturate(180%);
+  border-radius: 22px;
+  border: 2px solid #00eaff33;
+  box-shadow: 0 8px 32px #00eaff22;
+  color: #e7f6ff;
+  transition: background 0.4s, box-shadow 0.4s;
+}
+
+/* Responsive : sur tablette/mobile, largeur max et padding réduits */
+@media (max-width: 800px) {
+  .calculateur-ia-header.itech-header {
+    max-width: 98vw;
+    margin: 0 1vw 2em 1vw;
+    padding: 1.2em 1em 1.5em 1em;
+    border-radius: 16px;
+  }
+}
+
+.itech-gradient-text {
+  background: linear-gradient(90deg, #00eaff 0%, #0051ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  text-shadow: 0 2px 12px #00eaff44, 0 1px 0 #fff2;
+}
+.itech-highlight {
+  color: #00eaff;
+  font-weight: bold;
+  text-shadow: 0 0 8px #00eaff88;
+}
+.calculateur-ia-header.itech-header h2 {
+  font-size: 2.2em;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.01em;
+  transition: background 0.4s;
+}
+.calculateur-ia-header.itech-header p {
+  font-size: 1.13em;
+  color: #b7e8ff;
+  font-weight: 500;
+  margin-bottom: 0.7em;
+  line-height: 1.6em;
+  text-shadow: 0 1px 4px #00eaff33;
+}
+.calculateur-ia-header .calculateur-ia-audio p {
+  font-weight: 600;
+  color: #e0f7ff; /* blanc bleuté clair */
+  background: none;
+  text-shadow: 0 0 6px #007acccc, 0 1px 0 #001f33;
+  font-size: 1.15em; /* légèrement plus grand */
+}
+
+.calculateur-ia-header .calculateur-ia-audio p b {
+  display: inline-block;
+  animation: pulse-audio-itech 2.2s infinite alternate;
+}
+@keyframes pulse-audio-itech {
+  0% { filter: drop-shadow(0 0 0px #00eaff); }
+  100% { filter: drop-shadow(0 0 12px #0051ff); }
+}
+
+.itech-btn {
+  background: linear-gradient(90deg, #00eaff 0%, #0051ff 100%);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  box-shadow: var(--itech-glow);
+  padding: 1.1em 2.5em 1.1em 2.1em;
+  cursor: pointer;
+  font-size: 1.2em;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.itech-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 32px 8px #00eaff88, var(--itech-glow);
+  background: linear-gradient(90deg, #0051ff 0%, #00eaff 100%);
+}
+
+/* MODAL */
+.itech-modal-bg {
+  background: rgba(0,24,64,0.68);
+  animation: itech-modal-bg-appear 0.32s;
+}
+@keyframes itech-modal-bg-appear {
+  0% { background: rgba(0,24,64,0.0);}
+  100% { background: rgba(0,24,64,0.68);}
+}
+.itech-modal {
+  background: #0e213a;
+  border-radius: 22px;
+  box-shadow: 0 8px 32px #00eaff33, 0 2px 18px #0051ff55;
+  border: 2px solid #00eaff33;
+  color: #e7f6ff;
+  animation: modal-appear 0.39s cubic-bezier(.6,-0.28,.74,.05);
+}
+.itech-modal-header {
+  background: #0c2340;
+  border-bottom: 1.5px solid #00eaff33;
+}
+.itech-modal-header h2 {
+  color: #00eaff;
+  font-weight: 800;
+}
+.itech-modal-header button {
+  color: #00eaff;
+  font-size: 2em;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.itech-modal-body {
+  padding: 2em 1.5em;
+}
+
+/* FORMULAIRE */
+.itech-form label {
+  color: #b7e8ff;
+}
+.itech-form input,
+.itech-form select {
+  background: #14284a;
+  color: #e7f6ff;
+  border: 1.5px solid #00eaff55;
+  border-radius: 8px;
+  font-size: 1em;
+  padding: 0.6em 0.8em;
+  transition: border 0.2s, background 0.2s;
+}
+.itech-form input:focus,
+.itech-form select:focus {
+  border: 1.5px solid #00eaff;
+  background: #18305a;
+  outline: none;
+}
+.itech-form-btn {
+  background: linear-gradient(90deg, #00eaff 0%, #0051ff 100%);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 0.95em 2.2em;
+  border-radius: 999px;
+  border: none;
+  margin: 0 auto;
+  margin-top: 18px;
+  display: block;
+  cursor: pointer;
+  box-shadow: 0 2px 12px #00eaff33;
+  transition: background 0.18s, box-shadow 0.18s;
+}
+.itech-form-btn:hover {
+  background: linear-gradient(90deg, #0051ff 0%, #00eaff 100%);
+  box-shadow: 0 0 32px 8px #00eaff88, var(--itech-glow);
+}
+
+/* SCORE GAUGE */
+.jauge-score.i-tech {
+  margin: 1.2em 0 1em 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.jauge-score.i-tech .jauge-score-label {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 0.5em;
+  color: #00eaff;
+  text-shadow: 0 0 8px #00eaff88;
+}
+.jauge-score.i-tech svg {
+  filter: drop-shadow(0 0 18px #00eaff44);
+}
+
+/* OFFRES */
+.itech-offres {
+  gap: 20px;
+}
+.itech-offre {
+  border-radius: 14px;
+  box-shadow: 0 2px 18px #00eaff33;
+  padding: 1.3em 1em;
+  background: linear-gradient(100deg, #00eaff 0%, #0051ff 100%);
+  position: relative;
+  color: #fff;
+  border: 2px solid #00eaff33;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.itech-offre:hover {
+  background: linear-gradient(100deg, #0051ff 0%, #00eaff 100%);
+  box-shadow: 0 0 32px 8px #00eaff88, var(--itech-glow);
+}
+.itech-offre-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.itech-offre-prix {
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.18em;
+  margin-top: 0.5em;
+  text-shadow: 0 0 8px #00eaffcc;
+}
+.itech-offre-btn {
+  margin-top: 10px;
+  padding: 0.7em 1.4em;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #00eaff 0%, #0051ff 100%);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 1px 8px #00eaff44;
+  transition: background 0.18s;
+}
+.itech-offre-btn:hover {
+  background: linear-gradient(90deg, #0051ff 0%, #00eaff 100%);
+}
+
+/* TOOLTIP */
+.itech-tooltip-icon {
+  background: linear-gradient(90deg, #00eaff 0%, #0051ff 100%);
+  color: #fff;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.4em;
+  cursor: pointer;
+  margin-left: 8px;
+  outline: none;
+  border: 2px solid #00eaff;
+  box-shadow: 0 1px 6px #00eaff22;
+  transition: background 0.2s, color 0.2s;
+  position: relative;
+  z-index: 11;
+}
+.tooltip-content {
+  background: #0e213a;
+  color: #00eaff;
+  border: 1.5px solid #00eaff;
+  box-shadow: 0 4px 18px #00eaff33;
+}
+
+/* TUNNEL */
+.itech-tunnel-form label {
+  color: #b7e8ff;
+}
+.itech-tunnel-form input {
+  background: #14284a;
+  color: #e7f6ff;
+  border: 1.5px solid #00eaff55;
+  border-radius: 8px;
+  font-size: 1em;
+  padding: 0.6em 0.8em;
+}
+.itech-tunnel-form input:focus {
+  border: 1.5px solid #00eaff;
+  background: #18305a;
+  outline: none;
+}
+.itech-tunnel-actions button {
+  background: linear-gradient(90deg, #00eaff 0%, #0051ff 100%);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 0.7em 1.5em;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 12px #00eaff33;
+  transition: background 0.18s, box-shadow 0.18s;
+}
+.itech-tunnel-actions button:last-child {
+  background: #eee;
+  color: #444;
+  box-shadow: none;
+}
+
+/* PAIEMENT & CONFIRM */
+.itech-tunnel-confirm {
+  margin-top: 24px;
+}
+.itech-pay-btn {
+  background: linear-gradient(90deg, #00eaff 0%, #0051ff 100%);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.7em 1.5em;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  margin-right: 12px;
+  box-shadow: 0 2px 12px #00eaff33;
+}
+.itech-pay-btn:hover {
+  background: linear-gradient(90deg, #0051ff 0%, #00eaff 100%);
+}
+.itech-back-btn {
+  background: #eee;
+  color: #444;
+  border-radius: 8px;
+  padding: 0.7em 1.5em;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+.itech-confirm-msg {
+  margin-top: 24px;
+  padding: 1em;
+  background: #0e213a;
+  color: #00eaff;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 12px #00eaff33;
+}
+
+/* MODAL ACTIONS */
+.itech-modal-actions {
+  text-align: center;
+  margin-top: 2em;
+}
+.itech-modal-actions button {
+  background: linear-gradient(90deg, #00eaff 0%, #0051ff 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7em 1.5em;
+  font-weight: 600;
+  font-size: 1.1em;
+  cursor: pointer;
+  margin-right: 0.7em;
+  box-shadow: 0 2px 12px #00eaff33;
+  transition: background 0.18s, box-shadow 0.18s;
+}
+.itech-modal-actions button:last-child {
+  background: #eee;
+  color: #444;
+  box-shadow: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .calculateur-ia-header.itech-header {
+    padding-left: 1.3em;
+    padding-right: 1.3em;
+    max-width: 98vw;
+  }
+}
+@media (max-width: 600px) {
+  html { font-size: 0.95em; }
+  .itech-modal {
+    max-width: 98vw;
+    padding: 0;
+  }
+  .calculateur-ia-header.itech-header {
+    padding: 1em 0.5em;
+    max-width: 98vw;
+  }
+  .itech-offres {
+    gap: 10px;
+  }
+  .jauge-score-bar,
+  .jauge-score-svg {
+    max-width: 98vw;
+  }
+  .itech-modal-body {
+    padding: 1em 0.5em;
+  }
+}

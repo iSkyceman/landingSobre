@@ -1,0 +1,85 @@
+.section {
+  background: linear-gradient(120deg, #fff7f0 0%, #ffe4cc 60%, #ffd6b8 100%);
+  border-top: 1px solid #ffd7b899;
+  text-align: center;
+  padding: 3.2rem 1rem 3.6rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2.2rem;
+  box-shadow: 0 4px 32px #ffd6b855;
+  max-width: 600px;
+  margin: 2.5rem auto;
+  position: relative;
+}
+
+.title {
+  color: #ff8c42;
+  letter-spacing: 0.01em;
+  text-shadow: 
+    0 2px 12px #ffb86c55, 
+    0 0 18px #ffd6b888, 
+    0 0 4px #ffb86c;
+  text-align: center;
+  margin-bottom: 0.7rem;
+  font-size: 2.1em;
+  font-weight: 800;
+  display: block;
+  filter: drop-shadow(0 0 8px #ffd6b8cc);
+}
+
+.ctaButton {
+  background: linear-gradient(90deg, #ffb86c 0%, #ff8c42 100%);
+  color: #fff;
+  border: 2px solid #ffd6b8;
+  padding: 1em 2.4em;
+  font-size: 1.16em;
+  font-weight: 700;
+  border-radius: 2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 18px #ffb86c55, 0 0 12px #ffd6b8aa;
+  transition: 
+    background 0.18s, 
+    box-shadow 0.18s, 
+    transform 0.15s,
+    filter 0.18s,
+    border-color 0.18s;
+  outline: none;
+  margin-top: 1.3em;
+  display: inline-block;
+  animation: ctaPulseOrange 2.7s infinite alternate;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaButton:hover,
+.ctaButton:focus {
+  background: linear-gradient(90deg, #ff8c42 0%, #ffb86c 100%);
+  box-shadow: 0 8px 28px #ffb86c77, 0 0 16px #ffd6b8cc;
+  transform: scale(1.045);
+  filter: brightness(1.08) drop-shadow(0 0 10px #ffb86cbb);
+  border-color: #ff8c42;
+}
+
+@keyframes ctaPulseOrange {
+  0% { box-shadow: 0 4px 18px #ffb86c55, 0 0 8px #ffd6b8aa; }
+  100% { box-shadow: 0 8px 28px #ff8c4277, 0 0 22px #ffd6b8cc; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .section {
+    padding: 2rem 0.5rem 2.5rem 0.5rem;
+    border-radius: 1.2rem;
+    max-width: 98vw;
+  }
+  .title {
+    font-size: 1.22em;
+  }
+  .ctaButton {
+    font-size: 1em;
+    padding: 0.85em 1.2em;
+    border-radius: 1.2rem;
+  }
+}

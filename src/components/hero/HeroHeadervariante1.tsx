@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 
 export default function HeaderHero() {
   const [pos, setPos] = useState({ x: 50, y: 50 });
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef(null);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e) => {
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
     const x = Math.round(((e.clientX - rect.left) / rect.width) * 100);
@@ -106,9 +106,9 @@ export default function HeaderHero() {
           </span>
         </motion.p>
 
-        {/* Bouton animé */}
-        <motion.a
-          href="#offres"
+        {/* Bouton animé connecté au CalculateurIA */}
+        <motion.button
+          type="button"
           className={`
             flex justify-center items-center gap-3
             bg-gradient-to-r from-orange-500 via-orange-400 to-yellow-400
@@ -128,6 +128,9 @@ export default function HeaderHero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, duration: 0.4 }}
           whileHover={{ scale: 1.07, boxShadow: "0 8px 32px rgba(251,191,36,0.25)" }}
+          onClick={() => {
+            window.dispatchEvent(new Event("ouvrirCalculateurIA"));
+          }}
         >
           Découvrez nos solutions IA
           <motion.span
@@ -137,7 +140,7 @@ export default function HeaderHero() {
           >
             <FaArrowRight className="ml-2 text-2xl" />
           </motion.span>
-        </motion.a>
+        </motion.button>
 
         {/* Cartes animées */}
         <div
@@ -197,4 +200,3 @@ export default function HeaderHero() {
     </header>
   );
 }
- 

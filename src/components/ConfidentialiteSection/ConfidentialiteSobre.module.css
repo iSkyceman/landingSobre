@@ -1,0 +1,190 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  margin: 2.5rem 0;
+  padding: 0;
+  box-shadow: 0 8px 40px 0 rgba(255, 153, 51, 0.09), 0 2px 8px 0 rgba(34,48,90,0.06);
+  background: transparent;
+  min-height: 340px;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100%;
+  background:
+    image-set(
+      url("/images/bloc5.webp") type("image/webp"),
+      url("/images/bloc5.png") type("image/png")
+    );
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.23; /* Plus visible */
+  pointer-events: none;
+  filter: blur(2.5px) brightness(1.08); /* Effet premium */
+  animation: bgDown 16s linear infinite alternate, bgZoom 12s ease-in-out infinite alternate;
+}
+
+/* Overlay doux pour renforcer la lisibilité */
+.bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255,255,255,0.13) 0%, rgba(52,180,122,0.11) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes bgDown {
+  0% { background-position: center top; }
+  100% { background-position: center bottom; }
+}
+@keyframes bgZoom {
+  0% { transform: scale(1.01);}
+  100% { transform: scale(1.05);}
+}
+
+@media (max-width: 700px) {
+  .bg {
+    animation: bgLeftRight 16s linear infinite alternate, bgZoom 12s ease-in-out infinite alternate;
+    background-position: left center;
+  }
+  @keyframes bgLeftRight {
+    0% { background-position: left center; }
+    100% { background-position: right center; }
+  }
+}
+
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  margin: 0;
+  padding: 2.8rem 0.5rem 2.2rem 0.5rem;
+  background: rgba(255,255,255,0.48);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px 0 rgba(255, 153, 51, 0.04);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border: 1.5px solid rgba(255,148,77,0.13);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  font-weight: 800;
+  font-size: 2.2em;
+  color: #ff944d;
+  letter-spacing: 0.01em;
+  text-align: left;
+  margin: 0 0 1.3rem 0;
+  text-shadow: 0 2px 10px #ff944d22;
+}
+
+.lockIcon {
+  color: #ff944d;
+  font-size: 1.05em;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 8px #ff944d55);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+  padding: 0.55em 1.5em;
+  background: linear-gradient(90deg, #34b47a 70%, #ff944d 100%);
+  color: #fff;
+  border-radius: 2em;
+  font-size: 1.09rem;
+  font-weight: 700;
+  box-shadow: 0 2px 12px 0 #ff944d33, 0 0 0.5em #34b47a33;
+  text-align: left;
+  margin-left: 0;
+  cursor: pointer;
+  animation: badgePulse 2.5s infinite alternate;
+  transition: box-shadow 0.25s, transform 0.18s;
+  outline: 0;
+}
+.badge:hover,
+.badge:focus-visible {
+  box-shadow: 0 4px 18px 0 #ff944d55, 0 0 1.1em #34b47a55;
+  transform: scale(1.045);
+}
+@keyframes badgePulse {
+  0% { box-shadow: 0 2px 12px 0 #ff944d33, 0 0 0.5em #34b47a33; }
+  100% { box-shadow: 0 4px 20px 0 #ff944d66, 0 0 1.2em #34b47a66; }
+}
+
+.badgeIcon {
+  color: #fff;
+  font-size: 1.15em;
+  flex-shrink: 0;
+}
+
+.intro {
+  font-size: 1.17rem;
+  color: #22305a;
+  text-align: left;
+  margin-bottom: 1.3rem;
+  margin-left: 0;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  width: 100%;
+}
+
+.engagementBlock {
+  margin-bottom: 1.5rem;
+}
+
+.subTitle {
+  font-weight: 700;
+  font-size: 1.09rem;
+  margin-bottom: 1rem;
+  color: #22305a;
+  text-align: left;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin-bottom: 0.85rem;
+  justify-content: flex-start;
+}
+
+.emoji {
+  font-size: 1.25em;
+  margin-top: 0.1em;
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .content {
+    padding: 1.3rem 0.1rem 1.1rem 0.1rem;
+    border-radius: 1.1rem;
+  }
+  .title {
+    font-size: 1.19em;
+    gap: 0.7rem;
+  }
+  .badge {
+    font-size: 0.99rem;
+    padding: 0.45em 1em;
+  }
+}

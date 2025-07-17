@@ -1,0 +1,455 @@
+/* Section principale sobre */
+.succesFeeSection {
+  position: relative;
+  padding: 4rem 1rem;
+  background: #f9fafb;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 6px 32px 0 rgba(30, 41, 59, 0.06);
+  margin-bottom: 3rem;
+}
+
+/* TITRE PREMIUM SOBRE */
+.succesFeeSection .titleLeft {
+  font-size: 2.7rem;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  background: linear-gradient(90deg, #FFB86C 0%, #FF8C42 60%, #F76D3C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 12px #f76d3c22);
+  opacity: 0;
+  transform: translateY(-24px) scale(0.97);
+  animation: fadeInTitle 1.1s 0.2s forwards;
+  transition: transform 0.6s cubic-bezier(.77,0,.18,1), opacity 0.6s;
+}
+@keyframes fadeInTitle {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1.04);
+  }
+}
+
+/* DESCRIPTION SOBRE */
+.succesFeeSection .descriptionLeft {
+  margin-bottom: 1.5rem;
+  color: #22305a;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  text-align: left;
+}
+
+/* BOUTON PREMIUM SOBRE */
+.succesFeeSection .buttonFee {
+  color: #fff;
+  background: linear-gradient(90deg, #FFB86C 0%, #FF8C42 60%, #F76D3C 100%);
+  border: none;
+  border-radius: 2rem;
+  padding: 0.85rem 2.2rem;
+  font-size: 1.18em;
+  font-weight: 800;
+  margin: 0.4rem auto 0;
+  box-shadow: 0 2px 18px #F76D3C33;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.16s;
+  display: inline-block;
+  outline: none;
+  max-width: 320px;
+  width: 100%;
+}
+.succesFeeSection .buttonFee:hover,
+.succesFeeSection .buttonFee:focus {
+  background: linear-gradient(90deg, #F76D3C 0%, #FFB86C 100%);
+  box-shadow: 0 4px 32px #F76D3C55, 0 1.5px 8px #FFB86C44;
+  transform: scale(1.06);
+}
+
+/* SÉLECTEUR PREMIUM SOBRE */
+.succesFeeSection .selectFee {
+  width: 100%;
+  max-width: 420px;
+  margin: 1.2rem auto 0;
+  padding: 0.7rem 1.2rem;
+  border-radius: 1.5rem;
+  border: 2.5px solid #FF8C42;
+  background: rgba(255,255,255,0.92);
+  color: #181c2f;
+  font-size: 1.13rem;
+  font-weight: 600;
+  box-shadow: 0 2px 12px #FFB86C22;
+  outline: none;
+  transition: border 0.18s, box-shadow 0.18s;
+  appearance: none;
+  display: block;
+}
+.succesFeeSection .selectFee:focus {
+  border: 3px solid #F76D3C;
+  box-shadow: 0 0 0 3px #F76D3C33;
+}
+.succesFeeSection .selectFee option {
+  background: #fff;
+  color: #181c2f;
+}
+
+/* LIEN CONTRAT TYPE SOBRE */
+.succesFeeSection .linkFee {
+  display: inline-flex;
+  gap: 0.25rem;
+  color: #F76D3C;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: color 0.18s;
+}
+.succesFeeSection .linkFee:hover,
+.succesFeeSection .linkFee:focus {
+  color: #17BEBB;
+}
+
+/* MINI SCHEMA ET ÉTAPES SOBRE */
+.succesFeeSection .miniSchema {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  justify-content: flex-start;
+  margin: 2rem 0;
+  margin-left: 19rem;
+}
+.succesFeeSection .step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background: rgba(44, 83, 100, 0.1);
+  border-radius: 0.8rem;
+  padding: 0.6rem 1.1rem;
+  min-width: 90px;
+  box-shadow: 0 2px 12px 0 rgba(0,255,247,0.08);
+  color: #22223b;
+}
+.succesFeeSection .emoji {
+  font-size: 2rem;
+  margin-bottom: 0.2rem;
+}
+.succesFeeSection .arrow {
+  font-size: 2rem;
+  color: #6c63ff;
+}
+
+/* Témoignages SOBRE */
+.succesFeeSection .testimonialsRow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 2.5rem 0;
+}
+@media (min-width: 768px) {
+  .succesFeeSection .testimonialsRow {
+    flex-direction: row;
+  }
+}
+.succesFeeSection .testimonial {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  padding: 1.2rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px 0 rgba(30,41,59,0.06);
+  flex: 1 1 0;
+}
+.succesFeeSection .avatarWrapperSquare {
+  flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #2c5364;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.succesFeeSection .avatarSquare {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #e0e7ff;
+}
+.succesFeeSection .testimonialText {
+  font-style: italic;
+  margin-bottom: 0.3rem;
+  color: #3a3a4d;
+}
+.succesFeeSection .testimonialAuthor {
+  font-weight: bold;
+  color: #4f4f6e;
+  font-size: 1rem;
+}
+
+/* Bloc étude de cas SOBRE */
+.succesFeeSection .caseStudy {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: #e0e7ff;
+  color: #22223b;
+  padding: 1.1rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px 0 rgba(30,41,59,0.06);
+  margin-top: 2rem;
+  font-size: 1.05rem;
+}
+.succesFeeSection .caseStudyIcon {
+  font-size: 2rem;
+}
+
+/* --- VERSION I-TECH : inchangée --- */
+.succesFee1Section {
+  position: relative;
+  padding: 4rem 1rem;
+  background: linear-gradient(120deg, #0f2027 0%, #2c5364 50%, #00fff7 100%);
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 6px 32px 0 rgba(30, 41, 59, 0.13);
+  margin-bottom: 3rem;
+  min-height: 650px;
+}
+
+/* Variables couleurs i-tech */
+:root {
+  --itech-violet: #a259ff;
+  --itech-cyan: #8be9fd;
+}
+
+/* Fond image animée (uniquement i-tech) */
+.backgroundImage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  animation: slideFadeLeft 16s linear infinite;
+}
+
+/* Fond bulles i-tech */
+.itechBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.bubble {
+  position: absolute;
+  bottom: -120px;
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle at 30% 30%, #7f96ff 60%, #3e63dd 100%);
+  opacity: 0.22;
+  border-radius: 50%;
+  animation: bubbleFloat 12s infinite ease-in-out;
+}
+.bubble:nth-child(2) {
+  left: 15%;
+  width: 60px;
+  height: 60px;
+  animation-delay: 2s;
+  background: radial-gradient(circle at 60% 40%, #b8c1ec 50%, #6d83f2 100%);
+}
+.bubble:nth-child(3) {
+  left: 35%;
+  width: 120px;
+  height: 120px;
+  animation-delay: 4s;
+  background: radial-gradient(circle at 40% 70%, #e0e7ff 60%, #3e63dd 100%);
+}
+.bubble:nth-child(4) {
+  left: 65%;
+  width: 70px;
+  height: 70px;
+  animation-delay: 1s;
+  background: radial-gradient(circle at 60% 60%, #a0b4ff 60%, #232946 100%);
+}
+.bubble:nth-child(5) {
+  left: 80%;
+  width: 100px;
+  height: 100px;
+  animation-delay: 3s;
+  background: radial-gradient(circle at 50% 80%, #3e63dd 60%, #e0e7ff 100%);
+}
+@keyframes bubbleFloat {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.22;
+  }
+  40% {
+    opacity: 0.33;
+  }
+  70% {
+    opacity: 0.18;
+    transform: translateY(-440px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-520px) scale(0.9);
+  }
+}
+@keyframes slideFadeLeft {
+  0% {
+    transform: translateX(30%) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-30%) scale(1.05);
+  }
+  80% {
+    opacity: 0;
+    transform: translateX(-60%) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(30%) scale(1);
+  }
+}
+
+/* Contenu aligné à gauche (sobre) */
+.contentLeft {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: left;
+}
+
+/* TITRES I-TECH */
+.titleItech {
+  font-size: 2.7rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+   color: var(--itech-cyan);
+  text-align: left;
+  letter-spacing: 0.01em;
+}
+
+/* DESCRIPTIONS I-TECH */
+.descriptionItech {
+  margin-bottom: 1.5rem;
+  color: var(--itech-cyan);
+  font-size: 1.15rem;
+  line-height: 1.7;
+  text-align: left;
+}
+
+/* MINI SCHEMA I-TECH */
+.miniSchemaItech {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  justify-content: flex-start;
+  margin: 2rem 0;
+  margin-left: 2.5rem;
+  color: var(--itech-cyan);
+}
+.stepItech {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background: rgba(44, 83, 100, 0.1);
+  border-radius: 0.8rem;
+  padding: 0.6rem 1.1rem;
+  min-width: 90px;
+  box-shadow: 0 2px 12px 0 rgba(0,255,247,0.08);
+  color: var(--itech-cyan);
+}
+.emojiItech {
+  font-size: 2rem;
+  margin-bottom: 0.2rem;
+}
+.arrowItech {
+  font-size: 2.2rem;
+  color: var(--itech-cyan);
+}
+
+/* Témoignages I-TECH (inchangé) */
+.testimonialsRow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 2.5rem 0;
+}
+@media (min-width: 768px) {
+  .testimonialsRow {
+    flex-direction: row;
+  }
+}
+.testimonial {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  padding: 1.2rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px 0 rgba(30,41,59,0.06);
+  flex: 1 1 0;
+}
+.avatarWrapperSquare {
+  flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #2c5364;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatarSquare {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #e0e7ff;
+}
+.testimonialText {
+  font-style: italic;
+  margin-bottom: 0.3rem;
+  color: #3a3a4d;
+}
+.testimonialAuthor {
+  font-weight: bold;
+  color: #4f4f6e;
+  font-size: 1rem;
+}
+
+/* Bloc étude de cas (optionnel, à retirer si non utilisé) */
+.caseStudy {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: #e0e7ff;
+  color: #22223b;
+  padding: 1.1rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px 0 rgba(30,41,59,0.06);
+  margin-top: 2rem;
+  font-size: 1.05rem;
+}
+.caseStudyIcon {
+  font-size: 2rem;
+}

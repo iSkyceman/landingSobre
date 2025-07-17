@@ -1,0 +1,144 @@
+.section {
+  background: linear-gradient(120deg, #0f2027 0%, #2c5364 50%, #00fff7 100%);
+  border-top: 1px solid #8be9fd44;
+  text-align: center;
+  padding: 3rem 1rem 3.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2.5rem;
+  box-shadow: 0 4px 32px #00fff733;
+  max-width: 650px;
+  margin: 2.5rem auto;
+  position: relative;
+}
+
+.title {
+  color: #8be9fd;
+  letter-spacing: 0.02em;
+  text-shadow: 
+    0 2px 12px #3c8ce755, 
+    0 0 18px #00fff744, 
+    0 0 4px #8be9fd;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 2.2em;
+  font-weight: 800;
+  display: block;
+  /* Glow effect for premium/futuristic look */
+  filter: drop-shadow(0 0 6px #00fff7aa);
+}
+
+.ctaButton {
+  background: linear-gradient(90deg, #8be9fd 0%, #a084ee 100%);
+  color: #181c2f;
+  border: 2px solid #00fff7;
+  padding: 1em 2.3em;
+  font-size: 1.18em;
+  font-weight: 800;
+  border-radius: 2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 18px #8be9fd44, 0 0 12px #00fff733;
+  transition: 
+    background 0.18s, 
+    box-shadow 0.18s, 
+    transform 0.16s,
+    filter 0.18s;
+  outline: none;
+  margin-top: 1.2em;
+  display: inline-block;
+  animation: ctaPulseItech 2.5s infinite alternate;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaButton:hover,
+.ctaButton:focus {
+  background: linear-gradient(90deg, #a084ee 0%, #8be9fd 100%);
+  box-shadow: 0 8px 32px #8be9fd77, 0 1.5px 8px #a084ee55, 0 0 18px #00fff788;
+  transform: scale(1.07);
+  filter: brightness(1.13) drop-shadow(0 0 16px #00fff7aa);
+  border-color: #a084ee;
+}
+
+@keyframes ctaPulseItech {
+  0% { box-shadow: 0 4px 18px #8be9fd44, 0 0 8px #00fff733; }
+  100% { box-shadow: 0 8px 32px #a084ee77, 0 0 22px #00fff799; }
+}
+
+/* Popup overlay */
+.popupBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,20,40,0.65);
+  backdrop-filter: blur(2px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Popup window */
+.popup {
+  background: #181c2f;
+  border-radius: 1.2rem;
+  box-shadow: 0 8px 40px 0 #8be9fd33;
+  max-width: 420px;
+  width: 100%;
+  padding: 2.5rem 2rem 2rem 2rem;
+  position: relative;
+  text-align: center;
+  animation: popupAppearItech 0.35s cubic-bezier(.77,0,.18,1);
+  color: #eaf6ff;
+}
+
+@keyframes popupAppearItech {
+  0% { opacity: 0; transform: scale(0.96) translateY(20px);}
+  100% { opacity: 1; transform: scale(1) translateY(0);}
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1.1rem;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: #8be9fd;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.2s;
+  line-height: 1;
+  padding: 0;
+}
+.closeButton:hover { color: #a084ee; }
+
+.popupTitle {
+  font-size: 1.3em;
+  font-weight: 700;
+  margin-bottom: 1em;
+  color: #8be9fd;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .section {
+    padding: 2rem 0.5rem 2.5rem 0.5rem;
+    border-radius: 1.2rem;
+    max-width: 98vw;
+  }
+  .popup {
+    padding: 1.5rem 0.5rem 1.2rem 0.5rem;
+    max-width: 98vw;
+  }
+  .title {
+    font-size: 1.3em;
+  }
+  .ctaButton {
+    font-size: 1em;
+    padding: 0.8em 1.4em;
+    border-radius: 1.2rem;
+  }
+}
+
