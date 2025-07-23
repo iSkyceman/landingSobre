@@ -247,7 +247,6 @@
   outline: none;
 }
 .form textarea { min-height: 60px; resize: vertical; }
-input::placeholder, textarea::placeholder { color: #a084ee; opacity: .93; }
 .modalBody ul, .modalBody li, .form ul, .form li { color: #8be9fd !important; }
 .modalBody ul { margin-bottom: 12px; }
 

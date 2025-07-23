@@ -223,11 +223,6 @@
   min-height: 650px;
 }
 
-/* Variables couleurs i-tech */
-:root {
-  --itech-violet: #a259ff;
-  --itech-cyan: #8be9fd;
-}
 
 /* Fond image animée (uniquement i-tech) */
 .backgroundImage {
