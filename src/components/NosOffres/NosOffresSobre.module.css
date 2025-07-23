@@ -351,7 +351,3 @@
   .form { padding: 12px 4vw 6px 4vw; border-radius: 12px; }
   .ctaMain { font-size: 1em; padding: 12px 12px; }
 }
-
-/* SCROLLBAR */
-::-webkit-scrollbar { width: 8px; background: #fff3e0; }
-::-webkit-scrollbar-thumb { background: #FFB86C; border-radius: 8px; }
