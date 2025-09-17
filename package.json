@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "clean": "rimraf .next",
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "npm run clean && next build",
     "start": "next start",
     "lint": "next lint",
@@ -38,3 +38,4 @@
     "typescript": "^5"
   }
 }
+

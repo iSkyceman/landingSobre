@@ -1,25 +1,25 @@
-import HeroHeaderVariante1 from "@/components/hero/HeroHeaderVariante1";
-import HeroHeaderVariante2 from "@/components/hero/HeroHeaderVariante2";
-import CalculateurIA from "@/components/calculateur/CalculateurIA";
-import CalculateurIA1 from "@/components/calculateur/CalculateurIA1";
-import "@/styles/calculateur-ia.css";
+import HeroHeaderVariante1 from "@components/hero/HeroHeaderVariante1";
+import HeroHeaderVariante2 from "@components/hero/HeroHeaderVariante2";
+import CalculateurIA from "@components/calculateur/CalculateurIA";
+import CalculateurIA1 from "@components/calculateur/CalculateurIA1";
+import "@styles/calculateur-ia.css";
 import "../styles/calculateur-ia1.css";
-import NosOffresSobre from "@/components/NosOffres/NosOffresSobre";
-import NosOffresItech from "@/components/NosOffres/NosOffresItech";
-import SuccesFee from "@/components/SuccesFee/SuccesFee";
-import SuccesFee1 from "@/components/SuccesFee/SuccesFee1";
-import ClientOnlyOptionDataPlusSobre from "@/components/ClientOnlyOptionDataPlusSobre";
-import OptionDataPlusItech from "@/components/OptionDataPlusItech";
-import BeneficesSobre from "@/components/Benefices/BeneficesSobre";
-import BeneficesItech from "@/components/Benefices/BeneficesItech";
-import RisquesSobre from "@/components/RisquesSection/RisquesSobre";
-import RisquesItech from "@/components/RisquesSection/RisquesItech";
-import ConfidentialiteSobre from "@/components/ConfidentialiteSection/ConfidentialiteSobre";
-import ConfidentialiteItech from "@/components/ConfidentialiteSection/ConfidentialiteItech";
-import CtaFinalSobre from "@/components/CtaFinalSection/CtaFinalSobre";
-import CtaFinalItech from "@/components/CtaFinalSection/CtaFinalItech";
-import FooterSobre from "@/components/Footer/FooterSobre";
-import FooterItech from "@/components/Footer/FooterItech";
+import NosOffresSobre from "@components/NosOffres/NosOffresSobre";
+import NosOffresItech from "@components/NosOffres/NosOffresItech";
+import SuccesFee from "@components/SuccesFee/SuccesFee";
+import SuccesFee1 from "@components/SuccesFee/SuccesFee1";
+import ClientOnlyOptionDataPlusSobre from "@components/ClientOnlyOptionDataPlusSobre";
+import OptionDataPlusItech from "@components/OptionDataPlusItech";
+import BeneficesSobre from "@components/Benefices/BeneficesSobre";
+import BeneficesItech from "@components/Benefices/BeneficesItech";
+import RisquesSobre from "@components/RisquesSection/RisquesSobre";
+import RisquesItech from "@components/RisquesSection/RisquesItech";
+import ConfidentialiteSobre from "@components/ConfidentialiteSection/ConfidentialiteSobre";
+import ConfidentialiteItech from "@components/ConfidentialiteSection/ConfidentialiteItech";
+import CtaFinalSobre from "@components/CtaFinalSection/CtaFinalSobre";
+import CtaFinalItech from "@components/CtaFinalSection/CtaFinalItech";
+import FooterSobre from "@components/Footer/FooterSobre";
+import FooterItech from "@components/Footer/FooterItech";
 
 // Tape explicitement la constante pour autoriser 1 ou 2
 const VARIANTE: 1 | 2 = 1; // 2 = i-tech, 1 = sobre 
@@ -45,7 +45,7 @@ export const metadata = {
 };
 
 export default function Home() {
-  // Le choix dynamique reste simple :
+  // Le choix dynamique reste simple :
   return (
     <>
       {/* Choix du header selon variante */}
