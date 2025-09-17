@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+
+import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import styles from "./NosOffresItech.module.css";
 import { FaMicrochip, FaRobot, FaQuestionCircle, FaExternalLinkAlt, FaTimes } from "react-icons/fa";
 
@@ -15,11 +16,11 @@ const OFFRES = [
     nom: "Diagnostic Express IA",
     description: "Rapport IA personnalisé (10 slides), 4h de recherche expert, appel explicatif 15 min",
     tailles: [
-      { label: "0–15 salariés", prix: "590 €" },
-      { label: "16–49 salariés", prix: "990 €" },
-      { label: "50–99 salariés", prix: "1 990 €" },
-      { label: "100–250 salariés", prix: "2 990 €" },
-      { label: ">250 salariés", prix: "3 900 €" }
+      { label: "0–15 salariés", prix: "590\u202F€" },
+      { label: "16–49 salariés", prix: "990\u202F€" },
+      { label: "50–99 salariés", prix: "1\u202F990\u202F€" },
+      { label: "100–250 salariés", prix: "2\u202F990\u202F€" },
+      { label: ">250 salariés", prix: "3\u202F900\u202F€" }
     ],
     detail: [
       "Rapport IA personnalisé (10 slides)",
@@ -38,11 +39,11 @@ const OFFRES = [
     nom: "Feuille de Route IA",
     description: "Rapport IA approfondi (25–30 slides), 12h de recherche, 3 sujets prioritaires, roadmap visuelle, appel 20min",
     tailles: [
-      { label: "0–15 salariés", prix: "2 390 €" },
-      { label: "16–49 salariés", prix: "3 900 €" },
-      { label: "50–99 salariés", prix: "5 900 €" },
-      { label: "100–250 salariés", prix: "7 900 €" },
-      { label: ">250 salariés", prix: "15 900 €" }
+      { label: "0–15 salariés", prix: "2\u202F390\u202F€" },
+      { label: "16–49 salariés", prix: "3\u202F900\u202F€" },
+      { label: "50–99 salariés", prix: "5\u202F900\u202F€" },
+      { label: "100–250 salariés", prix: "7\u202F900\u202F€" },
+      { label: ">250 salariés", prix: "15\u202F900\u202F€" }
     ],
     detail: [
       "Rapport IA approfondi (25–30 slides)",
@@ -61,11 +62,11 @@ const OFFRES = [
     nom: "Analyse IA Totale",
     description: "Audit IA complet (40–45 slides), 30h de recherche, 5 sujets, roadmap avancée, appel 1h",
     tailles: [
-      { label: "0–15 salariés", prix: "4 900 €" },
-      { label: "16–49 salariés", prix: "7 900 €" },
-      { label: "50–99 salariés", prix: "11 900 €" },
-      { label: "100–250 salariés", prix: "15 900 €" },
-      { label: ">250 salariés", prix: "29 900 €" }
+      { label: "0–15 salariés", prix: "4\u202F900\u202F€" },
+      { label: "16–49 salariés", prix: "7\u202F900\u202F€" },
+      { label: "50–99 salariés", prix: "11\u202F900\u202F€" },
+      { label: "100–250 salariés", prix: "15\u202F900\u202F€" },
+      { label: ">250 salariés", prix: "29\u202F900\u202F€" }
     ],
     detail: [
       "Audit IA complet (40–45 slides)",
@@ -96,38 +97,57 @@ const sujetsInstructions = {
     sousTitre: "Aidez-nous à personnaliser votre feuille de route IA",
     intro: "Merci de préciser les 3 sujets ou problématiques à traiter en priorité.",
     precision: "Plus votre réponse est précise, plus notre feuille de route sera pertinente et actionnable.",
-    placeholder1: "ex : automatisation, réduction des coûts, qualité…"
+    placeholder1: "ex\u202F: automatisation, réduction des coûts, qualité…"
   },
   analyse: {
     titre: "Analyse IA Totale – Personnalisation",
     sousTitre: "Aidez-nous à personnaliser votre audit IA complet",
     intro: "Merci de préciser les 5 sujets ou problématiques à traiter en priorité.",
     precision: "Plus votre réponse est précise, plus notre audit sera pertinent et actionnable.",
-    placeholder1: "ex : cybersécurité, data, automatisation, supply chain…"
+    placeholder1: "ex\u202F: cybersécurité, data, automatisation, supply chain…"
   }
 };
 
-function isValidEmail(email: string) {
+function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) && email.length >= 6;
 }
-function isValidSiren(siren: string) {
+
+function isValidSiren(siren: string): boolean {
   return /^\d{9}$/.test(siren);
 }
-function isValidSiret(siret: string) {
+
+function isValidSiret(siret: string): boolean {
   return /^\d{14}$/.test(siret);
 }
-const generateReference = () => {
+
+interface DossierStored {
+  reference: string;
+  offre: { nom: string };
+  taille: string;
+  prix: string;
+  nom: string;
+  secteur: string;
+  email: string;
+  effectif: string;
+  siren: string;
+  observation?: string;
+  sujets: { [key: string]: string };
+  date: string;
+  provenance: string;
+}
+
+const generateReference = (): string => {
   const now = new Date();
   const pad = (n: number) => n.toString().padStart(2, "0");
   const random = Math.floor(1000 + Math.random() * 9000);
-  return `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}-${random}`;
+  return `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}-${random}`;
 };
 
-function saveDossierToStorage(dossier: any) {
-  let dossiers = [];
+function saveDossierToStorage(dossier: DossierStored): void {
+  let dossiers: DossierStored[] = [];
   try {
     dossiers = JSON.parse(localStorage.getItem("dossiers") || "[]");
-  } catch (e) {
+  } catch {
     dossiers = [];
   }
   dossiers.push(dossier);
@@ -135,11 +155,12 @@ function saveDossierToStorage(dossier: any) {
 }
 
 export default function NosOffresItech() {
-  const [taillesSelectionnees, setTaillesSelectionnees] = useState(OFFRES.map(() => 0));
+  const [taillesSelectionnees, setTaillesSelectionnees] = useState<number[]>(OFFRES.map(() => 0));
   const [showModal, setShowModal] = useState(false);
   const [etape, setEtape] = useState<Etape>("form");
   const [offreIdx, setOffreIdx] = useState<number | null>(null);
   const [tailleIdx, setTailleIdx] = useState<number>(0);
+
   const [form, setForm] = useState({
     nom: "",
     secteur: "",
@@ -148,19 +169,19 @@ export default function NosOffresItech() {
     siren: "",
     observation: ""
   });
+
   const [sujets, setSujets] = useState<{ [key: string]: string }>({});
   const [confirmation, setConfirmation] = useState("");
   const [showStripeModal, setShowStripeModal] = useState(false);
   const [emailValid, setEmailValid] = useState(true);
   const [sirenFormatValid, setSirenFormatValid] = useState(true);
-  const [reference, setReference] = useState("");
+  const [reference, setReference] = useState<string>("");
   const [showInfoIdx, setShowInfoIdx] = useState<number | null>(null);
-  const closeTimeout = useRef<any>();
+  const closeTimeout = useRef<NodeJS.Timeout | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const sujetsRef = useRef<HTMLFormElement>(null);
 
-  // Ouvre modale en gardant la tranche sélectionnée propre à chaque carte
-  const openModal = (idx: number, tailleInitiale: number) => {
+  const openModal = (idx: number, tailleInitiale: number): void => {
     setOffreIdx(idx);
     setTailleIdx(tailleInitiale);
     setEtape("form");
@@ -171,23 +192,29 @@ export default function NosOffresItech() {
     setEmailValid(true);
     setSirenFormatValid(true);
     setShowStripeModal(false);
-    setTimeout(() => { formRef.current?.scrollIntoView({ behavior: "auto" }); }, 50);
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: "auto" });
+    }, 50);
   };
 
   useEffect(() => {
     if (etape === "sujets" && offreIdx !== null) {
       const nb = OFFRES[offreIdx].sujets;
-      let init: { [key: string]: string } = {};
-      for (let i = 1; i <= nb; i++) init[`sujet${i}`] = "";
-      setSujets(init);
-      setTimeout(() => { sujetsRef.current?.scrollIntoView({ behavior: "auto" }); }, 50);
+      const initSujets: { [key: string]: string } = {};
+      for (let i = 1; i <= nb; i++) {
+        initSujets[`sujet${i}`] = "";
+      }
+      setSujets(initSujets);
+      setTimeout(() => {
+        sujetsRef.current?.scrollIntoView({ behavior: "auto" });
+      }, 50);
     }
     if (etape === "form" && formRef.current) {
       setTimeout(() => formRef.current?.scrollIntoView({ behavior: "auto" }), 50);
     }
   }, [etape, offreIdx]);
 
-  function isEffectifInTaille(effectif: string, tailleLabel: string) {
+  function isEffectifInTaille(effectif: string, tailleLabel: string): boolean {
     const val = Number(effectif);
     if (tailleLabel.startsWith("0–15")) return val >= 0 && val <= 15;
     if (tailleLabel.startsWith("16–49")) return val >= 16 && val <= 49;
@@ -197,18 +224,17 @@ export default function NosOffresItech() {
     return false;
   }
 
-  const isFormValid = () =>
-    form.nom &&
-    form.secteur &&
+  const isFormValid = (): boolean =>
+    form.nom.length > 0 &&
+    form.secteur.length > 0 &&
     isValidEmail(form.email) &&
     emailValid &&
-    form.effectif &&
+    form.effectif.length > 0 &&
     ((isValidSiren(form.siren) || isValidSiret(form.siren)) && sirenFormatValid) &&
     offreIdx !== null &&
     isEffectifInTaille(form.effectif, OFFRES[offreIdx].tailles[tailleIdx].label);
 
-  const isSujetsValid = () =>
-    Object.values(sujets).every(s => s.trim().length >= 3);
+  const isSujetsValid = (): boolean => Object.values(sujets).every(s => s.trim().length >= 3);
 
   let effectifMsg = null;
   if (offreIdx !== null && form.effectif) {
@@ -217,7 +243,7 @@ export default function NosOffresItech() {
       const nouvelleTaille = OFFRES[offreIdx].tailles.find(t => isEffectifInTaille(form.effectif, t.label));
       effectifMsg = (
         <div style={{ color: "#8be9fd", marginTop: 8, fontWeight: 500 }}>
-          L’effectif saisi ne correspond pas à la tranche sélectionnée.<br />
+          L&apos;effectif saisi ne correspond pas à la tranche sélectionnée.<br />
           {nouvelleTaille
             ? <>Sélectionnez plutôt la tranche <b>{nouvelleTaille.label}</b> ({nouvelleTaille.prix}).</>
             : <>Aucune tranche ne correspond à cet effectif.</>
@@ -231,32 +257,33 @@ export default function NosOffresItech() {
     setEmailValid(isValidEmail(form.email) || form.email === "");
   }, [form.email]);
 
-  function handleSirenChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleSirenChange(e: ChangeEvent<HTMLInputElement>): void {
     const value = e.target.value.trim().replace(/\s/g, "");
     setForm(f => ({ ...f, siren: value }));
-    setSirenFormatValid(
-      value === "" || isValidSiren(value) || isValidSiret(value)
-    );
+    setSirenFormatValid(value === "" || isValidSiren(value) || isValidSiret(value));
   }
 
-  function handleMouseLeave() {
+  function handleMouseLeave(): void {
+    if (closeTimeout.current) clearTimeout(closeTimeout.current);
     closeTimeout.current = setTimeout(() => setShowInfoIdx(null), 150);
   }
-  function handleMouseEnter(idx: number) {
-    clearTimeout(closeTimeout.current);
+
+  function handleMouseEnter(idx: number): void {
+    if (closeTimeout.current) clearTimeout(closeTimeout.current);
     setShowInfoIdx(idx);
   }
 
-  // --- RENDU ---
   return (
     <>
       <section className={styles.section}>
         <div className={styles.container}>
-          <h2 className={styles.title}><FaMicrochip className={styles.icon} /> Nos Offres</h2>
+          <h2 className={styles.title}>
+            <FaMicrochip className={styles.icon} /> Nos Offres
+          </h2>
           <p className={styles.subtitle}>
-            Boostez votre transformation digitale avec l’IA la plus avancée.&nbsp;
+            Boostez votre transformation digitale avec l&apos;IA la plus avancée.&nbsp;
             <span style={{ color: "#8be9fd" }}>
-              Sécurité, performance, innovation : passez à l’ère Itech.
+              Sécurité, performance, innovation : passez à l&apos;ère Itech.
             </span>
           </p>
           <div className={styles.grid}>
@@ -272,12 +299,15 @@ export default function NosOffresItech() {
                     onMouseLeave={handleMouseLeave}
                     onFocus={() => setShowInfoIdx(idx)}
                     onBlur={() => setShowInfoIdx(null)}
-                    style={{ position: "relative" }}>
+                    style={{ position: "relative" }}
+                  >
                     <FaQuestionCircle />
                     {showInfoIdx === idx && (
-                      <span className={styles.infoBulleContent}
+                      <span
+                        className={styles.infoBulleContent}
                         onMouseEnter={() => handleMouseEnter(idx)}
-                        onMouseLeave={handleMouseLeave}>
+                        onMouseLeave={handleMouseLeave}
+                      >
                         {offre.description}
                         <br />
                         <a
@@ -294,45 +324,56 @@ export default function NosOffresItech() {
                 </h3>
                 <select
                   className={styles.select}
-                  aria-label="Taille de l'entreprise"
+                  aria-label="Taille de l&apos;entreprise"
                   value={taillesSelectionnees[idx]}
                   onChange={e => {
                     const v = Number(e.target.value);
-                    setTaillesSelectionnees(ts =>
-                      ts.map((t, i) => (i === idx ? v : t))
-                    );
-                  }}>
+                    setTaillesSelectionnees(ts => ts.map((t, i) => (i === idx ? v : t)));
+                  }}
+                >
                   {offre.tailles.map((t, i) => (
-                    <option value={i} key={t.label}>{t.label} ({t.prix})</option>
+                    <option value={i} key={t.label}>
+                      {t.label} ({t.prix})
+                    </option>
                   ))}
                 </select>
-                <div className={styles.price}>
-                  {offre.tailles[taillesSelectionnees[idx]].prix}
-                </div>
+                <div className={styles.price}>{offre.tailles[taillesSelectionnees[idx]].prix}</div>
                 <ul>
                   {offre.detail.map((d, i) => {
                     const match = d.match(/^(.*?)(\s*\(.*\))$/);
                     return (
                       <li key={i}>
-                        {match
-                          ? <>
+                        {match ? (
+                          <>
                             {match[1]}
                             <span className={styles.nobr}>{match[2]}</span>
                           </>
-                          : d}
+                        ) : (
+                          d
+                        )}
                       </li>
                     );
                   })}
                 </ul>
-                <p style={{ color: "#8be9fd" }}><strong>Bénéfices :</strong> {offre.benefices}</p>
-                <p style={{ textAlign: "left", margin: "0.5em 0", color: "#8be9fd" }}><strong>Délai :</strong> {offre.delai}</p>
-                <span className={`${styles.pricingBadge} ${styles[offre.badge.color] || offre.badge.color}`}>{offre.badge.label}</span>
+                <p style={{ color: "#8be9fd" }}>
+                  <strong>Bénéfices :</strong> {offre.benefices}
+                </p>
+                <p style={{ textAlign: "left", margin: "0.5em 0", color: "#8be9fd" }}>
+                  <strong>Délai :</strong> {offre.delai}
+                </p>
+                <span className={`${styles.pricingBadge} ${styles[offre.badge.color] || offre.badge.color}`}>
+                  {offre.badge.label}
+                </span>
                 <div className={styles.buttonContainer}>
                   <button
                     className={styles.ctaTech}
                     onClick={() => openModal(idx, taillesSelectionnees[idx])}
                   >
-                    {offre.id === "diagnostic" ? "Réserver Itech" : offre.id === "strategie" ? "Choisir ma route IA" : "Devenir Leader"}
+                    {offre.id === "diagnostic"
+                      ? "Réserver Itech"
+                      : offre.id === "strategie"
+                      ? "Choisir ma route IA"
+                      : "Devenir Leader"}
                   </button>
                 </div>
                 <div style={{ fontSize: "0.97rem", color: "#8be9fd", marginTop: "0.5rem" }}>
@@ -344,138 +385,158 @@ export default function NosOffresItech() {
         </div>
       </section>
 
-     {/* MODALE TUNNEL */}
-{showModal && offreIdx !== null && (
-  <div className={styles.modalBg} tabIndex={-1} aria-modal="true" role="dialog"
-    onClick={e => { if (e.target === e.currentTarget) setShowModal(false); }}>
-    <div className={styles.modal} tabIndex={0} style={{ background: "#23294a" }}>
-      <div className={styles.modalHeader}>
-        <h2>Réservez votre offre IA</h2>
-        <button
-          className={styles.modalClose}
-          aria-label="Fermer"
-          onClick={() => setShowModal(false)}
+      {/* MODALE */}
+      {showModal && offreIdx !== null && (
+        <div
+          className={styles.modalBg}
+          tabIndex={-1}
+          aria-modal="true"
+          role="dialog"
+          onClick={e => {
+            if (e.target === e.currentTarget) setShowModal(false);
+          }}
         >
-          <FaTimes />
-        </button>
-      </div>
-      <div className={styles.modalBody}>
-
-        {/* FORM */}
-        {etape === "form" && (
-          <form
-            ref={formRef}
-            className={styles.form}
-            style={{ marginTop: 24, maxWidth: 420, color: "#fff" }}
-            onSubmit={e => {
-              e.preventDefault();
-              if (OFFRES[offreIdx].sujets > 0) setEtape("sujets");
-              else setEtape("recap");
-            }}
-          >
-            <h3 style={{ marginBottom: 14, color: "#8be9fd" }}>
-              {OFFRES[offreIdx].nom} – {OFFRES[offreIdx].tailles[tailleIdx].label}
-            </h3>
-            {OFFRES[offreIdx].id === "diagnostic" && (
-              <div style={{ marginBottom: 12 }}>
-                <a
-                  href={OFFRES[offreIdx].pdf}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "#8be9fd", textDecoration: "underline", fontWeight: 500 }}
+          <div className={styles.modal} tabIndex={0} style={{ background: "#23294a" }}>
+            <div className={styles.modalHeader}>
+              <h2>Réservez votre offre IA</h2>
+              <button
+                className={styles.modalClose}
+                aria-label="Fermer"
+                onClick={() => setShowModal(false)}
+              >
+                <FaTimes />
+              </button>
+            </div>
+            <div className={styles.modalBody}>
+              {/* FORM */}
+              {etape === "form" && (
+                <form
+                  ref={formRef}
+                  className={styles.form}
+                  style={{ marginTop: 24, maxWidth: 420, color: "#fff" }}
+                  onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                    e.preventDefault();
+                    if (OFFRES[offreIdx].sujets > 0) setEtape("sujets");
+                    else setEtape("recap");
+                  }}
                 >
-                  Voir la présentation Diagnostic Express (PDF)
-                </a>
-              </div>
-            )}
-            <label>Nom et prénom
-              <input required value={form.nom} onChange={e => setForm(f => ({ ...f, nom: e.target.value }))} />
-            </label>
-            <label>Secteur d'activité
-              <select required value={form.secteur} onChange={e => setForm(f => ({ ...f, secteur: e.target.value }))}>
-                <option value="">Choisissez...</option>
-                {SECTEURS.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </label>
-            <label>Email professionnel
-              <input
-                required
-                type="email"
-                value={form.email}
-                onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                onBlur={e => setEmailValid(isValidEmail(e.target.value))}
-                style={emailValid ? {} : { border: "1.5px solid #50fa7b" }}
-              />
-              {!emailValid && (
-                <div className={styles.emailError}>
-                  Merci de renseigner une adresse email valide.
-                </div>
-              )}
-            </label>
-            <label>Effectif
-              <input
-                required
-                type="number"
-                min={1}
-                value={form.effectif}
-                onChange={e => setForm(f => ({ ...f, effectif: e.target.value }))}
-              />
-            </label>
-            {/* MESSAGE EFFECTIF ERREUR */}
-            {effectifMsg && (
-              <div className={styles.effectifError}>
-                {effectifMsg.props.children}
-              </div>
-            )}
-            <label>
-              SIREN ou SIRET
-              <input
-                required
-                value={form.siren}
-                onChange={handleSirenChange}
-                pattern="\d{9}|\d{14}"
-                title="Saisissez un SIREN (9 chiffres) ou SIRET (14 chiffres) valide"
-                style={sirenFormatValid ? {} : { border: "1.5px solid #50fa7b" }}
-              />
-              {!sirenFormatValid && (
-                <div className={styles.sirenError}>
-                  Merci de renseigner un SIREN (9 chiffres) ou SIRET (14 chiffres) valide.
-                </div>
-              )}
-              <div style={{
-                color: "#8be9fd",
-                fontSize: "0.9em",
-                marginTop: 8,
-                background: "#181b2a",
-                borderRadius: 6,
-                padding: "8px 12px"
-              }}>
-                <b>À savoir :</b> L’audit sera réalisé sur l’entité réelle correspondant au SIREN/SIRET fourni.<br />
-                Le secteur officiel de l’entreprise, tel qu’enregistré dans la base INSEE, sera utilisé pour personnaliser l’analyse.<br />
-                La validité du SIREN/SIRET sera vérifiée manuellement lors du traitement de votre demande.<br />
-                {form.siren && (isValidSiren(form.siren) || isValidSiret(form.siren)) && (
-                  <a
-                    href={`https://annuaire-entreprises.data.gouv.fr/entreprise/${form.siren}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.sirenAnnuaire}
-                  >
-                    Vérifiez votre SIREN/SIRET sur l’Annuaire des Entreprises
-                  </a>
-                )}
-              </div>
-            </label>
-            {OFFRES[offreIdx].id === "diagnostic" && (
-              <label>
-                Observation ou sujet à signaler (optionnel)
-                <textarea
-                  value={form.observation}
-                  onChange={e => setForm(f => ({ ...f, observation: e.target.value }))}
-                  placeholder="Vous pouvez préciser un point d'attention, une question ou un sujet spécifique…"
-                  rows={3}
-                  style={{ resize: "vertical", marginTop: 4, marginBottom: 8, width: "100%" }}
-                />
-              </label>
+                  <h3 style={{ marginBottom: 14, color: "#8be9fd" }}>
+                    {OFFRES[offreIdx].nom} – {OFFRES[offreIdx].tailles[tailleIdx].label}
+                  </h3>
+                  {OFFRES[offreIdx].id === "diagnostic" && (
+                    <div style={{ marginBottom: 12 }}>
+                      <a
+                        href={OFFRES[offreIdx].pdf}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: "#8be9fd", textDecoration: "underline", fontWeight: 500 }}
+                      >
+                        Voir la présentation Diagnostic Express (PDF)
+                      </a>
+                    </div>
+                  )}
+                  <label>
+                    Nom et prénom
+                    <input
+                      required
+                      value={form.nom}
+                      onChange={e => setForm(f => ({ ...f, nom: e.target.value }))}
+                    />
+                  </label>
+                  <label>
+                    Secteur d&apos;activité
+                    <select
+                      required
+                      value={form.secteur}
+                      onChange={e => setForm(f => ({ ...f, secteur: e.target.value }))}
+                    >
+                      <option value="">Choisissez...</option>
+                      {SECTEURS.map(s => (
+                        <option key={s} value={s}>{s}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Email professionnel
+                    <input
+                      required
+                      type="email"
+                      value={form.email}
+                      onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                      onBlur={e => setEmailValid(isValidEmail(e.target.value))}
+                      style={emailValid ? {} : { border: "1.5px solid #50fa7b" }}
+                    />
+                    {!emailValid && (
+                      <div className={styles.emailError}>
+                        Merci de renseigner une adresse email valide.
+                      </div>
+                    )}
+                  </label>
+                  <label>
+                    Effectif
+                    <input
+                      required
+                      type="number"
+                      min={1}
+                      value={form.effectif}
+                      onChange={e => setForm(f => ({ ...f, effectif: e.target.value }))}
+                    />
+                  </label>
+                  {/* MESSAGE EFFECTIF ERREUR */}
+                  {effectifMsg && (
+                    <div className={styles.effectifError}>
+                      {effectifMsg.props.children}
+                    </div>
+                  )}
+                  <label>
+                    SIREN ou SIRET
+                    <input
+                      required
+                      value={form.siren}
+                      onChange={handleSirenChange}
+                      pattern="\d{9}|\d{14}"
+                      title="Saisissez un SIREN (9 chiffres) ou SIRET (14 chiffres) valide"
+                      style={sirenFormatValid ? {} : { border: "1.5px solid #50fa7b" }}
+                    />
+                    {!sirenFormatValid && (
+                      <div className={styles.sirenError}>
+                        Merci de renseigner un SIREN (9 chiffres) ou SIRET (14 chiffres) valide.
+                      </div>
+                    )}
+                    <div style={{
+                      color: "#8be9fd",
+                      fontSize: "0.9em",
+                      marginTop: 8,
+                      background: "#181b2a",
+                      borderRadius: 6,
+                      padding: "8px 12px"
+                    }}>
+                      <b>À savoir :</b> L&apos;audit sera réalisé sur l&apos;entité réelle correspondant au SIREN/SIRET fourni.<br />
+                      Le secteur officiel de l&apos;entreprise, tel qu&apos;enregistré dans la base INSEE, sera utilisé pour personnaliser l&apos;analyse.<br />
+                      La validité du SIREN/SIRET sera vérifiée manuellement lors du traitement de votre demande.<br />
+                      {form.siren && (isValidSiren(form.siren) || isValidSiret(form.siren)) && (
+                        <a
+                          href={`https://annuaire-entreprises.data.gouv.fr/entreprise/${form.siren}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.sirenAnnuaire}
+                        >
+                          Vérifiez votre SIREN/SIRET sur l&apos;Annuaire des Entreprises
+                        </a>
+                      )}
+                    </div>
+                  </label>
+                  {OFFRES[offreIdx].id === "diagnostic" && (
+                    <label>
+                      Observation ou sujet à signaler (optionnel)
+                      <textarea
+                        value={form.observation}
+                        onChange={e => setForm(f => ({ ...f, observation: e.target.value }))}
+                        placeholder="Vous pouvez préciser un point d&apos;attention, une question ou un sujet spécifique…"
+                        rows={3}
+                        style={{ resize: "vertical", marginTop: 4, marginBottom: 8, width: "100%" }}
+                      />
+                    </label>
                   )}
                   <div className={styles.buttonContainer}>
                     <button
@@ -498,18 +559,17 @@ export default function NosOffresItech() {
                 </form>
               )}
 
-              {/* ÉTAPE SUJETS (identique Sobre mais style Itech) */}
+              {/* ÉTAPE SUJETS */}
               {etape === "sujets" && OFFRES[offreIdx].sujets > 0 && (
                 <form
                   ref={sujetsRef}
                   className={styles.form}
                   style={{ marginTop: 20, maxWidth: 420, color: "#fff" }}
-                  onSubmit={e => {
+                  onSubmit={(e: FormEvent<HTMLFormElement>) => {
                     e.preventDefault();
                     setEtape("recap");
                   }}
                 >
-                  {/* Intitulés customisés */}
                   {OFFRES[offreIdx].id === "strategie" && (
                     <>
                       <h3 style={{ color: "#8be9fd" }}>{sujetsInstructions.strategie.titre}</h3>
@@ -558,31 +618,31 @@ export default function NosOffresItech() {
                       </div>
                     </>
                   )}
-                  {/* Saisies sujets */}
+
                   {Array.from({ length: OFFRES[offreIdx].sujets }).map((_, i) => (
-                    <label key={i}>Sujet prioritaire n°{i + 1}
+                    <label key={i}>
+                      Sujet prioritaire n°{i + 1}
                       <input
                         required
                         value={sujets[`sujet${i + 1}`] || ""}
                         onChange={e => setSujets(s => ({ ...s, [`sujet${i + 1}`]: e.target.value }))}
                         minLength={3}
                         autoComplete="off"
-                        placeholder={i === 0
-                          ? OFFRES[offreIdx].id === "strategie"
-                            ? sujetsInstructions.strategie.placeholder1
-                            : OFFRES[offreIdx].id === "analyse"
-                              ? sujetsInstructions.analyse.placeholder1
-                              : undefined
-                          : undefined}
+                        placeholder={i === 0 ?
+                          OFFRES[offreIdx].id === "strategie" ? sujetsInstructions.strategie.placeholder1 :
+                          OFFRES[offreIdx].id === "analyse" ? sujetsInstructions.analyse.placeholder1 :
+                          undefined : undefined}
                       />
                     </label>
                   ))}
+
                   <div style={{ fontSize: "0.95em", color: "#8be9fd", marginTop: "0.7em" }}>
                     <FaQuestionCircle style={{ color: "#8be9fd", marginRight: 4 }} />
                     Vous pouvez préciser un enjeu, un objectif, ou une difficulté rencontrée dans votre activité.
                     <br />
                     Toutes vos informations restent strictement confidentielles.
                   </div>
+
                   <div className={styles.buttonContainer}>
                     <button
                       type="submit"
@@ -673,11 +733,16 @@ export default function NosOffresItech() {
 
               {/* MODALE STRIPE */}
               {showStripeModal && (
-                <div className={styles.modalBg} tabIndex={-1} aria-modal="true" role="dialog"
-                  onClick={e => { if (e.target === e.currentTarget) setShowStripeModal(false); }}>
+                <div
+                  className={styles.modalBg}
+                  tabIndex={-1}
+                  aria-modal="true"
+                  role="dialog"
+                  onClick={e => { if (e.target === e.currentTarget) setShowStripeModal(false); }}
+                >
                   <div className={styles.modal} tabIndex={0} style={{ background: "#22253c", color: "#fff" }}>
                     <div className={styles.modalHeader}>
-                      <h2>Paiement Stripe pour l'offre : {OFFRES[offreIdx].nom}</h2>
+                      <h2>Paiement Stripe pour l&apos;offre : {OFFRES[offreIdx].nom}</h2>
                       <button className={styles.modalClose} aria-label="Fermer" onClick={() => setShowStripeModal(false)}>
                         <FaTimes />
                       </button>
@@ -694,7 +759,7 @@ export default function NosOffresItech() {
                           setShowStripeModal(false);
                           setConfirmation("Merci, votre réservation a bien été prise en compte !");
                           setEtape("confirmation");
-                          const dossier = {
+                          const dossier: DossierStored = {
                             reference: ref,
                             offre: { nom: OFFRES[offreIdx].nom },
                             taille: OFFRES[offreIdx].tailles[tailleIdx].label,
@@ -741,6 +806,4 @@ export default function NosOffresItech() {
     </>
   );
 }
-
-
 

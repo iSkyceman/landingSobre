@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
+import LayoutWrapper from "../components/LayoutWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,15 +40,23 @@ export const metadata: Metadata = {
     title: "iSkyce Industrie 5.0",
     description: "Landing page IA, data, automatisation et offres sur-mesure.",
     images: ["/images/logo-iskyce-industrie-5.0.png"],
-    site: "@iskyce", // Mets ici ton handle Twitter/X si tu en as un
+    site: "@iskyce",
   },
   icons: {
     icon: [
       { url: "/favicon.ico", rel: "icon", type: "image/x-icon" },
-      { url: "/images/icon-light.png", media: "(prefers-color-scheme: light)", rel: "icon", type: "image/png" },
-      { url: "/images/icon-dark.png", media: "(prefers-color-scheme: dark)", rel: "icon", type: "image/png" },
-      // Optionnel, pour le support SVG moderne :
-      // { url: "/images/icon.svg", rel: "icon", type: "image/svg+xml" },
+      {
+        url: "/images/icon-light.png",
+        media: "(prefers-color-scheme: light)",
+        rel: "icon",
+        type: "image/png",
+      },
+      {
+        url: "/images/icon-dark.png",
+        media: "(prefers-color-scheme: dark)",
+        rel: "icon",
+        type: "image/png",
+      },
     ],
     apple: "/images/icon-light.png",
   },
@@ -60,12 +69,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <div style={{ paddingLeft: "2rem", paddingRight: "2rem" }}>
+          <LayoutWrapper>{children}</LayoutWrapper>
+        </div>
       </body>
     </html>
   );
 }
-

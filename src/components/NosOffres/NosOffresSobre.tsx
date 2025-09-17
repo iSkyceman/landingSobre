@@ -1,124 +1,160 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+
+import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import styles from "./NosOffresSobre.module.css";
 import { FaTags, FaQuestionCircle, FaExternalLinkAlt, FaTimes } from "react-icons/fa";
 
 // --- Données ---
 const SECTEURS = [
-  "Industrie", "Services", "Santé", "Finance", "Transport", "Construction", "Commerce", "Agroalimentaire",
-  "IT / Digital", "Énergie", "Collectivité", "Éducation", "Tourisme", "Logistique", "Autre"
+  "Industrie",
+  "Services",
+  "Santé",
+  "Finance",
+  "Transport",
+  "Construction",
+  "Commerce",
+  "Agroalimentaire",
+  "IT / Digital",
+  "Énergie",
+  "Collectivité",
+  "Éducation",
+  "Tourisme",
+  "Logistique",
+  "Autre",
 ];
 
 const OFFRES = [
   {
     id: "diagnostic",
     nom: "Diagnostic Express",
-    description: "Rapport IA personnalisé (10 slides), 4h de recherche expert, appel explicatif 15 min",
+    description:
+      "Rapport IA personnalisé (10 slides), 4h de recherche expert, appel explicatif 15 min",
     tailles: [
-      { label: "0–15 salariés", prix: "590 €" },
-      { label: "16–49 salariés", prix: "990 €" },
-      { label: "50–99 salariés", prix: "1 990 €" },
-      { label: "100–250 salariés", prix: "2 990 €" },
-      { label: ">250 salariés", prix: "3 900 €" }
+      { label: "0–15 salariés", prix: "590\u202F€" },
+      { label: "16–49 salariés", prix: "990\u202F€" },
+      { label: "50–99 salariés", prix: "1\u202F990\u202F€" },
+      { label: "100–250 salariés", prix: "2\u202F990\u202F€" },
+      { label: ">250 salariés", prix: "3\u202F900\u202F€" },
     ],
     detail: [
       "Rapport IA personnalisé (10 slides)",
       "4h de recherche expert",
-      "Appel explicatif 15 min"
+      "Appel explicatif 15 min",
     ],
     benefices: "+10% productivité en 72h",
     delai: "72h maximum",
     badge: { label: "⚡ Livraison 72h", color: styles.badgeOrange },
     note: "Rapport personnalisé livré sous 3 jours ouvrés",
     sujets: 0,
-    pdf: "https://drive.google.com/file/d/1woF9MkW5Wm3omWyevfceOSzpwWe2n7nk/preview"
+    pdf: "https://drive.google.com/file/d/1woF9MkW5Wm3omWyevfceOSzpwWe2n7nk/preview",
   },
   {
     id: "strategie",
     nom: "Feuille de Route Stratégique",
-    description: "Rapport IA approfondi (25–30 slides), 12h de recherche, 3 sujets prioritaires, roadmap visuelle, appel 20min",
+    description:
+      "Rapport IA approfondi (25–30 slides), 12h de recherche, 3 sujets prioritaires, roadmap visuelle, appel 20min",
     tailles: [
-      { label: "0–15 salariés", prix: "2 390 €" },
-      { label: "16–49 salariés", prix: "3 900 €" },
-      { label: "50–99 salariés", prix: "5 900 €" },
-      { label: "100–250 salariés", prix: "7 900 €" },
-      { label: ">250 salariés", prix: "15 900 €" }
+      { label: "0–15 salariés", prix: "2\u202F390\u202F€" },
+      { label: "16–49 salariés", prix: "3\u202F900\u202F€" },
+      { label: "50–99 salariés", prix: "5\u202F900\u202F€" },
+      { label: "100–250 salariés", prix: "7\u202F900\u202F€" },
+      { label: ">250 salariés", prix: "15\u202F900\u202F€" },
     ],
     detail: [
       "Rapport IA approfondi (25–30 slides)",
       "12h de recherche, 3 sujets prioritaires",
-      "Roadmap visuelle, appel 20 min"
+      "Roadmap visuelle, appel 20 min",
     ],
     benefices: "+15% productivité globale",
     delai: "5-7 jours ouvrés",
     badge: { label: "🟢 Best Value", color: styles.badgeGreen },
     note: "Coaching IA offert pour toute réservation ce mois-ci",
     sujets: 3,
-    pdf: "https://drive.google.com/file/d/1TNf3-9BoJRORJkrsvbXQP6PSrYnPtvn3/view?usp=sharing"
+    pdf: "https://drive.google.com/file/d/1TNf3-9BoJRORJkrsvbXQP6PSrYnPtvn3/view?usp=sharing",
   },
   {
     id: "analyse",
     nom: "Analyse IA Totale",
-    description: "Audit IA complet (40–45 slides), 30h de recherche, 5 sujets, roadmap avancée, appel 1h",
+    description:
+      "Audit IA complet (40–45 slides), 30h de recherche, 5 sujets, roadmap avancée, appel 1h",
     tailles: [
-      { label: "0–15 salariés", prix: "4 900 €" },
-      { label: "16–49 salariés", prix: "7 900 €" },
-      { label: "50–99 salariés", prix: "11 900 €" },
-      { label: "100–250 salariés", prix: "15 900 €" },
-      { label: ">250 salariés", prix: "29 900 €" }
+      { label: "0–15 salariés", prix: "4\u202F900\u202F€" },
+      { label: "16–49 salariés", prix: "7\u202F900\u202F€" },
+      { label: "50–99 salariés", prix: "11\u202F900\u202F€" },
+      { label: "100–250 salariés", prix: "15\u202F900\u202F€" },
+      { label: ">250 salariés", prix: "29\u202F900\u202F€" },
     ],
     detail: [
       "Audit IA complet (40–45 slides)",
       "30h de recherche, 5 sujets, roadmap avancée",
-      "Appel 1h, accompagnement premium"
+      "Appel 1h, accompagnement premium",
     ],
     benefices: "+25% performance opérationnelle",
     delai: "10 jours + accompagnement continu",
     badge: { label: "🔵 Assistance IA 24/7", color: styles.badgeBlue },
     note: "Paiement 100% sécurisé – Données confidentielles",
     sujets: 5,
-    pdf: "https://drive.google.com/file/d/115txXF3KykV55nitlCK9HqSqld2uMlYn/view?usp=sharing"
-  }
+    pdf: "https://drive.google.com/file/d/115txXF3KykV55nitlCK9HqSqld2uMlYn/view?usp=sharing",
+  },
 ];
 
 type Etape = "form" | "sujets" | "recap" | "paiement" | "confirmation";
-
-// Helpers de validation
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) && email.length >= 6;
-}
-function isValidSiren(siren: string) {
-  return /^\d{9}$/.test(siren);
-}
-function isValidSiret(siret: string) {
-  return /^\d{14}$/.test(siret);
-}
 
 const sujetsInstructions = {
   diagnostic: {
     titre: "Diagnostic Express – Présentation",
     sousTitre: "Découvrez un exemple de rapport IA personnalisé",
     precision: "",
-    placeholder1: ""
+    placeholder1: "",
   },
   strategie: {
     titre: "Feuille de route Stratégique – Personnalisation",
     sousTitre: "Aidez-nous à personnaliser votre feuille de route IA",
     intro: "Merci de préciser les 3 sujets ou problématiques à traiter en priorité.",
-    precision: "Plus votre réponse est précise, plus notre feuille de route sera pertinente et actionnable.",
-    placeholder1: "ex : automatisation, réduction des coûts, qualité…"
+    precision:
+      "Plus votre réponse est précise, plus notre feuille de route sera pertinente et actionnable.",
+    placeholder1: "ex\u202F: automatisation, réduction des coûts, qualité…",
   },
   analyse: {
     titre: "Analyse IA Totale – Personnalisation",
     sousTitre: "Aidez-nous à personnaliser votre audit IA complet",
     intro: "Merci de préciser les 5 sujets ou problématiques à traiter en priorité.",
-    precision: "Plus votre réponse est précise, plus notre audit sera pertinent et actionnable.",
-    placeholder1: "ex : cybersécurité, data, automatisation, supply chain…"
-  }
+    precision:
+      "Plus votre réponse est précise, plus notre audit sera pertinent et actionnable.",
+    placeholder1: "ex\u202F: cybersécurité, data, automatisation, supply chain…",
+  },
 };
 
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) && email.length >= 6;
+}
+
+function isValidSiren(siren: string): boolean {
+  return /^\d{9}$/.test(siren);
+}
+
+function isValidSiret(siret: string): boolean {
+  return /^\d{14}$/.test(siret);
+}
+
+interface DossierStored {
+  reference: string;
+  offre: { nom: string };
+  taille: string;
+  prix: string;
+  nom: string;
+  secteur: string;
+  email: string;
+  effectif: string;
+  siren: string;
+  observation?: string;
+  sujets: { [key: string]: string };
+  date: string;
+  provenance: string;
+}
+
 export default function NosOffresSobre() {
-  const [taillesSelectionnees, setTaillesSelectionnees] = useState(OFFRES.map(() => 0));
+  const [taillesSelectionnees, setTaillesSelectionnees] = useState<number[]>(OFFRES.map(() => 0));
   const [showModal, setShowModal] = useState(false);
   const [etape, setEtape] = useState<Etape>("form");
   const [offreIdx, setOffreIdx] = useState<number | null>(null);
@@ -130,7 +166,7 @@ export default function NosOffresSobre() {
     email: "",
     effectif: "",
     siren: "",
-    observation: ""
+    observation: "",
   });
   const [sujets, setSujets] = useState<{ [key: string]: string }>({});
   const [confirmation, setConfirmation] = useState("");
@@ -140,22 +176,23 @@ export default function NosOffresSobre() {
   const [sirenFormatValid, setSirenFormatValid] = useState(true);
 
   const [showInfoIdx, setShowInfoIdx] = useState<number | null>(null);
-  const closeTimeout = useRef<any>();
+  const closeTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const formRef = useRef<HTMLFormElement>(null);
   const sujetsRef = useRef<HTMLFormElement>(null);
 
   const [reference, setReference] = useState("");
 
-  const generateReference = () => {
+  const generateReference = (): string => {
     const now = new Date();
     const pad = (n: number) => n.toString().padStart(2, "0");
     const random = Math.floor(1000 + Math.random() * 9000);
-    return `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}-${random}`;
+    return `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-${pad(
+      now.getHours()
+    )}${pad(now.getMinutes())}-${random}`;
   };
 
-  // Ouvre modale en gardant la tranche sélectionnée propre à chaque carte
-  const openModal = (idx: number, tailleInitiale: number) => {
+  const openModal = (idx: number, tailleInitiale: number): void => {
     setOffreIdx(idx);
     setTailleIdx(tailleInitiale);
     setEtape("form");
@@ -167,26 +204,36 @@ export default function NosOffresSobre() {
     setSirenFormatValid(true);
     setShowStripeModal(false);
     setTimeout(() => {
-      if (formRef.current) formRef.current.scrollIntoView({ behavior: "auto" });
+      if (formRef.current) {
+        formRef.current.scrollIntoView({ behavior: "auto" });
+      }
     }, 50);
   };
 
   useEffect(() => {
     if (etape === "sujets" && offreIdx !== null) {
       const nb = OFFRES[offreIdx].sujets;
-      let init: { [key: string]: string } = {};
-      for (let i = 1; i <= nb; i++) init[`sujet${i}`] = "";
-      setSujets(init);
+      const initSujets: { [key: string]: string } = {};
+      for (let i = 1; i <= nb; i++) {
+        initSujets[`sujet${i}`] = "";
+      }
+      setSujets(initSujets);
       setTimeout(() => {
-        if (sujetsRef.current) sujetsRef.current.scrollIntoView({ behavior: "auto" });
+        if (sujetsRef.current) {
+          sujetsRef.current.scrollIntoView({ behavior: "auto" });
+        }
       }, 50);
     }
     if (etape === "form" && formRef.current) {
-      setTimeout(() => formRef.current.scrollIntoView({ behavior: "auto" }), 50);
+      setTimeout(() => {
+        if (formRef.current) {
+          formRef.current.scrollIntoView({ behavior: "auto" });
+        }
+      }, 50);
     }
   }, [etape, offreIdx]);
 
-  function isEffectifInTaille(effectif: string, tailleLabel: string) {
+  function isEffectifInTaille(effectif: string, tailleLabel: string): boolean {
     const val = Number(effectif);
     if (tailleLabel.startsWith("0–15")) return val >= 0 && val <= 15;
     if (tailleLabel.startsWith("16–49")) return val >= 16 && val <= 49;
@@ -196,32 +243,36 @@ export default function NosOffresSobre() {
     return false;
   }
 
-  const isFormValid = () =>
-    form.nom &&
-    form.secteur &&
+  const isFormValid = (): boolean =>
+    form.nom.length > 0 &&
+    form.secteur.length > 0 &&
     isValidEmail(form.email) &&
     emailValid &&
-    form.effectif &&
+    form.effectif.length > 0 &&
     ((isValidSiren(form.siren) || isValidSiret(form.siren)) && sirenFormatValid) &&
     offreIdx !== null &&
     isEffectifInTaille(form.effectif, OFFRES[offreIdx].tailles[tailleIdx].label);
 
-  const isSujetsValid = () =>
-    Object.values(sujets).every(s => s.trim().length >= 3);
+  const isSujetsValid = (): boolean => Object.values(sujets).every((s) => s.trim().length >= 3);
 
-  // Message d’erreur si mismatch tranche/effectif
   let effectifMsg = null;
   if (offreIdx !== null && form.effectif) {
     const tailleLabel = OFFRES[offreIdx].tailles[tailleIdx].label;
     if (!isEffectifInTaille(form.effectif, tailleLabel)) {
-      const nouvelleTaille = OFFRES[offreIdx].tailles.find(t => isEffectifInTaille(form.effectif, t.label));
+      const nouvelleTaille = OFFRES[offreIdx].tailles.find((t) =>
+        isEffectifInTaille(form.effectif, t.label)
+      );
       effectifMsg = (
         <div className={styles.effectifError}>
-          L’effectif saisi ne correspond pas à la tranche sélectionnée.<br />
-          {nouvelleTaille
-            ? <>Sélectionnez plutôt la tranche <b>{nouvelleTaille.label}</b> ({nouvelleTaille.prix}).</>
-            : <>Aucune tranche ne correspond à cet effectif.</>
-          }
+          L&apos;effectif saisi ne correspond pas à la tranche sélectionnée.
+          <br />
+          {nouvelleTaille ? (
+            <>
+              Sélectionnez plutôt la tranche <b>{nouvelleTaille.label}</b> ({nouvelleTaille.prix}).
+            </>
+          ) : (
+            <>Aucune tranche ne correspond à cet effectif.</>
+          )}
         </div>
       );
     }
@@ -231,19 +282,19 @@ export default function NosOffresSobre() {
     setEmailValid(isValidEmail(form.email) || form.email === "");
   }, [form.email]);
 
-  function handleSirenChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleSirenChange(e: ChangeEvent<HTMLInputElement>): void {
     const value = e.target.value.trim().replace(/\s/g, "");
-    setForm(f => ({ ...f, siren: value }));
-    setSirenFormatValid(
-      value === "" || isValidSiren(value) || isValidSiret(value)
-    );
+    setForm((f) => ({ ...f, siren: value }));
+    setSirenFormatValid(value === "" || isValidSiren(value) || isValidSiret(value));
   }
 
   function handleMouseLeave() {
+    if (closeTimeout.current) clearTimeout(closeTimeout.current);
     closeTimeout.current = setTimeout(() => setShowInfoIdx(null), 150);
   }
+
   function handleMouseEnter(idx: number) {
-    clearTimeout(closeTimeout.current);
+    if (closeTimeout.current) clearTimeout(closeTimeout.current);
     setShowInfoIdx(idx);
   }
 
@@ -255,7 +306,7 @@ export default function NosOffresSobre() {
             <FaTags className={styles.icon} /> Nos Offres
           </h2>
           <p className={styles.subtitle}>
-            Anticipez les défis, sécurisez votre croissance avec un accompagnement expert jusqu'à 2030. Ceux qui agissent aujourd'hui domineront demain.
+            Anticipez les défis, sécurisez votre croissance avec un accompagnement expert jusqu&apos;à 2030. Ceux qui agissent aujourd&apos;hui domineront demain.
           </p>
           <div className={styles.grid}>
             {OFFRES.map((offre, idx) => (
@@ -295,11 +346,11 @@ export default function NosOffresSobre() {
 
                 <select
                   className={styles.select}
-                  aria-label="Taille de l'entreprise"
+                  aria-label="Taille de l&apos;entreprise"
                   value={taillesSelectionnees[idx]}
-                  onChange={e => {
+                  onChange={(e) => {
                     const v = Number(e.target.value);
-                    setTaillesSelectionnees(ts =>
+                    setTaillesSelectionnees((ts) =>
                       ts.map((t, i) => (i === idx ? v : t))
                     );
                   }}
@@ -311,9 +362,7 @@ export default function NosOffresSobre() {
                   ))}
                 </select>
 
-                <div className={styles.price}>
-                  {offre.tailles[taillesSelectionnees[idx]].prix}
-                </div>
+                <div className={styles.price}>{offre.tailles[taillesSelectionnees[idx]].prix}</div>
 
                 <ul>
                   {offre.detail.map((d, i) => {
@@ -338,9 +387,7 @@ export default function NosOffresSobre() {
                 <p style={{ textAlign: "left", margin: "0.5em 0" }}>
                   <strong>Délai :</strong> {offre.delai}
                 </p>
-                <span
-                  className={`${styles.pricingBadge} ${offre.badge.color}`}
-                >
+                <span className={`${styles.pricingBadge} ${offre.badge.color}`}>
                   {offre.badge.label}
                 </span>
                 <div className={styles.buttonContainer}>
@@ -373,7 +420,7 @@ export default function NosOffresSobre() {
           tabIndex={-1}
           aria-modal="true"
           role="dialog"
-          onClick={e => {
+          onClick={(e) => {
             if (e.target === e.currentTarget) setShowModal(false);
           }}
         >
@@ -389,13 +436,13 @@ export default function NosOffresSobre() {
               </button>
             </div>
             <div className={styles.modalBody}>
-              {/* ÉTAPE 1 : FORMULAIRE */}
+              {/* Étape 1 : Formulaire */}
               {etape === "form" && (
                 <form
                   ref={formRef}
                   className={styles.form}
                   style={{ marginTop: 24, maxWidth: 420 }}
-                  onSubmit={e => {
+                  onSubmit={(e: FormEvent<HTMLFormElement>) => {
                     e.preventDefault();
                     if (OFFRES[offreIdx].sujets > 0) setEtape("sujets");
                     else setEtape("recap");
@@ -404,6 +451,7 @@ export default function NosOffresSobre() {
                   <h3 style={{ marginBottom: 14 }}>
                     {OFFRES[offreIdx].nom} – {OFFRES[offreIdx].tailles[tailleIdx].label}
                   </h3>
+
                   {OFFRES[offreIdx].id === "diagnostic" && (
                     <div style={{ marginBottom: 12 }}>
                       <a
@@ -420,39 +468,40 @@ export default function NosOffresSobre() {
                       </a>
                     </div>
                   )}
+
                   <label>
                     Nom et prénom
                     <input
                       required
                       value={form.nom}
-                      onChange={e => setForm(f => ({ ...f, nom: e.target.value }))}
+                      onChange={(e) => setForm((f) => ({ ...f, nom: e.target.value }))}
                     />
                   </label>
+
                   <label>
-                    Secteur d'activité
+                    Secteur d&apos;activité
                     <select
                       required
                       value={form.secteur}
-                      onChange={e => setForm(f => ({ ...f, secteur: e.target.value }))}
+                      onChange={(e) => setForm((f) => ({ ...f, secteur: e.target.value }))}
                     >
                       <option value="">Choisissez...</option>
-                      {SECTEURS.map(s => (
+                      {SECTEURS.map((s) => (
                         <option key={s} value={s}>
                           {s}
                         </option>
                       ))}
                     </select>
                   </label>
+
                   <label>
                     Email professionnel
                     <input
                       required
                       type="email"
                       value={form.email}
-                      onChange={e =>
-                        setForm(f => ({ ...f, email: e.target.value }))
-                      }
-                      onBlur={e => setEmailValid(isValidEmail(e.target.value))}
+                      onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                      onBlur={(e) => setEmailValid(isValidEmail(e.target.value))}
                       style={emailValid ? {} : { border: "1.5px solid #F76D3C" }}
                     />
                     {!emailValid && (
@@ -461,6 +510,7 @@ export default function NosOffresSobre() {
                       </div>
                     )}
                   </label>
+
                   <label>
                     Effectif
                     <input
@@ -468,12 +518,12 @@ export default function NosOffresSobre() {
                       type="number"
                       min={1}
                       value={form.effectif}
-                      onChange={e =>
-                        setForm(f => ({ ...f, effectif: e.target.value }))
-                      }
+                      onChange={(e) => setForm((f) => ({ ...f, effectif: e.target.value }))}
                     />
                   </label>
+
                   {effectifMsg}
+
                   <label>
                     SIREN ou SIRET
                     <input
@@ -499,9 +549,12 @@ export default function NosOffresSobre() {
                         padding: "8px 12px",
                       }}
                     >
-                      <b>À savoir :</b> L’audit sera réalisé sur l’entité réelle correspondant au SIREN/SIRET fourni.<br />
-                      Le secteur officiel de l’entreprise, tel qu’enregistré dans la base INSEE, sera utilisé pour personnaliser l’analyse.<br />
-                      La validité du SIREN/SIRET sera vérifiée manuellement lors du traitement de votre demande.<br />
+                      <b>À savoir :</b> L&apos;audit sera réalisé sur l&apos;entité réelle correspondant au SIREN/SIRET fourni.
+                      <br />
+                      Le secteur officiel de l&apos;entreprise, tel qu&apos;enregistré dans la base INSEE, sera utilisé pour personnaliser l&apos;analyse.
+                      <br />
+                      La validité du SIREN/SIRET sera vérifiée manuellement lors du traitement de votre demande.
+                      <br />
                       {form.siren &&
                         (isValidSiren(form.siren) || isValidSiret(form.siren)) && (
                           <a
@@ -510,20 +563,19 @@ export default function NosOffresSobre() {
                             rel="noopener noreferrer"
                             className={styles.sirenAnnuaire}
                           >
-                            Vérifiez votre SIREN/SIRET sur l’Annuaire des Entreprises
+                            Vérifiez votre SIREN/SIRET sur l&apos;Annuaire des Entreprises
                           </a>
                         )}
                     </div>
                   </label>
+
                   {OFFRES[offreIdx].id === "diagnostic" && (
                     <label>
                       Observation ou sujet à signaler (optionnel)
                       <textarea
                         value={form.observation}
-                        onChange={e =>
-                          setForm(f => ({ ...f, observation: e.target.value }))
-                        }
-                        placeholder="Vous pouvez préciser un point d'attention, une question ou un sujet spécifique…"
+                        onChange={(e) => setForm((f) => ({ ...f, observation: e.target.value }))}
+                        placeholder="Vous pouvez préciser un point d&apos;attention, une question ou un sujet spécifique…"
                         rows={3}
                         style={{
                           resize: "vertical",
@@ -534,6 +586,7 @@ export default function NosOffresSobre() {
                       />
                     </label>
                   )}
+
                   <div className={styles.buttonContainer}>
                     <button
                       type="submit"
@@ -560,7 +613,7 @@ export default function NosOffresSobre() {
                   ref={sujetsRef}
                   className={styles.form}
                   style={{ marginTop: 20, maxWidth: 420 }}
-                  onSubmit={e => {
+                  onSubmit={(e: FormEvent<HTMLFormElement>) => {
                     e.preventDefault();
                     setEtape("recap");
                   }}
@@ -646,8 +699,8 @@ export default function NosOffresSobre() {
                         <input
                           required
                           value={val}
-                          onChange={e =>
-                            setSujets(s => ({
+                          onChange={(e) =>
+                            setSujets((s) => ({
                               ...s,
                               [`sujet${i + 1}`]: e.target.value,
                             }))
@@ -664,7 +717,6 @@ export default function NosOffresSobre() {
                               : undefined
                           }
                         />
-                        {/* Message d'erreur si le champ est rempli mais trop court */}
                         {val.length > 0 && val.length < 3 && (
                           <span className={styles.sujetsError}>
                             Merci de préciser au moins 3 caractères pour ce sujet.
@@ -687,7 +739,6 @@ export default function NosOffresSobre() {
                     Toutes vos informations restent strictement confidentielles.
                   </div>
 
-                  {/* Message global en orange si au moins un sujet est incomplet */}
                   {!isSujetsValid() && (
                     <div className={styles.sujetsGlobalError}>
                       Merci de remplir tous les sujets (3 caractères minimum chacun).
@@ -719,26 +770,49 @@ export default function NosOffresSobre() {
                 <div style={{ marginTop: 22, maxWidth: 420 }}>
                   <h3>Récapitulatif de votre demande</h3>
                   <ul style={{ margin: "1em 0 1.5em 0", paddingLeft: 18 }}>
-                    <li><b>Offre :</b> {OFFRES[offreIdx].nom}</li>
-                    <li><b>Taille :</b> {OFFRES[offreIdx].tailles[tailleIdx].label}</li>
-                    <li><b>Prix :</b> {OFFRES[offreIdx].tailles[tailleIdx].prix}</li>
-                    <li><b>Nom :</b> {form.nom}</li>
-                    <li><b>Secteur :</b> {form.secteur}</li>
-                    <li><b>Email :</b> {form.email}</li>
-                    <li><b>Effectif :</b> {form.effectif}</li>
-                    <li><b>SIREN/SIRET :</b> {form.siren}</li>
+                    <li>
+                      <b>Offre :</b> {OFFRES[offreIdx].nom}
+                    </li>
+                    <li>
+                      <b>Taille :</b> {OFFRES[offreIdx].tailles[tailleIdx].label}
+                    </li>
+                    <li>
+                      <b>Prix :</b> {OFFRES[offreIdx].tailles[tailleIdx].prix}
+                    </li>
+                    <li>
+                      <b>Nom :</b> {form.nom}
+                    </li>
+                    <li>
+                      <b>Secteur :</b> {form.secteur}
+                    </li>
+                    <li>
+                      <b>Email :</b> {form.email}
+                    </li>
+                    <li>
+                      <b>Effectif :</b> {form.effectif}
+                    </li>
+                    <li>
+                      <b>SIREN/SIRET :</b> {form.siren}
+                    </li>
                     {OFFRES[offreIdx].id === "diagnostic" && form.observation && (
-                      <li><b>Observation / sujet :</b> {form.observation}</li>
+                      <li>
+                        <b>Observation / sujet :</b> {form.observation}
+                      </li>
                     )}
-                    {Object.keys(sujets).length > 0 && Object.values(sujets).map((s, i) => (
-                      <li key={i}><b>Sujet prioritaire n°{i + 1} :</b> {s}</li>
-                    ))}
+                    {Object.keys(sujets).length > 0 &&
+                      Object.values(sujets).map((s, i) => (
+                        <li key={i}>
+                          <b>Sujet prioritaire n°{i + 1} :</b> {s}
+                        </li>
+                      ))}
                   </ul>
                   <div className={styles.buttonContainer}>
                     <button
                       className={styles.ctaMain}
                       style={{ background: "#eee", color: "#222" }}
-                      onClick={() => setEtape(OFFRES[offreIdx].sujets > 0 ? "sujets" : "form")}
+                      onClick={() =>
+                        setEtape(OFFRES[offreIdx].sujets > 0 ? "sujets" : "form")
+                      }
                     >
                       ⟵ Retour
                     </button>
@@ -787,13 +861,16 @@ export default function NosOffresSobre() {
                   tabIndex={-1}
                   aria-modal="true"
                   role="dialog"
-                  onClick={e => {
+                  onClick={(e) => {
                     if (e.target === e.currentTarget) setShowStripeModal(false);
                   }}
                 >
                   <div className={styles.modal} tabIndex={0}>
                     <div className={styles.modalHeader}>
-                      <h2>Paiement Stripe pour l'offre : {OFFRES[offreIdx].nom}</h2>
+                      <h2>
+                        Paiement Stripe pour l&apos;offre :{" "}
+                        {OFFRES[offreIdx].nom}
+                      </h2>
                       <button
                         className={styles.modalClose}
                         aria-label="Fermer"
@@ -802,9 +879,19 @@ export default function NosOffresSobre() {
                         <FaTimes />
                       </button>
                     </div>
-                    <div className={styles.modalBody} style={{ padding: 30, textAlign: "center" }}>
-                      <p><b>Intégration Stripe à faire ici</b></p>
-                      <p><i>Vous pourrez activer le paiement réel dès que vos identifiants Stripe seront disponibles.</i></p>
+                    <div
+                      className={styles.modalBody}
+                      style={{ padding: 30, textAlign: "center" }}
+                    >
+                      <p>
+                        <b>Intégration Stripe à faire ici</b>
+                      </p>
+                      <p>
+                        <i>
+                          Vous pourrez activer le paiement réel dès que vos
+                          identifiants Stripe seront disponibles.
+                        </i>
+                      </p>
                       <button
                         className={styles.ctaMain}
                         style={{ marginTop: 20 }}
@@ -812,10 +899,12 @@ export default function NosOffresSobre() {
                           const ref = generateReference();
                           setReference(ref);
                           setShowStripeModal(false);
-                          setConfirmation("Merci, votre réservation a bien été prise en compte !");
+                          setConfirmation(
+                            "Merci, votre réservation a bien été prise en compte !"
+                          );
                           setEtape("confirmation");
 
-                          const dossier = {
+                          const dossier: DossierStored = {
                             reference: ref,
                             offre: { nom: OFFRES[offreIdx].nom },
                             taille: OFFRES[offreIdx].tailles[tailleIdx].label,
@@ -828,12 +917,14 @@ export default function NosOffresSobre() {
                             observation: form.observation,
                             sujets,
                             date: new Date().toISOString(),
-                            provenance: "NosOffresSobre"
+                            provenance: "NosOffresSobre",
                           };
 
-                          let dossiers = [];
+                          let dossiers: DossierStored[] = [];
                           try {
-                            dossiers = JSON.parse(localStorage.getItem("dossiers") || "[]");
+                            dossiers = JSON.parse(
+                              localStorage.getItem("dossiers") || "[]"
+                            );
                           } catch {
                             dossiers = [];
                           }
@@ -850,14 +941,28 @@ export default function NosOffresSobre() {
 
               {/* Confirmation */}
               {etape === "confirmation" && (
-                <div style={{ marginTop: 40, fontSize: "1.2em", color: "#F76D3C", fontWeight: 600 }}>
+                <div
+                  style={{
+                    marginTop: 40,
+                    fontSize: "1.2em",
+                    color: "#F76D3C",
+                    fontWeight: 600,
+                  }}
+                >
                   {confirmation}
                   {reference && (
-                    <div style={{ marginTop: 18, fontSize: "1.1em", color: "#14375a" }}>
+                    <div
+                      style={{
+                        marginTop: 18,
+                        fontSize: "1.1em",
+                        color: "#14375a",
+                      }}
+                    >
                       <b>Votre n° de dossier :</b> {reference}
                       <br />
                       <span style={{ fontSize: "0.92em", color: "#444" }}>
-                        Merci de conserver ce numéro pour toute demande de suivi ou accéder à votre interface de jumeau numérique.
+                        Merci de conserver ce numéro pour toute demande de suivi ou
+                        accéder à votre interface de jumeau numérique.
                       </span>
                     </div>
                   )}
@@ -870,3 +975,4 @@ export default function NosOffresSobre() {
     </>
   );
 }
+

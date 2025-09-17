@@ -2,18 +2,38 @@
   background: linear-gradient(135deg, #171b2a 0%, #23264a 100%);
   padding-top: 3rem;
   padding-bottom: 3rem;
+  padding-left: 1rem;  /* léger décalage pour marge horizontale */
+  padding-right: 1rem;
+  box-sizing: border-box;
 }
 
-.itechTitle {
-  color: rgb(139, 233, 253);
-  letter-spacing: 0.02em;
-  align-items: center;
-  margin-bottom: 10px;
-  font-size: 2.2em;
-  font-weight: 800;
-  display: flex;
-  /* Optionnel : ombre douce pour plus de relief */
-  text-shadow: 0 2px 12px #3c8ce755;
+/* Grille responsive */
+.grid {
+  display: grid !important;
+  grid-template-columns: repeat(1, 1fr) !important;
+  gap: 1.5rem !important;
+  max-width: 112rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box;
+  padding-left: 1rem; /* léger décalage horizontal */
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+@media (min-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
 }
 
 .card {
@@ -31,7 +51,9 @@
   border: 2px solid transparent;
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
   backdrop-filter: blur(4px);
+  width: auto;
 }
+
 .card:focus-visible,
 .card:hover {
   border-color: #7f5fff;
@@ -52,6 +74,7 @@
   box-shadow: 0 2px 12px #3c8ce799;
   transition: transform 0.2s;
 }
+
 .card:hover .iconWrapper,
 .card:focus-visible .iconWrapper {
   transform: scale(1.08);
@@ -68,12 +91,27 @@
   color: #f2f6fa;
   margin-bottom: 0.5rem;
   letter-spacing: 0.01em;
+  text-align: left;
+  padding-left: 0.5rem; /* léger décalage à droite */
+}
+
+.itechTitle {
+  color: #8be9fd;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding-left: 0.5rem; /* léger décalage */
+  text-shadow: 0 2px 12px #3c8ce755;
 }
 
 .cardDesc {
   color: #d1d7e0;
   font-size: 1rem;
   opacity: 0.92;
+  text-align: left;
+  padding-left: 0.5rem; /* léger décalage */
 }
 
 .highlight {
@@ -87,6 +125,7 @@
   opacity: 0;
   transition: opacity 0.2s;
 }
+
 .card:hover .highlight,
 .card:focus-visible .highlight {
   opacity: 1;

@@ -16,30 +16,12 @@ const icons = [
 ];
 
 const benefices = [
-  {
-    title: "🚀 Productivité immédiate",
-    desc: "+15 % en 72h grâce à l'IA embarquée",
-  },
-  {
-    title: "💰 Coûts maîtrisés",
-    desc: "-20 % coûts maintenance via algorithmes prédictifs",
-  },
-  {
-    title: "✅ Conformité totale",
-    desc: "100 % audit optimisé prédictif, AI Act",
-  },
-  {
-    title: "♻️ Éco-performance",
-    desc: "-40 % empreinte carbone avec solutions vertes",
-  },
-  {
-    title: "🏆 ROI garanti",
-    desc: "ROI x3 d'ici 2030",
-  },
-  {
-    title: "🛡️ Sécurité augmentée",
-    desc: "99,5 % disponibilité machines",
-  },
+  { title: "🚀 Productivité immédiate", desc: "+15 % en 72h grâce à l'IA embarquée" },
+  { title: "💰 Coûts maîtrisés", desc: "-20 % coûts maintenance via algorithmes prédictifs" },
+  { title: "✅ Conformité totale", desc: "100 % audit optimisé prédictif, AI Act" },
+  { title: "♻️ Éco-performance", desc: "-40 % empreinte carbone avec solutions vertes" },
+  { title: "🏆 ROI garanti", desc: "ROI x3 d'ici 2030" },
+  { title: "🛡️ Sécurité augmentée", desc: "99,5 % disponibilité machines" },
 ];
 
 export default function BeneficesSobre() {
@@ -57,10 +39,11 @@ export default function BeneficesSobre() {
         </defs>
       </svg>
       <div className="container px-4 sm:px-6 lg:px-8">
-        <h2 className="calculateur-ia-title mb-10">
+        <h2 className="calculateur-ia-title mb-10 text-3xl font-bold text-center">
           Bénéfices Concrets &amp; Premium
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6 max-w-7xl mx-auto">
+        {/* Grille responsive avec CSS module */}
+        <div className={styles.grid}>
           {benefices.map((b, i) => {
             const Icon = icons[i];
             return (
@@ -68,17 +51,13 @@ export default function BeneficesSobre() {
                 key={i}
                 tabIndex={0}
                 className={styles.card}
-                aria-label={b.title + ' : ' + b.desc}
+                aria-label={`${b.title} : ${b.desc}`}
               >
                 <div className={styles.iconWrapper}>
                   <Icon size={32} style={{ fill: `url(#gradient${i + 1})` }} />
                 </div>
-                <h3 className={styles.cardTitle}>
-                  {b.title}
-                </h3>
-                <p className={styles.cardDesc}>
-                  {b.desc}
-                </p>
+                <h3 className={styles.cardTitle}>{b.title}</h3>
+                <p className={styles.cardDesc}>{b.desc}</p>
                 <span className={styles.highlight}></span>
               </div>
             );

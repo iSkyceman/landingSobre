@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';  // import ajouté
 
 export default function LoginPage() {
   const [error, setError] = useState('');
@@ -39,10 +40,12 @@ export default function LoginPage() {
         minHeight: 0
       }}>
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <img 
-            src="/images/logo-iSkyce-industrie-5.0.webp" 
+          <Image
+            src="/images/logo-iSkyce-industrie-5.0.webp"
             alt="Logo iSkyce"
-            style={{ maxWidth: 140, margin: '0 auto 1rem auto', display: 'block' }}
+            width={140}             // largeur en pixels obligatoire
+            height={60}             // hauteur approximative, à ajuster si besoin
+            style={{ margin: '0 auto 1rem auto', display: 'block' }}
           />
           <h2 style={{ 
             margin: 0, 

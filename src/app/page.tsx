@@ -8,7 +8,7 @@ import NosOffresSobre from "@/components/NosOffres/NosOffresSobre";
 import NosOffresItech from "@/components/NosOffres/NosOffresItech";
 import SuccesFee from "@/components/SuccesFee/SuccesFee";
 import SuccesFee1 from "@/components/SuccesFee/SuccesFee1";
-import OptionDataPlusSobre from "@/components/OptionDataPlusSobre";
+import ClientOnlyOptionDataPlusSobre from "@/components/ClientOnlyOptionDataPlusSobre";
 import OptionDataPlusItech from "@/components/OptionDataPlusItech";
 import BeneficesSobre from "@/components/Benefices/BeneficesSobre";
 import BeneficesItech from "@/components/Benefices/BeneficesItech";
@@ -21,7 +21,8 @@ import CtaFinalItech from "@/components/CtaFinalSection/CtaFinalItech";
 import FooterSobre from "@/components/Footer/FooterSobre";
 import FooterItech from "@/components/Footer/FooterItech";
 
-const VARIANTE = 1; // 2 = i-tech, 1 = sobre 
+// Tape explicitement la constante pour autoriser 1 ou 2
+const VARIANTE: 1 | 2 = 1; // 2 = i-tech, 1 = sobre 
 
 export const metadata = {
   title: "iSkyce Industrie 5.0 – IA & Data pour l’industrie",
@@ -44,41 +45,24 @@ export const metadata = {
 };
 
 export default function Home() {
-  // Astuce clé dynamique pour "forcer le reset" et l’état neuf à chaque navigation 
-  const pathname = typeof window !== "undefined" ? window.location.pathname : "sobre";
-
+  // Le choix dynamique reste simple :
   return (
-    <main className={VARIANTE === 2 ? "min-h-screen bg-[#171b2a]" : "min-h-screen bg-white"}>
-      {/* Header */}
+    <>
+      {/* Choix du header selon variante */}
       {VARIANTE === 1 ? <HeroHeaderVariante1 /> : <HeroHeaderVariante2 />}
-      {/* Calculateur */}
-      {VARIANTE === 1 ? <CalculateurIA /> : <CalculateurIA1 />}
-      {/* Bloc Nos Offres */}
-      {VARIANTE === 1 && <NosOffresSobre />}
-      {VARIANTE === 2 && <NosOffresItech />}
-      {/* Bloc Succès Fee */}
-      {VARIANTE === 1 && <SuccesFee />}
-      {VARIANTE === 2 && <SuccesFee1 />}
-      {/* Bloc Data+ */}
-      {VARIANTE === 1 && (
-        <OptionDataPlusSobre key={pathname} />
-      )}
-      {VARIANTE === 2 && <OptionDataPlusItech />}
-      {/* Bloc Bénéfices */}
-      {VARIANTE === 1 && <BeneficesSobre />}
-      {VARIANTE === 2 && <BeneficesItech />}
-      {/* Bloc Risques */}
-      {VARIANTE === 1 && <RisquesSobre />}
-      {VARIANTE === 2 && <RisquesItech />}
-      {/* Bloc Confidentialité */}
-      {VARIANTE === 1 && <ConfidentialiteSobre />}
-      {VARIANTE === 2 && <ConfidentialiteItech />}
-      {/* Bloc CTA Final */}
-      {VARIANTE === 1 && <CtaFinalSobre />}
-      {VARIANTE === 2 && <CtaFinalItech />}
-      {/* Footer premium dynamique */}
-      {VARIANTE === 1 && <FooterSobre />}
-      {VARIANTE === 2 && <FooterItech />}
-    </main>
+
+      {/* Contenu principal */}
+      <main className="bg-white">
+        {VARIANTE === 1 ? <CalculateurIA /> : <CalculateurIA1 />}
+        {VARIANTE === 1 ? <NosOffresSobre /> : <NosOffresItech />}
+        {VARIANTE === 1 ? <SuccesFee /> : <SuccesFee1 />}
+        {VARIANTE === 1 ? <ClientOnlyOptionDataPlusSobre key="sobre" /> : <OptionDataPlusItech />}
+        {VARIANTE === 1 ? <BeneficesSobre /> : <BeneficesItech />}
+        {VARIANTE === 1 ? <RisquesSobre /> : <RisquesItech />}
+        {VARIANTE === 1 ? <ConfidentialiteSobre /> : <ConfidentialiteItech />}
+        {VARIANTE === 1 ? <CtaFinalSobre /> : <CtaFinalItech />}
+        {VARIANTE === 1 ? <FooterSobre /> : <FooterItech />}
+      </main>
+    </>
   );
 }

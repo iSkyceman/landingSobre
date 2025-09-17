@@ -1,38 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
-
-/* ANIMATIONS */
+/* ========== ANIMATIONS ========== */
 @keyframes moldavePop {
-  0%   { transform: scale(0.92) translateY(50px); opacity: 0.08; filter: blur(3px);}
-  70%  { filter: blur(0.7px);}
-  100% { transform: scale(1) translateY(0px); opacity: 1; filter: none;}
+ 0%   { transform: scale(0.92) translateY(50px); opacity: 0.08; filter: blur(3px); }
+ 70%  { filter: blur(0.7px); }
+ 100% { transform: scale(1) translateY(0); opacity: 1; filter: none; }
 }
 @keyframes moldaveGlow {
-  0%   { box-shadow: 0 0 0 0 rgba(243,180,86,0.10);}
-  25%  { box-shadow: 0 0 0 8px rgba(246,218,164,0.13);}
-  85%  { box-shadow: 0 0 0 10px rgba(255,165,59,0.07);}
-  100% { box-shadow: 0 0 0 0 rgba(243,180,86,0.05);}
+ 0%   { box-shadow: 0 0 0 0 rgba(243,180,86,0.10); }
+ 25%  { box-shadow: 0 0 0 8px rgba(246,218,164,0.13); }
+ 85%  { box-shadow: 0 0 0 10px rgba(255,165,59,0.07); }
+ 100% { box-shadow: 0 0 0 0 rgba(243,180,86,0.05); }
 }
 @keyframes moldaveLift {
-  0% { transform: translateY(18px); opacity: 0.4; }
-  100% { transform: translateY(0); opacity: 1; }
+ 0% { transform: translateY(18px); opacity: 0.4; }
+ 100% { transform: translateY(0); opacity: 1; }
 }
 @keyframes borderSweep {
-  0%   { border-image: linear-gradient(90deg,#fff7c6,#ffd18c,#f6842b,#fff7c6) 1; }
-  100% { border-image: linear-gradient(90deg,#ffe6c4,#ffb86c,#f76d3c,#ffe6c4) 1; }
+ 0%   { border-image: linear-gradient(90deg,#fff7c6,#ffd18c,#f6842b,#fff7c6) 1; }
+ 100% { border-image: linear-gradient(90deg,#ffe6c4,#ffb86c,#f76d3c,#ffe6c4) 1; }
 }
 
-/* FOND GLOBAL ET LISÉRÉ ANIMÉ */
+/* ========== CONTENEUR GLOBAL ========== */
 .container,
 .fullscreenModal,
 .tunnelModal {
   border: 2.2px solid transparent;
   border-radius: 21px;
-  /* Dégradé liséré moldave invisible */
   border-image: linear-gradient(90deg,#fff7c6,#ffd18c,#f6842b,#fff7c6) 1;
-  transition:
-    border-color 0.33s cubic-bezier(.6,.2,.31,1.47),
-    box-shadow 0.28s,
-    border-image 0.38s cubic-bezier(.68,-0.14,.57,1.34);
+  transition: border-color 0.33s cubic-bezier(.6,.2,.31,1.47), box-shadow 0.28s, border-image 0.38s cubic-bezier(.68,-0.14,.57,1.34);
   box-shadow: 0 4px 24px 0 rgba(139,80,50,0.16);
   position: relative;
 }
@@ -43,21 +37,17 @@
   max-width: 840px;
   font-family: 'Montserrat', Arial, sans-serif;
   animation: moldavePop 1.04s cubic-bezier(.29,1.46,.65,1);
+  color: #22305a;
 }
-
 .container:hover,
 .fullscreenModal:hover,
 .tunnelModal:hover {
-  /* Liséré dégradé gold/orange + glow */
   border-image: linear-gradient(90deg,#ffe6c4 10%,#f7ba44 43%,#ffac5c 65%,#ffd18c 95%) 1;
-  box-shadow:
-    0 8px 42px #f7cf9c42,
-    0 1px 0px 8px #f6daac33,
-    0 0 40px 0 #f6d5b120;
+  box-shadow: 0 8px 42px #f7cf9c42, 0 1px 0px 8px #f6daac33, 0 0 40px 0 #f6d5b120;
   animation: moldaveGlow 2.8s 1 cubic-bezier(.35,.71,.28,1.31);
 }
 
-/* TITRES */
+/* ========== TITRES ========== */
 .title {
   font-size: 2.15em;
   background: linear-gradient(92deg, #ffb86c 10%, #ff8c42 66%, #f76d3c 100%);
@@ -77,13 +67,13 @@
   vertical-align: -2px;
 }
 
+/* ========== TEXTES ========== */
 .text,
 .info,
 .modalContent,
 .checkboxLabel {
   color: #22305a;
 }
-
 .text {
   text-align: center;
   font-size: 1.13rem;
@@ -97,7 +87,7 @@
   font-size: 1.09em;
 }
 
-/* ZONE ALERT LEFT */
+/* ========== ALERTES ========== */
 .noteLeft {
   background: linear-gradient(96deg,#fff8ec 75%,#ffe2bc 100%);
   color: #ac6127;
@@ -110,7 +100,7 @@
   box-shadow: 0 1px 10px 0 #fbd59713;
 }
 
-/*********** INPUT CODE ***********/
+/* ========== INPUT CODE ========== */
 .centerCodeBox {
   background: #fff;
   border-radius: 17px;
@@ -130,7 +120,7 @@
   font-weight: 600;
 }
 
-/* INPUT/SELECT */
+/* ========== INPUTS & SELECTS ========== */
 .select {
   font-size: 1.07rem;
   padding: 0.68rem 1rem;
@@ -157,8 +147,9 @@
   min-height: 1.18rem;
 }
 
-/*********** BOUTONS ***********/
-.buttonOrange, .buttonBlue {
+/* ========== BOUTONS ========== */
+.buttonOrange,
+.buttonBlue {
   background: linear-gradient(90deg, #ffe2bc 4%, #ffb86c 26%, #ff8c42 66%, #f76d3c 98%);
   color: #181c2f;
   border: none;
@@ -173,7 +164,10 @@
   animation: buttonPulseSobre 3s infinite;
   transition: box-shadow 0.15s, background 0.25s;
 }
-.buttonOrange:hover, .buttonBlue:hover, .buttonOrange:focus, .buttonBlue:focus {
+.buttonOrange:hover,
+.buttonBlue:hover,
+.buttonOrange:focus,
+.buttonBlue:focus {
   background: linear-gradient(90deg, #ffd392 11%, #f7ba44 43%, #f76d3c 100%);
   color: #181c2f;
   box-shadow: 0 2px 36px #ffe2bc62;
@@ -193,7 +187,7 @@
   color: #f79f1c;
 }
 
-/*********** MODAL MOLDAU ***********/
+/* ========== MODALS ========== */
 .tunnelModalOverlay {
   position: fixed;
   top: 0;
@@ -208,7 +202,8 @@
   animation: fadeIn 0.36s;
 }
 
-.fullscreenModal, .tunnelModal {
+.fullscreenModal,
+.tunnelModal {
   background: linear-gradient(133deg, #fff 85%, #fff6e8 100%);
   border-radius: 22px;
   border: 2.2px solid transparent;
@@ -218,8 +213,8 @@
   width: 97%;
   animation: moldavePop 0.75s cubic-bezier(.55,.01,.41,.99);
 }
-/* Liséré survol modal */
-.fullscreenModal:hover, .tunnelModal:hover {
+.fullscreenModal:hover,
+.tunnelModal:hover {
   border-color: #f0c49d;
   box-shadow: 0 8px 44px #ffeacc, 0 0px 0px 7px #f9cfa2bd;
 }
@@ -248,7 +243,10 @@
   z-index: 100;
   transition: color 0.2s;
 }
-.closeBtn:hover { color: #f76d3c; opacity: 1; }
+.closeBtn:hover {
+  color: #f76d3c;
+  opacity: 1;
+}
 
 .progressBar {
   list-style: none;
@@ -258,10 +256,20 @@
   padding: 0 0 1.1rem 0;
   margin: 0 0 1.8em 0;
 }
-.stepTodo { color: #f8e3ce; }
-.stepDone { color: #f7af3c; }
-.stepActive { font-weight: 600; color: #f76d3c; text-shadow: 0 1px 6px #fff7; }
-.progressBar li { flex: 1 1 50px; }
+.stepTodo {
+  color: #f8e3ce;
+}
+.stepDone {
+  color: #f7af3c;
+}
+.stepActive {
+  font-weight: 600;
+  color: #f76d3c;
+  text-shadow: 0 1px 6px #fff7;
+}
+.progressBar li {
+  flex: 1 1 50px;
+}
 .progressBar span {
   display: inline-block;
   background: #fff7ec;
@@ -278,8 +286,10 @@
   top: 3px;
 }
 
-/* Contrat/signature, zone neutre */
-.contractMenu { margin-bottom: 1.3em; }
+/* ========== CONTRAT et SIGNATURE ========== */
+.contractMenu {
+  margin-bottom: 1.3em;
+}
 .contractDropdownBtn {
   background: #FFF6EE;
   font-size: 1.06em;
@@ -302,11 +312,22 @@
   border: 1.3px solid #ffb86c1b;
   padding: 1.1rem;
   margin-top: 0.5em;
-  max-height: 290px;
-  overflow-y: auto;
+
+  /* IMPORTANT : Pour la génération PDF enlever max-height et overflow pour éviter tronquage */
+  max-height: none !important;
+  overflow-y: visible !important;
+
   border-radius: 8px;
   font-size: 1em;
+  white-space: pre-wrap;
+  line-height: 1.5em;
 }
+
+.page-break {
+  page-break-before: always;
+  break-before: page;
+}
+
 .contractTitle {
   font-weight: 600;
   color: #ffd18c;
@@ -314,11 +335,32 @@
   margin-bottom: 1.1em;
 }
 
-.checkboxLabel { margin-top: 1rem; font-size: 1em; }
+.contract-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-height: none !important;
+  overflow: visible !important;
+}
 
-/*********** AUTRES ***********/
-.loader { color: #f76d3c; font-weight: bold; margin-top: 1.4rem; }
-.emailNotif { color: #36be46; font-size: 1em; margin-top: 0.8em; letter-spacing: 0.5px; }
+/* ========== AUTRES ========== */
+.checkboxLabel {
+  margin-top: 1rem;
+  font-size: 1em;
+}
+
+.loader {
+  color: #f76d3c;
+  font-weight: bold;
+  margin-top: 1.4rem;
+}
+.emailNotif {
+  color: #36be46;
+  font-size: 1em;
+  margin-top: 0.8em;
+  letter-spacing: 0.5px;
+}
 .link {
   color: #ff8c42;
   text-decoration: underline;
@@ -327,10 +369,38 @@
   display: inline-block;
   transition: color 0.18s;
 }
-.link:hover { color: #f76d3c; }
-.successMessage { color: #f76d3c; font-size: 1.06em; margin-top: 8px; font-weight: 500; }
-/* Responsive */
-@media (max-width:650px){
-  .container { padding: 1.6rem 0.5rem; }
-  .fullscreenModal, .tunnelModal { padding: 1.5rem 0.6rem 1.2rem 0.6rem; }
+.link:hover {
+  color: #f76d3c;
+}
+.successMessage {
+  color: #f76d3c;
+  font-size: 1.06em;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width:650px) {
+  .container {
+    padding: 1.6rem 0.5rem;
+  }
+  .fullscreenModal,
+  .tunnelModal {
+    padding: 1.5rem 0.6rem 1.2rem 0.6rem;
+  }
+}
+
+/* Wrapper modale : limite la hauteur totale et empêche overflow */
+.modalBodyWrapper {
+  max-height: 70vh; /* hauteur max modale */
+  overflow: hidden;  /* pas de scroll ici */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenu scrollable interne */
+.modalBodyScrollable {
+  overflow-y: auto;
+  flex: 1 1 auto;
+  padding-right: 12px; /* espace pour scrollbar */
 }

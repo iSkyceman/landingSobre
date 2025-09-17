@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 import styles from './AdminDossiers.module.css';
@@ -15,10 +15,13 @@ type Dossier = {
   sujets?: { [key: string]: string };
   observation?: string;
   provenance?: string;
+  contrat?: string;  // Contrat HTML complet
 };
 
 export default function AdminDossiers() {
   const [dossiers, setDossiers] = useState<Dossier[] | null>(null);
+  const [modalContent, setModalContent] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
   const router = useRouter();
 
   useEffect(() => {
@@ -29,17 +32,59 @@ export default function AdminDossiers() {
       const saved = localStorage.getItem("dossiers");
       setDossiers(saved ? JSON.parse(saved) : []);
     }
-  }, []);
+  }, [router]);
 
+  // Toggle sélection individuelle
+  function toggleSelection(ref: string) {
+    setSelected(prev => {
+      const newSelected = new Set(prev);
+      if (newSelected.has(ref)) {
+        newSelected.delete(ref);
+      } else {
+        newSelected.add(ref);
+      }
+      return newSelected;
+    });
+  }
+
+  // Toggle sélection tous/désélection tous
+  function toggleSelectAll() {
+    if (!dossiers) return;
+    if (selected.size === dossiers.length) {
+      setSelected(new Set());
+    } else {
+      setSelected(new Set(dossiers.map(d => d.reference)));
+    }
+  }
+
+  // Supprimer un dossier
   function supprimerDossier(ref: string) {
-    if (!window.confirm("Supprimer ce dossier ?")) return;
+    if (!window.confirm("Supprimer ce dossier ?")) return;
     if (dossiers) {
       const updated = dossiers.filter(d => d.reference !== ref);
       setDossiers(updated);
       localStorage.setItem("dossiers", JSON.stringify(updated));
+      setSelected(prev => {
+        const newSelected = new Set(prev);
+        newSelected.delete(ref);
+        return newSelected;
+      });
     }
   }
 
+  // Supprimer la sélection multiple
+  function supprimerSelection() {
+    if (selected.size === 0) return;
+    if (!window.confirm(`Supprimer ${selected.size} dossier${selected.size > 1 ? "s" : ""} ?`)) return;
+    if (dossiers) {
+      const updated = dossiers.filter(d => !selected.has(d.reference));
+      setDossiers(updated);
+      localStorage.setItem("dossiers", JSON.stringify(updated));
+      setSelected(new Set());
+    }
+  }
+
+  // Export CSV
   function exportCSV() {
     if (!dossiers || dossiers.length === 0) return;
     const sep = ";";
@@ -90,7 +135,8 @@ export default function AdminDossiers() {
           🔒 Déconnexion
         </button>
       </div>
-      <div style={{ marginBottom: 18 }}>
+
+      <div style={{ marginBottom: 18, display: "flex", alignItems: "center", gap: "15px" }}>
         <button
           onClick={exportCSV}
           disabled={dossiers.length === 0}
@@ -98,17 +144,48 @@ export default function AdminDossiers() {
         >
           Exporter CSV
         </button>
-        <span style={{ color: "#888", fontSize: "0.97em", marginLeft: 10 }}>
+
+        <button
+          onClick={supprimerSelection}
+          disabled={selected.size === 0}
+          className={selected.size ? styles.adminBtn : `${styles.adminBtn} ${styles.Disabled}`}
+        >
+          Supprimer la sélection
+        </button>
+
+        <span style={{ color: "#888", fontSize: "0.97em" }}>
           {dossiers.length} dossier{dossiers.length > 1 ? "s" : ""}
         </span>
       </div>
 
+      {modalContent && (
+        <div className={styles.modalOverlay} onClick={() => setModalContent(null)} style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+          backgroundColor: 'rgba(0,0,0,0.4)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 4000
+        }}>
+          <div style={{backgroundColor: '#fff', padding: 30, borderRadius: 10, maxWidth: '90%', maxHeight: '90%', overflowY: 'auto', position: 'relative'}} onClick={e => e.stopPropagation()}>
+            <button onClick={() => setModalContent(null)} style={{position: 'absolute', top: 10, right: 15, fontSize: 24, border: 'none', background: 'none', cursor: 'pointer'}}>
+              ×
+            </button>
+            <div dangerouslySetInnerHTML={{ __html: modalContent }} />
+          </div>
+        </div>
+      )}
+
       {dossiers.length === 0 && <p>Aucun dossier enregistré.</p>}
       {dossiers.length > 0 && (
-        <div style={{ overflowX: "auto" }}>
-          <table className={styles.tableAdmin}>
+        <div style={{ overflowX: 'auto' }}>
+          <table className={styles.table}>
             <thead>
               <tr className={styles.theadMain}>
+                <th>
+                  <input
+                    type="checkbox"
+                    onChange={toggleSelectAll}
+                    checked={dossiers.length > 0 && selected.size === dossiers.length}
+                    aria-label="Sélectionner tout"
+                  />
+                </th>
                 <th>N° dossier</th>
                 <th>Offre</th>
                 <th>Nom</th>
@@ -119,81 +196,75 @@ export default function AdminDossiers() {
                 <th>Date</th>
                 <th>Sujets</th>
                 <th>Observation</th>
+                <th>Contrat</th>
                 <th>Provenance</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {dossiers.map((dossier) => {
-                const sujetsList = dossier.sujets
-                  ? Object.values(dossier.sujets).filter(s => s && s.trim() !== "")
-                  : [];
+                const sujetsList = dossier.sujets ? Object.values(dossier.sujets).filter(s => s && s.trim() !== "") : [];
                 return (
                   <tr key={dossier.reference} className={styles.tbodyRow}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={selected.has(dossier.reference)}
+                        onChange={() => toggleSelection(dossier.reference)}
+                        aria-label={`Sélectionner dossier ${dossier.reference}`}
+                      />
+                    </td>
                     <td>{dossier.reference}</td>
                     <td>{dossier.offre?.nom || ""}</td>
                     <td>{dossier.nom || ""}</td>
                     <td>{dossier.email || "—"}</td>
                     <td>
-                      <a
-                        href={`https://annuaire-entreprises.data.gouv.fr/entreprise/${dossier.siren}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: "#0051ff", textDecoration: "underline" }}
-                      >
+                      <a href={`https://annuaire-entreprises.data.gouv.fr/entreprise/${dossier.siren}`} target="_blank" rel="noopener noreferrer" style={{ color: "#0051ff", textDecoration: "underline" }}>
                         {dossier.siren}
                       </a>
                     </td>
                     <td>{dossier.effectif}</td>
                     <td>{dossier.prix ?? "—"}</td>
                     <td>{dossier.date ? new Date(dossier.date).toLocaleString() : ""}</td>
-                    <td>
-                      {sujetsList.length > 0 ? (
-                        <span className={styles.infobulleRoot} tabIndex={0}>
-                          {sujetsList.length} sujet{sujetsList.length > 1 ? "s" : ""}
-                          <span className={styles.infobulleBox}>
-                            {sujetsList.map((r, i) => (
-                              <div key={i}>{r}</div>
-                            ))}
-                          </span>
+                    <td>{sujetsList.length > 0 ? (
+                      <span className={styles.infobulleRoot} tabIndex={0}>
+                        {sujetsList.length} sujet{(sujetsList.length > 1 ? "s" : "")}
+                        <span className={styles.infobulleBox}>
+                          {sujetsList.map((r, i) => <div key={i}>{r}</div>)}
                         </span>
-                      ) : (
-                        "—"
-                      )}
-                    </td>
+                      </span>
+                    ) : "—"}</td>
+                    <td>{dossier.observation && dossier.observation.trim() !== "" ? (
+                      <span className={styles.infobulleRoot} tabIndex={0}>
+                        Voir
+                        <span className={styles.infobulleBox} style={{whiteSpace: 'pre-line', maxWidth: 340}}>
+                          {dossier.observation}
+                        </span>
+                      </span>
+                    ) : "—"}</td>
                     <td>
-                   {dossier.observation && dossier.observation.trim() !== "" ? (
-                    <span className={styles.infobulleRoot} tabIndex={0}>
-                    Voir
-                      <span
-                    className={styles.infobulleBox}
-                    style={{ whiteSpace: "pre-line", maxWidth: 340 }}
-                      >
-                    {dossier.observation}
-                    </span>
-                    </span>
-                     ) : (
-                     "—"
-                      )}
-                    </td>
+                  {dossier.contrat ? (
+                  <button onClick={() => setModalContent(dossier.contrat ?? null)} style={{ cursor: 'pointer' }}>
+                  Voir contrat
+                  </button>
+                  ) : "—"}
+                  </td>
                     <td>
                       <span style={{
-                        color: dossier.provenance === "NosOffresSobre" ? "#FF8C42"
-                          : dossier.provenance === "NosOffresItech" ? "#0051ff"
-                          : dossier.provenance === "CalculateurItech" ? "#00eaff"
-                          : dossier.provenance === "CalculateurSobre" ? "#F76D3C"
-                          : "#888",
+                        color:
+                          dossier.provenance === "NosOffresSobre" ? "#FF8C42" :
+                          dossier.provenance === "NosOffresItech" ? "#0051ff" :
+                          dossier.provenance === "CalculateurItech" ? "#00eaff" :
+                          dossier.provenance === "CalculateurSobre" ? "#F76D3C" :
+                          dossier.provenance === "abosDataPlusItech" ? "#4e50ff" :
+                          "#888",
                         fontWeight: 600
                       }}>
                         {dossier.provenance || "?"}
                       </span>
                     </td>
                     <td>
-                      <button
-                        onClick={() => supprimerDossier(dossier.reference)}
-                        className={`${styles.adminBtn} ${styles.Delete}`}
-                        title="Supprimer ce dossier"
-                      >
+                      <button onClick={() => supprimerDossier(dossier.reference)} className={`${styles.adminBtn} ${styles.Delete}`} title="Supprimer ce dossier">
                         🗑️ Supprimer
                       </button>
                     </td>

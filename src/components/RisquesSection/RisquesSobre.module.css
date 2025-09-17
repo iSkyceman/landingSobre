@@ -2,6 +2,9 @@
   background: #fff;
   padding-top: 3rem;
   padding-bottom: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
 }
 
 .riskTitle {
@@ -13,6 +16,9 @@
   color: #FF8C42;
   letter-spacing: 0.01em;
   margin-bottom: 0.5rem;
+  justify-content: flex-start;
+  text-align: left;
+  padding-left: 0.5rem;
 }
 
 .riskIcon {
@@ -26,6 +32,8 @@
   color: #444;
   font-size: 1.05em;
   opacity: 0.95;
+  text-align: left;
+  padding-left: 0.5rem;
 }
 
 .grid {
@@ -35,6 +43,9 @@
   max-width: 112rem;
   margin-left: auto;
   margin-right: auto;
+  box-sizing: border-box;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 @media (min-width: 640px) {
@@ -67,7 +78,9 @@
   cursor: pointer;
   border: 2px solid transparent;
   transition: border-color 0.2s, box-shadow 0.2s;
+  width: auto;
 }
+
 .card:focus-visible,
 .card:hover {
   border-color: #FF8C42;
@@ -87,6 +100,7 @@
   box-shadow: 0 2px 12px #ff8c4222;
   transition: transform 0.2s;
 }
+
 .card:hover .iconWrapper,
 .card:focus-visible .iconWrapper {
   transform: scale(1.08);
@@ -101,12 +115,16 @@
   font-size: 1.1rem;
   color: #c2410c;
   margin-bottom: 0.5rem;
+  text-align: left;
+  padding-left: 0.5rem;
 }
 
 .cardDesc {
   color: #444;
   font-size: 1rem;
   opacity: 0.92;
+  text-align: left;
+  padding-left: 0.5rem;
 }
 
 .highlight {
@@ -120,6 +138,7 @@
   opacity: 0;
   transition: opacity 0.2s;
 }
+
 .card:hover .highlight,
 .card:focus-visible .highlight {
   opacity: 1;

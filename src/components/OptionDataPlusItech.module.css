@@ -15,13 +15,12 @@
   75% { box-shadow: 0 0 0 12px rgba(144,72,255,0.07); }
 }
 
-/********** LISÉRÉ VIOLET ANIMÉ **********/
+/********** CONTENEURS PRINCIPAUX **********/
 .container,
 .tunnelModal,
 .fullscreenModal {
   border: 2.2px solid transparent;
   border-radius: 21px;
-  /* Liséré violet invisible de base */
   border-image: linear-gradient(90deg,#e3d6fe,#9048ff 38%,#0098e9 100%) 1;
   transition:
     border-color 0.34s cubic-bezier(.6,.2,.31,1.47),
@@ -48,7 +47,7 @@
 }
 .title {
   font-size: 2.05em;
-  color: #8be9fd; /* Bleu ciel */
+  color: #8be9fd;
   text-align: center;
   font-weight: 700;
   text-shadow: 0 2px 24px #1a0936ad, 0 1px 0 #fff2;
@@ -71,6 +70,7 @@
   margin: 0 auto 1.3rem;
   padding-bottom: 0.7em;
 }
+
 /********** NOTE VIOLET LEFT **********/
 .noteLeft {
   background: linear-gradient(90deg,#ede9fb 70%,#9048ff 100%);
@@ -187,150 +187,135 @@
   justify-content: center;
   animation: fadeIn 0.31s;
 }
-.fullscreenModal, .tunnelModal {
+.tunnelModal {
   background: linear-gradient(131deg,#fff 90%,#ede9fb 100%);
   border-radius: 21px;
   border: 2.2px solid transparent;
   box-shadow: 0 10px 44px #9048ff1b;
   padding: 2.4rem 2rem 1.7rem 2rem;
-  max-width: 560px;
+  max-width: 600px;
   width: 97%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   position: relative;
   animation: itechPop 0.7s cubic-bezier(.47,1.34,.4,1);
 }
-.fullscreenModal:hover, .tunnelModal:hover {
+.tunnelModal:hover {
   border-image: linear-gradient(91deg,#b692e6 9%,#9048ff 40%,#0098e9 97%) 1;
-  box-shadow: 0 8px 44px #8f6dff52, 0 px 0px 10px #a890ed29;
+  box-shadow: 0 8px 44px #8f6dff52, 0 0 10px #a890ed29;
 }
 
-/* Modal titre */
+/********** DÉCOUVRIR DATA+ HIGH-TECH - MODAL LISIBILITÉ **********/
+.fullscreenModal {
+  background: #fff !important; /* Fond blanc lisible */
+  color: #9048ff;
+  padding: 2.4rem 2rem 1.7rem 2rem;
+  border-radius: 21px;
+  max-width: 560px;
+  width: 95%;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(144,72,255, 0.15);
+  position: relative;
+  z-index: 3500;
+  font-family: 'Montserrat', Arial, sans-serif;
+  animation: itechPop 0.7s cubic-bezier(.47,1.34,.4,1);
+}
+
+.modalContentItech {
+  color: #9048ff;
+  font-weight: 600;
+  font-size: 1.1em;
+  line-height: 1.5;
+  margin-bottom: 1.6rem;
+}
+.modalContentItech strong {
+  color: #f76d3c;
+  font-weight: 700;
+}
+.modalContentItech a,
+.fullscreenModal .link {
+  color: #9048ff !important;
+  font-weight: 600;
+  text-decoration: underline;
+  background: none;
+  margin-top: 1.3em;
+  display: inline-block;
+  transition: color 0.17s;
+  font-size: 1em;
+}
+.modalContentItech a:hover,
+.fullscreenModal .link:hover {
+  color: #f76d3c !important;
+  background: none;
+}
+/* Visibilité croix fermeture sur .fullscreenModal */
+.fullscreenModal .closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: #f76d3c;
+  z-index: 1200;
+  font-size: 2em;
+  opacity: 0.93;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s, opacity 0.15s;
+}
+.fullscreenModal .closeBtn:hover {
+  color: #9048ff;
+  opacity: 1;
+}
+
+/* ... gardez TOUT LE RESTE INCHANGÉ ci-dessous (progressBar, contractMenu, responsive, etc.) ... */
+
+.modalHeader {
+  padding-bottom: 1em;
+  position: relative;
+}
 .modalTitle {
   font-size: 1.27em;
   font-weight: 600;
   color: #9048ff;
   letter-spacing: 1px;
   text-align: center;
-  margin-bottom: 1.1rem;
+  margin: 0;
   font-family: inherit;
+  user-select: none;
   text-shadow: 0 1px 0 #fff4;
 }
-
-/* MODAL CONTENT */
-.modalContentItech {
-  color: #22305a; /* bleu foncé moderne */
-  font-size: 1.07em;
-  line-height: 1.56;
-  text-align: left;
-  max-width: 510px;
-  margin: 0 auto 1.1em;
-}
-
-/********** AUTRES **********/
-.closeBtn {
-  background: transparent;
-  border: none;
-  font-size: 2em;
-  position: absolute;
-  top: 18px;
-  right: 30px;
-  cursor: pointer;
-  color: #9048ff;
-  opacity: 0.77;
-  z-index: 100;
-  transition: color 0.2s;
-}
-.closeBtn:hover { color: #0098E9; opacity: 1; }
-
-/* ProgressBar */
-.progressBar {
-  list-style: none;
+.modalBodyWrapper {
+  flex-grow: 1;
+  overflow: hidden;
   display: flex;
-  justify-content: space-between;
-  font-size: 0.95rem;
-  padding: 0 0 1.1rem 0;
-  margin: 0 0 1.8em 0;
+  flex-direction: column;
 }
-.stepTodo { color: #d0baff; }
-.stepDone { color: #49f3ea; }
-.stepActive { font-weight: 600; color: #9048ff; text-shadow: 0 1px 6px #fff7; }
-.progressBar li { position: relative; flex: 1 1 50px; }
-.progressBar span {
-  display: inline-block;
-  background: #ede9fb;
-  color: #9048ff;
-  width: 2.1em;
-  height: 2.1em;
-  line-height: 2.1em;
-  border-radius: 99px;
-  box-shadow: 0 2px 10px #7153e917;
-  margin-right: 8px;
-  font-weight: bold;
-  border: 2.5px solid #9048ff;
-  position: relative;
-  top: 3px;
-}
-
-/* CONTRACT dropdown and zone: violet */
-.contractMenu { margin-bottom: 1.3em; }
-.contractDropdownBtn {
-  background: #f3f0fa;
-  font-size: 1.06em;
-  border: 1.8px solid #9048ff;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 9px;
-  font-weight: 600;
-  color: #9048ff;
-  margin-bottom: 0.7em;
-  box-shadow: 0 1px 8px #9048ff10;
-  transition: background 0.18s, color 0.18s;
-}
-.contractDropdownBtn:hover {
-  background: #e8e3f7;
-  color: #342063;
-}
-.contractZone {
-  background: #fff;
-  border: 1.2px solid #9048ff2b;
-  padding: 1.1rem;
-  margin-top: 0.5em;
-  max-height: 290px;
+.modalBodyScrollable {
   overflow-y: auto;
-  border-radius: 8px;
-  font-size: 1em;
+  padding: 20px;
+  flex-grow: 1;
+  -webkit-overflow-scrolling: touch;
 }
-.contractTitle {
-  font-weight: 600;
-  color: #9048ff;
-  font-size: 1.18em;
-  margin-bottom: 1.1em;
-}
-.checkboxLabel {
-  display: block;
-  margin-top: 1rem;
-  font-size: 1em;
-  color: #22305a;
-}
-.loader { color: #9048ff; font-weight: bold; margin-top: 1.4rem;}
-.emailNotif { color: #12C572; font-size: 1em; margin-top: 0.8em; letter-spacing: 0.5px;}
-.link {
-  color: #9048ff;
-  text-decoration: underline;
-  font-weight: 600;
-  margin-top: 1.5em;
-  display: inline-block;
-  transition: color 0.17s;
-}
-.link:hover { color: #181c2f; background: linear-gradient(90deg, #00ffd6 20%, #8be9fd 100%);}
+/* (Gardez la suite du CSS existant) ... */
 
 /* Responsive */
-@media (max-width:650px){
-  .container { padding: 1.6rem 0.5rem; }
-  .fullscreenModal, .tunnelModal { padding: 1.5rem 0.6rem 1.2rem 0.6rem; }
+@media (max-width:650px) {
+  .container {
+    padding: 1.6rem 0.5rem;
+  }
+  .fullscreenModal,
+  .tunnelModal {
+    padding: 1.5rem 0.6rem 1.2rem 0.6rem;
+    width: 95%;
+  }
 }
+
+/* Info text */
 .info {
   text-align: center;
   margin-top: 2.1rem;
-  color: #fff;           /* <-- TEXTE EN BLANC PUR partout */
+  color: #fff;
   font-size: 1.09em;
 }

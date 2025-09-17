@@ -23,13 +23,12 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  opacity: 0.23; /* Plus visible */
+  opacity: 0.23;
   pointer-events: none;
-  filter: blur(2.5px) brightness(1.08); /* Effet premium */
+  filter: blur(2.5px) brightness(1.08);
   animation: bgDown 16s linear infinite alternate, bgZoom 12s ease-in-out infinite alternate;
 }
 
-/* Overlay doux pour renforcer la lisibilité */
 .bg::after {
   content: "";
   position: absolute;
@@ -59,13 +58,12 @@
   }
 }
 
-
 .content {
   position: relative;
   z-index: 1;
   width: 100vw;
   margin: 0;
-  padding: 2.8rem 0.5rem 2.2rem 0.5rem;
+  padding: 2.8rem 2rem 2.2rem 2rem; /* décalage à droite et à gauche */
   background: rgba(255,255,255,0.48);
   border-radius: 1.5rem;
   box-shadow: 0 4px 24px 0 rgba(255, 153, 51, 0.04);
@@ -85,6 +83,7 @@
   text-align: left;
   margin: 0 0 1.3rem 0;
   text-shadow: 0 2px 10px #ff944d22;
+  padding-left: 1.5rem; /* décalage à droite */
 }
 
 .lockIcon {
@@ -107,7 +106,7 @@
   font-weight: 700;
   box-shadow: 0 2px 12px 0 #ff944d33, 0 0 0.5em #34b47a33;
   text-align: left;
-  margin-left: 0;
+  margin-left: 1.5rem; /* décalage */
   cursor: pointer;
   animation: badgePulse 2.5s infinite alternate;
   transition: box-shadow 0.25s, transform 0.18s;
@@ -134,7 +133,7 @@
   color: #22305a;
   text-align: left;
   margin-bottom: 1.3rem;
-  margin-left: 0;
+  margin-left: 1.5rem; /* décalage droit */
   font-weight: 500;
   letter-spacing: 0.01em;
   width: 100%;
@@ -150,6 +149,7 @@
   margin-bottom: 1rem;
   color: #22305a;
   text-align: left;
+  padding-left: 1.5rem; /* décalage droit */
 }
 
 .list {
@@ -157,6 +157,7 @@
   padding: 0;
   list-style: none;
   text-align: left;
+  padding-left: 1.5rem; /* décalage droit */
 }
 
 .list li {
@@ -182,9 +183,11 @@
   .title {
     font-size: 1.19em;
     gap: 0.7rem;
+    padding-left: 0.5rem;
   }
   .badge {
     font-size: 0.99rem;
     padding: 0.45em 1em;
+    margin-left: 0.5rem;
   }
 }

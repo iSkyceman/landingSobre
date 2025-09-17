@@ -7,10 +7,11 @@
   overflow: hidden;
   box-shadow: 0 6px 32px 0 rgba(30, 41, 59, 0.06);
   margin-bottom: 3rem;
+  box-sizing: border-box;
 }
 
 /* TITRE PREMIUM SOBRE */
-.succesFeeSection .titleLeft {
+.titleLeft {
   font-size: 2.7rem;
   font-weight: 900;
   margin-bottom: 1.5rem;
@@ -26,6 +27,7 @@
   transform: translateY(-24px) scale(0.97);
   animation: fadeInTitle 1.1s 0.2s forwards;
   transition: transform 0.6s cubic-bezier(.77,0,.18,1), opacity 0.6s;
+  padding-left: 2.5rem; /* léger décalage */
 }
 @keyframes fadeInTitle {
   to {
@@ -35,16 +37,17 @@
 }
 
 /* DESCRIPTION SOBRE */
-.succesFeeSection .descriptionLeft {
+.descriptionLeft {
   margin-bottom: 1.5rem;
   color: #22305a;
   font-size: 1.1rem;
   line-height: 1.7;
   text-align: left;
+  padding-left: 0.5rem; /* léger décalage */
 }
 
 /* BOUTON PREMIUM SOBRE */
-.succesFeeSection .buttonFee {
+.buttonFee {
   color: #fff;
   background: linear-gradient(90deg, #FFB86C 0%, #FF8C42 60%, #F76D3C 100%);
   border: none;
@@ -60,15 +63,15 @@
   max-width: 320px;
   width: 100%;
 }
-.succesFeeSection .buttonFee:hover,
-.succesFeeSection .buttonFee:focus {
+.buttonFee:hover,
+.buttonFee:focus {
   background: linear-gradient(90deg, #F76D3C 0%, #FFB86C 100%);
   box-shadow: 0 4px 32px #F76D3C55, 0 1.5px 8px #FFB86C44;
   transform: scale(1.06);
 }
 
 /* SÉLECTEUR PREMIUM SOBRE */
-.succesFeeSection .selectFee {
+.selectFee {
   width: 100%;
   max-width: 420px;
   margin: 1.2rem auto 0;
@@ -85,17 +88,17 @@
   appearance: none;
   display: block;
 }
-.succesFeeSection .selectFee:focus {
+.selectFee:focus {
   border: 3px solid #F76D3C;
   box-shadow: 0 0 0 3px #F76D3C33;
 }
-.succesFeeSection .selectFee option {
+.selectFee option {
   background: #fff;
   color: #181c2f;
 }
 
 /* LIEN CONTRAT TYPE SOBRE */
-.succesFeeSection .linkFee {
+.linkFee {
   display: inline-flex;
   gap: 0.25rem;
   color: #F76D3C;
@@ -106,13 +109,13 @@
   font-weight: 700;
   transition: color 0.18s;
 }
-.succesFeeSection .linkFee:hover,
-.succesFeeSection .linkFee:focus {
+.linkFee:hover,
+.linkFee:focus {
   color: #17BEBB;
 }
 
 /* MINI SCHEMA ET ÉTAPES SOBRE */
-.succesFeeSection .miniSchema {
+.miniSchema {
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -120,7 +123,7 @@
   margin: 2rem 0;
   margin-left: 19rem;
 }
-.succesFeeSection .step {
+.step {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -134,28 +137,28 @@
   box-shadow: 0 2px 12px 0 rgba(0,255,247,0.08);
   color: #22223b;
 }
-.succesFeeSection .emoji {
+.emoji {
   font-size: 2rem;
   margin-bottom: 0.2rem;
 }
-.succesFeeSection .arrow {
+.arrow {
   font-size: 2rem;
   color: #6c63ff;
 }
 
 /* Témoignages SOBRE */
-.succesFeeSection .testimonialsRow {
+.testimonialsRow {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   margin: 2.5rem 0;
 }
 @media (min-width: 768px) {
-  .succesFeeSection .testimonialsRow {
+  .testimonialsRow {
     flex-direction: row;
   }
 }
-.succesFeeSection .testimonial {
+.testimonial {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -165,7 +168,7 @@
   box-shadow: 0 2px 12px 0 rgba(30,41,59,0.06);
   flex: 1 1 0;
 }
-.succesFeeSection .avatarWrapperSquare {
+.avatarWrapperSquare {
   flex-shrink: 0;
   width: 70px;
   height: 70px;
@@ -176,26 +179,26 @@
   align-items: center;
   justify-content: center;
 }
-.succesFeeSection .avatarSquare {
+.avatarSquare {
   width: 64px;
   height: 64px;
   object-fit: cover;
   border-radius: 12px;
   border: 2px solid #e0e7ff;
 }
-.succesFeeSection .testimonialText {
+.testimonialText {
   font-style: italic;
   margin-bottom: 0.3rem;
   color: #3a3a4d;
 }
-.succesFeeSection .testimonialAuthor {
+.testimonialAuthor {
   font-weight: bold;
   color: #4f4f6e;
   font-size: 1rem;
 }
 
 /* Bloc étude de cas SOBRE */
-.succesFeeSection .caseStudy {
+.caseStudy {
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -207,7 +210,7 @@
   margin-top: 2rem;
   font-size: 1.05rem;
 }
-.succesFeeSection .caseStudyIcon {
+.caseStudyIcon {
   font-size: 2rem;
 }
 
@@ -222,7 +225,6 @@
   margin-bottom: 3rem;
   min-height: 650px;
 }
-
 
 /* Fond image animée (uniquement i-tech) */
 .backgroundImage {
@@ -334,7 +336,7 @@
   font-size: 2.7rem;
   font-weight: 800;
   margin-bottom: 1.5rem;
-   color: var(--itech-cyan);
+  color: var(--itech-cyan);
   text-align: left;
   letter-spacing: 0.01em;
 }

@@ -1,9 +1,40 @@
 .section {
   background: #fff;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  padding: 3rem 1rem; /* padding vertical 3rem, horizontal 1rem pour laisser léger espace aux bords */
+  box-sizing: border-box;
 }
 
+/* Grille responsive avec centrage et largeur max */
+.grid {
+  display: grid !important;
+  grid-template-columns: repeat(1, 1fr) !important;
+  gap: 1.5rem !important;
+  max-width: 112rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box;
+  padding-left: 1rem;   /* léger décalage horizontal */
+  padding-right: 1rem;
+}
+
+/* Responsive col count */
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+@media (min-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+}
+
+/* Cartes */
 .card {
   background: #fff;
   border-radius: 1.5rem;
@@ -18,7 +49,10 @@
   cursor: pointer;
   border: 2px solid transparent;
   transition: border-color 0.2s, box-shadow 0.2s;
+  width: auto;
 }
+
+/* Hover cartes */
 .card:focus-visible,
 .card:hover {
   border-color: #FF8C42;
@@ -26,6 +60,7 @@
   outline: none;
 }
 
+/* Icônes wrapper */
 .iconWrapper {
   display: flex;
   align-items: center;
@@ -38,6 +73,8 @@
   box-shadow: 0 2px 12px #f76d3c22;
   transition: transform 0.2s;
 }
+
+/* Hover icônes */
 .card:hover .iconWrapper,
 .card:focus-visible .iconWrapper {
   transform: scale(1.08);
@@ -47,19 +84,26 @@
   filter: drop-shadow(0 2px 12px #f76d3c55);
 }
 
+/* Titres cartes */
 .cardTitle {
   font-weight: 700;
   font-size: 1.1rem;
   color: #1a1a1a;
   margin-bottom: 0.5rem;
+  text-align: left;
+  padding-left: 0.5rem; /* léger décalage */
 }
 
+/* Description cartes */
 .cardDesc {
   color: #444;
   font-size: 1rem;
   opacity: 0.92;
+  text-align: left;
+  padding-left: 0.5rem; /* léger décalage */
 }
 
+/* Highlight */
 .highlight {
   position: absolute;
   left: 0;
@@ -71,6 +115,8 @@
   opacity: 0;
   transition: opacity 0.2s;
 }
+
+/* Hover highlight */
 .card:hover .highlight,
 .card:focus-visible .highlight {
   opacity: 1;

@@ -2,6 +2,7 @@
 import styles from "./BeneficesItech.module.css";
 import { FaBolt, FaCoins, FaShieldAlt, FaLeaf, FaChartLine } from "react-icons/fa";
 
+
 const gradients = [
   { id: "itech-gradient1", from: "#7f5fff", to: "#3c8ce7" },
   { id: "itech-gradient2", from: "#43e97b", to: "#38f9d7" },
@@ -11,9 +12,11 @@ const gradients = [
   { id: "itech-gradient6", from: "#f7971e", to: "#ffd200" },
 ];
 
+
 const icons = [
   FaBolt, FaCoins, FaShieldAlt, FaLeaf, FaChartLine, FaShieldAlt
 ];
+
 
 const benefices = [
   {
@@ -42,6 +45,7 @@ const benefices = [
   },
 ];
 
+
 export default function BeneficesItech() {
   return (
     <section className={styles.section}>
@@ -58,9 +62,9 @@ export default function BeneficesItech() {
       </svg>
       <div className="container px-4 sm:px-6 lg:px-8">
         <h2 className={styles.itechTitle}>
-          Bénéfices &amp; IA
+          Bénéfices Concrets &amp; Premium
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6 max-w-7xl mx-auto">
+        <div className={styles.grid}>
           {benefices.map((b, i) => {
             const Icon = icons[i];
             return (
