@@ -469,31 +469,36 @@
 .caseStudyIcon {
   font-size: 2rem;
 }
-@media (max-width: 640px) and (orientation: portrait) {
+/* Ajout spécifique pour mobiles en orientation portrait */
+@media (max-width: 480px) and (orientation: portrait) {
   .titleLeft, .titleItech {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-    font-size: 1.5rem !important;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-    max-width: 100%;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    font-size: 1.3rem !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.4 !important;
   }
 
   .miniSchema, .miniSchemaItech {
-    margin-left: 0 !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
+    margin-left: 0 !important;
     flex-wrap: wrap !important;
     justify-content: center !important;
+    gap: 1rem !important;
   }
 
   .step, .stepItech {
-    min-width: 80px !important;
-    padding: 0.5rem 0.8rem !important;
+    min-width: 70px !important;
+    padding: 0.4rem 0.7rem !important;
+    font-size: 1rem !important;
   }
 
   .arrow, .arrowItech {
-    font-size: 1.5rem !important;
+    font-size: 1.3rem !important;
   }
 }
+
