@@ -134,7 +134,7 @@
   display: flex;
   align-items: center;
   gap: 2rem;
-  justify-content: center;
+  justify-content: center; /* Centré pour petite largeur */
   margin: 2rem 0;
   margin-left: 0;
   flex-wrap: wrap; /* Permet d'aller à la ligne sur petit écran */
@@ -147,7 +147,7 @@
     flex-wrap: nowrap;
     padding-left: 0;
     padding-right: 0;
-    justify-content: flex-start;
+    justify-content: flex-start; /* Aligné à gauche sur grand écran */
   }
 }
 .step {
@@ -487,10 +487,10 @@
 
 /* Ajout spécifique pour mobiles en orientation portrait */
 @media (max-width: 480px) and (orientation: portrait) {
-  .titleLeft, .titleItech {
+  .titleLeft {
+    font-size: clamp(1rem, 3vw, 1.3rem) !important;
     padding-left: 2rem !important;
     padding-right: 2rem !important;
-    font-size: 1.3rem !important;
     max-width: 100% !important;
     white-space: normal !important;
     word-break: break-word !important;
@@ -498,7 +498,7 @@
     line-height: 1.4 !important;
   }
 
-  .miniSchema, .miniSchemaItech {
+  .miniSchema {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
     margin-left: 0 !important;
@@ -507,13 +507,13 @@
     gap: 1rem !important;
   }
 
-  .step, .stepItech {
+  .step {
     min-width: 70px !important;
     padding: 0.4rem 0.7rem !important;
     font-size: 1rem !important;
   }
 
-  .arrow, .arrowItech {
+  .arrow {
     font-size: 1.3rem !important;
   }
 }
