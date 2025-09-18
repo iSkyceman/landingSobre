@@ -49,7 +49,7 @@ export default function HeaderHero() {
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full min-h-[600px] md:h-screen overflow-hidden"
+      className="relative w-full h-screen overflow-hidden"
       style={{ cursor: "pointer" }}
     >
       {/* Image background */}
@@ -77,7 +77,8 @@ export default function HeaderHero() {
             animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0)" }}
             exit={{ opacity: 0, y: 20, scale: 0.9, filter: "blur(4px)" }}
             transition={{ duration: 0.8 }}
-            className="relative z-20 flex flex-col items-start w-full max-w-7xl px-4 sm:px-12 xl:px-24 py-5 mx-auto"
+            className="relative z-20 flex flex-col items-start w-full max-w-7xl px-4 sm:px-12 xl:px-24 py-5"
+            style={{ marginLeft: "max(3vw, 2rem)" }}
           >
             <motion.div
               initial={false}
@@ -150,9 +151,16 @@ export default function HeaderHero() {
               </motion.span>
             </motion.button>
 
-            <div className="flex flex-col sm:flex-row items-center w-full max-w-3xl mt-12 gap-6">
+            <div className="flex flex-row items-start w-full max-w-3xl mt-12">
               <motion.div
                 key="audit-predictif"
+                style={{
+                  position: "relative",
+                  zIndex: 9999,
+                  opacity: 1,
+                  visibility: "visible",
+                  marginRight: "3.5rem",
+                }}
                 initial={{ opacity: 1, x: 0, scale: 1 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 transition={{ delay: 0, duration: 0 }}
@@ -162,17 +170,36 @@ export default function HeaderHero() {
                 <FaCertificate
                   className="text-orange-400 text-2xl"
                   style={{
+                    position: "relative",
+                    zIndex: 10000,
+                    opacity: 1,
+                    visibility: "visible",
                     filter:
                       "drop-shadow(0 0 5px rgba(251, 191, 54, 0.8)) drop-shadow(0 0 8px rgba(251, 191, 54, 0.5))",
                   }}
                 />
-                <span className="font-semibold text-[clamp(1rem,2.5vw,1.4rem)] leading-tight text-blue-900 drop-shadow-md">
+
+                <span
+                  style={{
+                    fontWeight: 600,
+                    fontSize: "clamp(1rem, 2.5vw, 1.4rem)",
+                    lineHeight: 1.35,
+                    color: "#1e3a8a",
+                    textShadow: "0 0 6px rgba(0,0,0,0.4)",
+                  }}
+                >
                   Audit prédictif
                 </span>
               </motion.div>
 
               <motion.div
                 key="roi-x3"
+                style={{
+                  position: "relative",
+                  zIndex: 9999,
+                  opacity: 1,
+                  visibility: "visible",
+                }}
                 initial={{ opacity: 0, x: 30, scale: 0.96 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 transition={{ delay: 0.5, duration: 0.5, ease: "easeOut" }}
@@ -185,9 +212,27 @@ export default function HeaderHero() {
                   transition={{ delay: 0.6, duration: 0.4, type: "spring" }}
                   style={{ textShadow: "0 0 6px rgba(0,0,0,0.4)" }}
                 >
-                  <FaChartLine className="text-green-500 text-2xl" />
+                  <FaChartLine
+                    className="text-green-500 text-2xl"
+                    style={{
+                      position: "relative",
+                      zIndex: 10000,
+                      opacity: 1,
+                      visibility: "visible",
+                      filter:
+                        "drop-shadow(0 0 5px rgba(34, 197, 94, 0.8)) drop-shadow(0 0 8px rgba(34, 197, 94, 0.5))",
+                    }}
+                  />
                 </motion.span>
-                <span className="font-semibold text-[clamp(1rem,2.5vw,1.4rem)] leading-tight text-blue-900 drop-shadow-md">
+                <span
+                  style={{
+                    fontWeight: 600,
+                    fontSize: "clamp(1rem, 2.5vw, 1.4rem)",
+                    lineHeight: 1.35,
+                    color: "#1e3a8a",
+                    textShadow: "0 0 6px rgba(0,0,0,0.4)",
+                  }}
+                >
                   ROI x3
                 </span>
               </motion.div>
