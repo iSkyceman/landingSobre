@@ -469,3 +469,31 @@
 .caseStudyIcon {
   font-size: 2rem;
 }
+@media (max-width: 640px) and (orientation: portrait) {
+  .titleLeft, .titleItech {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    font-size: 1.5rem !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  .miniSchema, .miniSchemaItech {
+    margin-left: 0 !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+
+  .step, .stepItech {
+    min-width: 80px !important;
+    padding: 0.5rem 0.8rem !important;
+  }
+
+  .arrow, .arrowItech {
+    font-size: 1.5rem !important;
+  }
+}
