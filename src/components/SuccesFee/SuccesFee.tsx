@@ -1,4 +1,3 @@
-
 import styles from "./SuccesFee.module.css";
 import Image from "next/image";
 
@@ -118,3 +117,4 @@ export default function SuccesFee() {
     </section>
   );
 }
+
