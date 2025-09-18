@@ -4,7 +4,9 @@ import { useState, useRef, useEffect, ChangeEvent, FormEvent } from "react";
 import "../../styles/calculateur-ia.css";
 
 type SujetForm = { [key: string]: string };
+
 type Offre = { nom: string; cible: string; prix: string; code: string; detail: string };
+
 type Dossier = {
   reference: string;
   offre: Offre;
@@ -358,7 +360,7 @@ export default function CalculateurIA() {
 
   return (
     <section
-      className="calculateur-ia-section"
+      className="calculateur-ia-section max-w-7xl mx-auto px-4 sm:px-8 md:px-12"
       id="calculateur-ia"
       ref={calculateurRef}
       style={{ position: "relative", minHeight: 600 }}
@@ -389,9 +391,8 @@ export default function CalculateurIA() {
           />
         </picture>
       </div>
-      {/* FIN DU BLOC FOND ANIMÉ */}
 
-      <div className="calculateur-ia-header" style={{ zIndex: 2, position: "relative" }}>
+      <div className="calculateur-ia-header relative z-10 text-center sm:text-left">
         <h2 className="calculateur-ia-title">🤝 Notre Méthode</h2>
         <p>
           Nous croyons en un accompagnement sur-mesure, basé sur l&apos;écoute, la confidentialité et la transparence.
@@ -400,9 +401,7 @@ export default function CalculateurIA() {
           tout en assurant la sécurité et la confidentialité de vos données.
         </p>
         <div className="calculateur-ia-audio">
-          <p>
-            <b>🎧 Écoutez la synthèse audio de notre démarche :</b>
-          </p>
+          <p><b>🎧 Écoutez la synthèse audio de notre démarche :</b></p>
           <audio controls>
             <source src="https://github.com/iSkyceman/podcast/raw/refs/heads/main/podcast.mp3" type="audio/mpeg" />
             Votre navigateur ne supporte pas la lecture audio.
@@ -458,7 +457,7 @@ export default function CalculateurIA() {
                       <input
                         type="text"
                         name="siren"
-                        pattern="\d{9}|\d{14}"
+                        pattern="\\d{9}|\\d{14}"
                         title="Veuillez entrer un SIREN (9 chiffres) ou SIRET (14 chiffres)"
                         required
                         value={formData.siren}
@@ -772,8 +771,6 @@ export default function CalculateurIA() {
           </div>
         </div>
       )}
-
-      {/* Lien discret vers l&apos;admin */}
       <div style={{ textAlign: "center", marginTop: 24 }}>
         <a href="/admin-dossiers" style={{ color: "#888", fontSize: "0.93em", textDecoration: "underline dotted", opacity: 0.7 }} tabIndex={-1}>
           Accès interface gestion dossiers
