@@ -6,7 +6,7 @@ type LayoutWrapperProps = {
 };
 
 export default function LayoutWrapper({ children, variant = "sobre" }: LayoutWrapperProps) {
-  const baseClasses = "min-h-screen flex flex-col p-5 font-sans max-w-[1200px] mx-auto";
+  const baseClasses = "min-h-screen flex flex-col justify-center items-center p-5 font-sans";
   
   // Classes CSS Tailwind différentes selon variante
   const variantClasses =
@@ -15,7 +15,7 @@ export default function LayoutWrapper({ children, variant = "sobre" }: LayoutWra
       : "bg-white text-black";    // Fond blanc et texte noir pour Sobre
 
   return (
-    <div className={`${baseClasses} ${variantClasses}`}>
+    <div className={`${baseClasses} ${variantClasses}`} style={{ background: "transparent" }}>
       {children}
     </div>
   );

@@ -1,6 +1,6 @@
 .section {
   background: #fff;
-  padding: 3rem 1rem; /* padding vertical 3rem, horizontal 1rem pour laisser léger espace aux bords */
+  padding: 3rem 0; /* Padding vertical conservé, padding horizontal supprimé */
   box-sizing: border-box;
 }
 
@@ -9,12 +9,12 @@
   display: grid !important;
   grid-template-columns: repeat(1, 1fr) !important;
   gap: 1.5rem !important;
-  max-width: 112rem !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  max-width: 100% !important; /* Pour occuper toute la largeur */
+  margin-left: 0 !important;   /* Suppression du centrage par marges auto */
+  margin-right: 0 !important;
   box-sizing: border-box;
-  padding-left: 1rem;   /* léger décalage horizontal */
-  padding-right: 1rem;
+  padding-left: 0;   /* Suppression du padding horizontal */
+  padding-right: 0;
 }
 
 /* Responsive col count */
