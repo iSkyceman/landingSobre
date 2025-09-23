@@ -41,3 +41,5 @@ next-env.d.ts
 # Éditeurs (optionnel)
 .vscode/
 .idea/
+
+.vercel
