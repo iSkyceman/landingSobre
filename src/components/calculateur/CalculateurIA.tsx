@@ -26,7 +26,7 @@ type Dossier = {
 const PDF_LINKS = {
   diagnostic: "https://drive.google.com/file/d/1woF9MkW5Wm3omWyevfceOSzpwWe2n7nk/preview",
   feuille: "https://drive.google.com/file/d/1TNf3-9BoJRORJkrsvbXQP6PSrYnPtvn3/view?usp=sharing",
-  totale: "https://drive.google.com/file/d/115txXF3KykV55nitlCK9HqSqld2uMlYn/view?usp=sharing"
+  totale: "https://drive.google.com/file/d/115txXF3KykV55nitlCK9HqSqld2nMlYn/view?usp=sharing"
 };
 
 function getLienPDF(code: string): string {
@@ -155,9 +155,9 @@ function envoyerDossier(dossier: Dossier): void {
 
 export default function CalculateurIA() {
   const [showModal, setShowModal] = useState(false);
-  const [etape, setEtape] = useState<"formulaire" | "resultat" | "diagnostic" | "feuille" | "analyse" | "recap" | "confirmation">(
-    "formulaire"
-  );
+  const [etape, setEtape] = useState<
+    "formulaire" | "resultat" | "diagnostic" | "feuille" | "analyse" | "recap" | "confirmation"
+  >("formulaire");
   const [formData, setFormData] = useState({
     nom: "",
     siren: "",
@@ -226,98 +226,98 @@ export default function CalculateurIA() {
 
   function handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-  function validateSirenSiret(value: string): boolean {
-  const sirenRegex = /^\d{9}$/;
-  const siretRegex = /^\d{14}$/;
-  return sirenRegex.test(value) || siretRegex.test(value);
+function validateSirenSiret(value: string): boolean {
+  const cleanValue = value.replace(/\D/g, ""); // supprime tout sauf chiffres
+  return cleanValue.length === 9 || cleanValue.length === 14;
 }
 
 function handleSubmit(e: FormEvent<HTMLFormElement>) {
   e.preventDefault();
+  const cleanSiren = formData.siren.replace(/\D/g, "");
+  console.log("SIREN/SIRET soumis :", cleanSiren);
 
-  // Validation SIREN/SIRET
-  if (!validateSirenSiret(formData.siren)) {
+  if (!validateSirenSiret(cleanSiren)) {
     alert("Veuillez entrer un SIREN à 9 chiffres ou un SIRET à 14 chiffres.");
     return;
   }
 
-  // Validation des autres champs requis si besoin
-  if (!formData.nom || !formData.email || !formData.secteur || !formData.salaries) {
-    alert("Veuillez remplir tous les champs requis.");
-    return;
+
+    if (!formData.nom || !formData.email || !formData.secteur || !formData.salaries) {
+      alert("Veuillez remplir tous les champs requis.");
+      return;
+    }
+
+    const { secteur, utilisation, salaries } = formData;
+    const nbSalaries = parseInt(salaries, 10) || 0;
+
+    const scores: Record<string, number> = {
+      industrie: 42,
+      services: 45,
+      sante: 28,
+      construction: 15,
+      commerce: 30,
+      transport: 35,
+      agroalimentaire: 38,
+      tourisme: 33,
+      energie: 40,
+      informatique: 60,
+      immobilier: 32,
+      finance: 50,
+      education: 36,
+      administration: 25,
+      autre: 35
+    };
+
+    let scoreCalc = scores[secteur] ?? 30;
+    if (utilisation === "oui") scoreCalc += 30;
+    else if (utilisation === "exp") scoreCalc += 15;
+
+    if (scoreCalc > 100) scoreCalc = 100;
+
+    const suggestions: Record<string, string> = {
+      construction:
+        "L’IA peut optimiser la gestion de vos chantiers, la planification, la gestion des stocks et l’analyse des devis.",
+      industrie:
+        "L’IA optimise la maintenance prédictive, la production et anticipe les pannes.",
+      sante:
+        "L’IA accélère la gestion des dossiers patients, aide au diagnostic et optimise les plannings.",
+      commerce:
+        "L’IA analyse les ventes, prédit les tendances et automatise la gestion des stocks.",
+      services:
+        "L’IA améliore la gestion des plannings, l’analyse client et automatise l’administratif.",
+      transport: "L’IA optimise la logistique, les itinéraires et la maintenance.",
+      agroalimentaire: "L’IA contrôle la qualité, anticipe la demande et optimise la logistique.",
+      tourisme:
+        "L’IA personnalise l’expérience client, optimise les réservations et analyse la satisfaction.",
+      energie:
+        "L’IA optimise la gestion énergétique, la maintenance et la prévision de la demande.",
+      informatique:
+        "L’IA automatise la cybersécurité, l’analyse de données et le support technique.",
+      immobilier:
+        "L’IA valorise les biens, analyse le marché et automatise la gestion locative.",
+      finance:
+        "L’IA détecte les fraudes, optimise les investissements et personnalise les offres clients.",
+      education:
+        "L’IA personnalise les parcours d’apprentissage et automatise l’évaluation.",
+      administration:
+        "L’IA simplifie la gestion documentaire et automatise le traitement des demandes.",
+      autre:
+        "L’IA automatise les tâches répétitives, analyse vos données et améliore la relation client."
+    };
+
+    const suggestionCalc = suggestions[secteur] ?? suggestions["autre"];
+
+    setScore(scoreCalc);
+    setSuggestion(suggestionCalc);
+    setOffres(getOffres(nbSalaries));
+    setEtape("resultat");
+    setTimeout(() => {
+      modalBodyRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    }, 50);
   }
-
-  const { secteur, utilisation, salaries } = formData;
-  const nbSalaries = parseInt(salaries, 10) || 0;
-
-  const scores: Record<string, number> = {
-    industrie: 42,
-    services: 45,
-    sante: 28,
-    construction: 15,
-    commerce: 30,
-    transport: 35,
-    agroalimentaire: 38,
-    tourisme: 33,
-    energie: 40,
-    informatique: 60,
-    immobilier: 32,
-    finance: 50,
-    education: 36,
-    administration: 25,
-    autre: 35
-  };
-
-  let scoreCalc = scores[secteur] ?? 30;
-  if (utilisation === "oui") scoreCalc += 30;
-  else if (utilisation === "exp") scoreCalc += 15;
-
-  if (scoreCalc > 100) scoreCalc = 100;
-
-  const suggestions: Record<string, string> = {
-    construction:
-      "L’IA peut optimiser la gestion de vos chantiers, la planification, la gestion des stocks et l’analyse des devis.",
-    industrie:
-      "L’IA optimise la maintenance prédictive, la production et anticipe les pannes.",
-    sante:
-      "L’IA accélère la gestion des dossiers patients, aide au diagnostic et optimise les plannings.",
-    commerce:
-      "L’IA analyse les ventes, prédit les tendances et automatise la gestion des stocks.",
-    services:
-      "L’IA améliore la gestion des plannings, l’analyse client et automatise l’administratif.",
-    transport: "L’IA optimise la logistique, les itinéraires et la maintenance.",
-    agroalimentaire: "L’IA contrôle la qualité, anticipe la demande et optimise la logistique.",
-    tourisme:
-      "L’IA personnalise l’expérience client, optimise les réservations et analyse la satisfaction.",
-    energie:
-      "L’IA optimise la gestion énergétique, la maintenance et la prévision de la demande.",
-    informatique:
-      "L’IA automatise la cybersécurité, l’analyse de données et le support technique.",
-    immobilier:
-      "L’IA valorise les biens, analyse le marché et automatise la gestion locative.",
-    finance:
-      "L’IA détecte les fraudes, optimise les investissements et personnalise les offres clients.",
-    education:
-      "L’IA personnalise les parcours d’apprentissage et automatise l’évaluation.",
-    administration:
-      "L’IA simplifie la gestion documentaire et automatise le traitement des demandes.",
-    autre:
-      "L’IA automatise les tâches répétitives, analyse vos données et améliore la relation client."
-  };
-
-  const suggestionCalc = suggestions[secteur] ?? suggestions["autre"];
-
-  setScore(scoreCalc);
-  setSuggestion(suggestionCalc);
-  setOffres(getOffres(nbSalaries));
-  setEtape("resultat");
-  setTimeout(() => {
-    modalBodyRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-  }, 50);
-}
 
   function handleChoisirOffre(opt: Offre) {
     setSelectedOffer(opt);
@@ -477,14 +477,13 @@ function handleSubmit(e: FormEvent<HTMLFormElement>) {
                     <label>
                       SIREN ou SIRET
                       <input
-                        type="text"
-                        name="siren"
-                        pattern="\\d{9}|\\d{14}"
-                        title="Veuillez entrer un SIREN (9 chiffres) ou SIRET (14 chiffres)"
-                        required
-                        value={formData.siren}
-                        onChange={handleChange}
-                      />
+                       type="text"
+                       name="siren"
+                       required
+                       title="Veuillez entrer un SIREN (9 chiffres) ou SIRET (14 chiffres)"
+                       value={formData.siren}
+                       onChange={handleChange}
+                    />
                     </label>
                     <label>
                       Email professionnel
