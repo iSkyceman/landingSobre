@@ -171,7 +171,10 @@ export default function HeaderHero() {
               initial={false}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.4 }}
-              whileHover={{ scale: 1.07, boxShadow: "0 8px 32px rgba(251,191,36,0.25)" }}
+              whileHover={{
+                scale: 1.07,
+                boxShadow: "0 8px 32px rgba(251,191,36,0.25)",
+              }}
               onClick={() => window.dispatchEvent(new Event("ouvrirCalculateurIA"))}
               style={{ background: "linear-gradient(90deg, #f97316 0%, #fbbf24 100%)" }}
             >
@@ -186,7 +189,7 @@ export default function HeaderHero() {
             </motion.button>
 
             {/* Cartes */}
-            <div className="flex flex-row items-start w-full max-w-3xl mt-12">
+            <div className="flex flex-row items-start w-full max-w-3xl mt-12 landscape:flex-wrap landscape:overflow-x-auto">
               <motion.div
                 key="audit-predictif"
                 style={{
@@ -303,6 +306,7 @@ export default function HeaderHero() {
                   overflow-wrap: break-word !important;
                 }
               }
+              /* Paysage mobile : débordement possible wrap et scroll */
               @media (orientation: landscape) and (max-width: 900px) {
                 .max-w-full,
                 .w-full,
@@ -312,6 +316,14 @@ export default function HeaderHero() {
                   font-size: 3vw !important;
                   padding-left: 3vw !important;
                   padding-right: 3vw !important;
+                }
+                /* Permet le wrap pour cartes en paysage sur petit écran */
+                .landscape\\:flex-wrap {
+                  flex-wrap: wrap;
+                }
+                /* Permet scroll horizontal si débordement */
+                .landscape\\:overflow-x-auto {
+                  overflow-x: auto;
                 }
               }
             `}</style>
