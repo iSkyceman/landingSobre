@@ -30,6 +30,7 @@
   animation: fadeInOutBg 14s cubic-bezier(.77,0,.18,1) infinite alternate;
   transition: opacity 0.7s;
   filter: blur(0.5px) brightness(1.06);
+  will-change: opacity, transform;
 }
 
 @keyframes fadeInOutBg {
@@ -58,12 +59,12 @@
   width: 100vw;
   margin: 0;
   padding: 2.8rem 0.5rem 2.2rem 2rem; /* décalage gauche augmenté */
-  background: rgba(18, 28, 38, 0.68); /* translucide, modifie l'alpha si besoin */
+  background: rgba(18, 28, 38, 0.68); /* translucide */
   border-radius: 1.2rem;
   box-shadow: 0 4px 24px 0 rgba(60,140,231,0.13);
 }
 
-/* Le reste de ton style initial (titre, badge, intro, etc.) */
+/* Titres, badge, intro */
 .title {
   display: flex;
   align-items: center;
@@ -76,7 +77,7 @@
   text-align: left;
   justify-content: flex-start;
   margin-bottom: 0.5rem;
-  padding-left: 1.5rem; /* décalage à droite */
+  padding-left: 1.5rem;
 }
 
 .lockIcon {
@@ -99,7 +100,7 @@
   font-weight: 700;
   box-shadow: 0 2px 12px 0 #8be9fd44, 0 0 0.5em #a084ee33;
   text-align: left;
-  margin-left: 1.5rem; /* décalage léger à droite */
+  margin-left: 1.5rem;
   cursor: pointer;
   animation: badgePulseItech 2.5s infinite alternate;
   transition: box-shadow 0.25s, transform 0.18s;
@@ -129,7 +130,7 @@
   max-width: 720px;
   text-align: left;
   text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-  padding-left: 1.5rem; /* décalage à droite */
+  padding-left: 1.5rem;
 }
 
 .engagementBlock {
@@ -142,7 +143,7 @@
   margin-bottom: 1rem;
   color: #b3d0ff;
   text-align: left;
-  padding-left: 1.5rem; /* décalage à droite */
+  padding-left: 1.5rem;
 }
 
 .list {
@@ -150,7 +151,7 @@
   padding: 0;
   list-style: none;
   text-align: left;
-  padding-left: 1.5rem; /* décalage à droite */
+  padding-left: 1.5rem;
 }
 
 .list li {
@@ -177,15 +178,21 @@
   .title {
     font-size: 1.19em;
     gap: 0.7rem;
-    padding-left: 0.5rem; /* réduire le décalage sur petit écran */
+    padding-left: 0.5rem;
   }
   .badge {
     font-size: 0.99rem;
     padding: 0.45em 1em;
-    margin-left: 0.5rem; /* réduire le décalage */
+    margin-left: 0.5rem;
   }
   .bgImg {
     min-width: 0;
     width: 120vw;
+  }
+  .intro {
+    font-size: 1rem;
+  }
+  .subTitle {
+    font-size: 1rem;
   }
 }

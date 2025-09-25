@@ -183,7 +183,9 @@ function Tooltip({ children, content }: { children: React.ReactNode; content: Re
 export default function CalculateurIA1() {
   // États et refs
   const [showModal, setShowModal] = useState(false);
-  const [etape, setEtape] = useState<"formulaire" | "resultat" | "diagnostic" | "feuille" | "analyse" | "recap" | "confirmation">("formulaire");
+  const [etape, setEtape] = useState<
+    "formulaire" | "resultat" | "diagnostic" | "feuille" | "analyse" | "recap" | "confirmation"
+  >("formulaire");
   const [formData, setFormData] = useState({
     nom: "",
     siren: "",
@@ -354,12 +356,13 @@ export default function CalculateurIA1() {
 
   // Rendu JSX complet (incluant modale, étapes, etc.)
   return (
-    <section
-      className="calculateur-ia-section i-tech-bg"
-      id="calculateur-ia1"
-      ref={calculateurRef}
-      style={{ position: "relative", minHeight: 600, scrollMarginTop: "80px" }}
-    >
+  <div
+    ref={calculateurRef}
+    className="calculateur-ia-section i-tech-bg max-w-full w-full px-4 sm:px-6 mx-auto overflow-x-hidden"
+    style={{ position: "relative", minHeight: 600, scrollMarginTop: "80px" }}
+    id="calculateur-ia1"
+  >
+
       {/* Arrière-plan animé */}
       <div className="calculateur-ia-bg itech-animated-bg" aria-hidden="true">
         <picture>
@@ -398,14 +401,15 @@ export default function CalculateurIA1() {
           </audio>
         </div>
         <button
-          onClick={() => {
-            setShowModal(true);
-            resetModal();
-          }}
-          className="calculateur-ia-btn itech-btn"
-        >
-          Découvrir mon potentiel IA
-        </button>
+  onClick={() => {
+    setShowModal(true);
+    resetModal();
+  }}
+  className="calculateur-ia-btn itech-btn whitespace-nowrap"
+>
+  Découvrir mon potentiel IA
+</button>
+
       </div>
 
       {/* MODALE */}
@@ -805,6 +809,6 @@ export default function CalculateurIA1() {
           Accès interface gestion dossiers
         </a>
       </div>
-    </section>
+    </div>
   );
 }
