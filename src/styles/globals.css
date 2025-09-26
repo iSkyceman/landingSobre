@@ -2,11 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Variables CSS globales */
 :root {
   --background: #ffffff;
   --foreground: #171717;
   --itech-violet: #a259ff;
   --itech-cyan: #8be9fd;
+
+  --color-primary-light: #8be9fd;
+  --color-primary-dark: #a084ee;
+  --color-bg-content: rgba(18, 28, 38, 0.68);
+  --color-shadow: rgba(60, 140, 231, 0.13);
+  --color-text-light: #e6f0ff;
+  --color-text-subtitle: #b3d0ff;
+  --color-badge-text: #181c2f;
+  --color-badge-bg-start: #8be9fd;
+  --color-badge-bg-end: #a084ee;
+}
+
+/* Reset box-sizing global */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 /* Pas de mode sombre forcé ici */
@@ -16,9 +32,10 @@ body {
   color: var(--foreground);
   font-family: 'Montserrat', Arial, Helvetica, sans-serif;
   margin: 0;
+  overflow-x: hidden; /* Empêche scroll horizontal */
 }
 
-/* Styles scrollbar et placeholder conservés comme avant */
+/* Styles scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   background: #23294a;
@@ -29,12 +46,14 @@ body {
   border-radius: 8px;
 }
 
+/* Placeholder */
 input::placeholder,
 textarea::placeholder {
   color: #a084ee;
   opacity: 0.93;
 }
 
+/* Réinitialisation marges et paddings dans landing-wrapper */
 .landing-wrapper * {
   margin: 0 !important;
   padding: 0 !important;
@@ -42,6 +61,7 @@ textarea::placeholder {
   box-sizing: border-box !important;
 }
 
+/* Responsive adaptatif */
 @media (max-width: 600px) {
   .max-w-full,
   .overflow-hidden {
@@ -70,10 +90,14 @@ textarea::placeholder {
   }
 }
 
+/* Remise à zéro des marges et paddings globaux */
 html,
 body {
-  overflow-x: hidden; /* empêche scroll horizontal */
   background: transparent;
   margin: 0;
   padding: 0;
+}
+body > div:nth-child(2) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }

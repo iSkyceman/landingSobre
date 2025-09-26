@@ -1,3 +1,26 @@
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: 400px;
+  padding-bottom: 10px; /* espace suffisant sous scrollbar */
+  box-sizing: content-box;
+  scrollbar-width: thin;
+  scrollbar-color: #0051ff88 transparent;
+}
+
+.tableWrapper::-webkit-scrollbar {
+  height: 5px; /* scrollbar fine */
+}
+
+.tableWrapper::-webkit-scrollbar-thumb {
+  background-color: #0051ff88;
+  border-radius: 3px;
+  min-height: 12px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
 .tableAdmin {
   width: 100%;
   border-collapse: collapse;
@@ -6,6 +29,7 @@
   box-shadow: 0 2px 12px #0051ff22;
   font-size: 1.04em;
   margin-bottom: 20px;
+  min-width: 720px; /* largeur minimale modérée */
 }
 
 .theadMain th {
@@ -13,6 +37,8 @@
   color: #fff;
   padding: 10px;
   text-align: center;
+  white-space: nowrap;
+  font-weight: 600;
 }
 
 .tbodyRow td {
@@ -20,38 +46,61 @@
   text-align: center;
   border-bottom: 1px solid #e0eaff;
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .tbodyRow:nth-child(even) {
   background: #f7faff;
 }
+
 .tbodyRow:nth-child(odd) {
   background: #edf3ff;
 }
+
+/* Boutons */
 
 .adminBtn {
   background: #0051ff;
   color: #fff;
   border: none;
   border-radius: 5px;
-  padding: 7px 18px;
+  padding: 10px 18px;
   font-weight: 600;
   cursor: pointer;
+  min-width: 80px;
+  min-height: 38px;
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
+
 .adminBtn.Delete {
   background: #d32f2f;
 }
+
 .adminBtn.Disabled {
   opacity: 0.5;
   pointer-events: none;
   background: #ccc;
 }
 
+.adminBtn:focus-visible,
+.adminBtn:hover {
+  outline-offset: 3px;
+  outline: 3px solid #ffd18c;
+  box-shadow: 0 0 5px #ffd18caa;
+}
+
+/* Infobulle */
+
 .infobulleRoot {
   position: relative;
   display: inline-block;
   cursor: pointer;
   border-bottom: 1px dotted #0051ff;
+  outline-offset: 2px;
+}
+
+.infobulleRoot:focus {
+  outline: 3px solid #0051ff;
 }
 
 .infobulleBox {
@@ -71,9 +120,45 @@
   top: 130%;
   transform: translateX(-50%);
   font-size: 0.99em;
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.18s, transform 0.18s;
 }
 
 .infobulleRoot:hover .infobulleBox,
 .infobulleRoot:focus .infobulleBox {
   visibility: visible;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .tableAdmin {
+    min-width: auto; /* libère min-width et laisse s’adapter */
+    font-size: 0.9em;
+  }
+  .theadMain th,
+  .tbodyRow td {
+    padding: 6px 8px;
+    white-space: normal;
+  }
+  .adminBtn {
+    padding: 8px 12px;
+    min-width: 60px;
+    min-height: 34px;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .tableAdmin {
+    font-size: 0.85em;
+  }
+  .theadMain th,
+  .tbodyRow td {
+    padding: 4px 6px;
+  }
+  .tableWrapper {
+    padding-bottom: 15px; /* plus d’espace sur tout petit écran */
+  }
 }

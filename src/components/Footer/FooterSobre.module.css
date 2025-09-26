@@ -3,12 +3,11 @@
   background: none; /* Pas de dégradé orangé */
   color: #ff8c42;
   overflow: hidden;
-  padding: 2.5rem 0 2.5rem 0;
+  padding: 2.5rem 1.5rem 3rem 1.5rem;
   text-align: center;
   border-radius: 2.2rem 2.2rem 0 0;
 }
 
-/* Image de fond translucide et animée */
 .bgImage {
   position: absolute;
   inset: 0;
@@ -20,19 +19,18 @@
     );
   background-size: cover;
   background-position: center 60%;
-  opacity: 0.60; /* Ajuste pour le rendu naturel */
+  opacity: 0.6;
   pointer-events: none;
   will-change: background-position;
   animation: moveSobreBg 7s cubic-bezier(.7,0,.2,1) infinite alternate;
   transition: opacity 0.3s;
 }
 
-/* Optionnel : voile blanc translucide pour améliorer la lisibilité */
 .footer::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,0.35); /* Ajuste l'opacité selon le rendu désiré */
+  background: rgba(255,255,255,0.35);
   z-index: 1;
   pointer-events: none;
   border-radius: 2.2rem 2.2rem 0 0;
@@ -59,37 +57,48 @@
 .container {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1rem;
   position: relative;
-  z-index: 2; /* Au-dessus du voile */
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  text-align: left;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  font-size: 1rem;
+  color: #ff8c42;
 }
 
 .grid {
+  flex: 1 1 300px;
+  min-width: 280px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1.4rem;
+  gap: 1.5rem;
 }
 
 .legalLink {
-  margin: 0.7rem 0;
-  color: #ff8c42;
   font-weight: 500;
-  font-size: 1.05em;
 }
 .legalLink a {
   color: #ff8c42;
   text-decoration: underline;
   transition: color 0.2s;
+  cursor: pointer;
 }
-.legalLink a:hover { color: #ffb86c; }
+.legalLink a:hover,
+.legalLink a:focus-visible {
+  color: #ffb86c;
+  outline-offset: 2px;
+  outline: 2px solid #ffb86c;
+}
 
 .coords {
   color: #a05a2c;
-  font-size: 0.98em;
-  margin-top: 0.5rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .contactLink {
@@ -97,25 +106,38 @@
   font-weight: 600;
   text-decoration: underline;
   transition: color 0.2s;
+  cursor: pointer;
 }
-.contactLink:hover { color: #ffb86c; }
+.contactLink:hover,
+.contactLink:focus-visible {
+  color: #ffb86c;
+  outline-offset: 2px;
+  outline: 2px solid #ffb86c;
+}
 
 .social {
   display: flex;
-  gap: 1.2rem;
-  justify-content: center;
-  margin-top: 0.7rem;
+  gap: 1rem;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1.1rem;
 }
+
 .social a {
   color: #ff8c42;
   transition: color 0.3s, transform 0.2s;
   filter: drop-shadow(0 0 6px #ffd6b8aa);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .social a:hover,
-.social a:focus {
+.social a:focus-visible {
   color: #ffb86c;
   transform: scale(1.12) rotate(-3deg);
   filter: drop-shadow(0 0 12px #ffb86caa);
+  outline-offset: 3px;
+  outline: 3px solid #ffb86c;
 }
 
 .footer h3 {
@@ -127,20 +149,43 @@
   font-size: 1.2em;
 }
 
-.footer p,
-.footer a {
-  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+/* Responsive */
+
+@media (max-width: 900px) {
+  .container {
+    justify-content: center;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+  .grid {
+    flex: 1 1 100%;
+    min-width: unset;
+    align-items: center;
+  }
+  .legalLink {
+    font-size: 0.9rem;
+  }
+  .coords {
+    font-size: 0.85rem;
+  }
+  .social {
+    justify-content: center;
+    gap: 1.5rem;
+  }
 }
 
-@media (max-width: 700px) {
-  .grid { gap: 0.7rem; }
-  .footer { padding: 1.2rem 0; border-radius: 1.2rem 1.2rem 0 0; }
-  .gradient { height: 28px; border-radius: 0 0 1.2rem 1.2rem; }
-  .container { padding: 0 0.5rem; }
+@media (max-width: 600px) {
+  .footer {
+    padding: 1rem 1rem 1.5rem 1rem;
+    border-radius: 1.2rem 1.2rem 0 0;
+  }
+  .grid {
+    gap: 1rem;
+  }
+  .legalLink a {
+    font-size: 0.85rem;
+  }
+  .social a {
+    font-size: 1.6rem;
+  }
 }
-
-@media (max-width: 420px) {
-  .footer { font-size: 0.97em; }
-  .gradient { height: 18px; }
-}
-

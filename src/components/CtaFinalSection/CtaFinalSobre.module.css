@@ -2,7 +2,7 @@
   background: linear-gradient(120deg, #fff7f0 0%, #ffe4cc 60%, #ffd6b8 100%);
   border-top: 1px solid #ffd7b899;
   text-align: center;
-  padding: 3.2rem 1rem 3.6rem 1rem;
+  padding: clamp(2rem, 4vw, 3.6rem) clamp(1rem, 4vw, 3rem);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,18 +23,18 @@
     0 0 4px #ffb86c;
   text-align: center;
   margin-bottom: 0.7rem;
-  font-size: 2.1em;
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
   font-weight: 800;
-  display: block;
   filter: drop-shadow(0 0 8px #ffd6b8cc);
+  line-height: 1.1;
 }
 
 .ctaButton {
   background: linear-gradient(90deg, #ffb86c 0%, #ff8c42 100%);
   color: #fff;
   border: 2px solid #ffd6b8;
-  padding: 1em 2.4em;
-  font-size: 1.16em;
+  padding: clamp(0.8rem, 1.5vw, 1.2rem) clamp(1.5rem, 4vw, 2.4rem);
+  font-size: clamp(1rem, 3vw, 1.16rem);
   font-weight: 700;
   border-radius: 2rem;
   cursor: pointer;
@@ -51,15 +51,17 @@
   animation: ctaPulseOrange 2.7s infinite alternate;
   position: relative;
   z-index: 1;
+  min-height: 48px; /* accessible touch target */
 }
 
 .ctaButton:hover,
-.ctaButton:focus {
+.ctaButton:focus-visible {
   background: linear-gradient(90deg, #ff8c42 0%, #ffb86c 100%);
   box-shadow: 0 8px 28px #ffb86c77, 0 0 16px #ffd6b8cc;
-  transform: scale(1.045);
+  transform: scale(1.05);
   filter: brightness(1.08) drop-shadow(0 0 10px #ffb86cbb);
   border-color: #ff8c42;
+  outline-offset: 4px; /* meilleure visibilité focus */
 }
 
 @keyframes ctaPulseOrange {
@@ -68,18 +70,20 @@
 }
 
 /* Responsive */
+
 @media (max-width: 600px) {
   .section {
-    padding: 2rem 0.5rem 2.5rem 0.5rem;
+    padding: 2rem 1rem 2.5rem 1rem;
     border-radius: 1.2rem;
     max-width: 98vw;
   }
   .title {
-    font-size: 1.22em;
+    font-size: 1.3rem;
   }
   .ctaButton {
-    font-size: 1em;
+    font-size: 1rem;
     padding: 0.85em 1.2em;
     border-radius: 1.2rem;
+    min-height: 48px;
   }
 }

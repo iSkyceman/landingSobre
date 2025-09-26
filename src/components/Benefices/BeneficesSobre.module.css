@@ -1,40 +1,21 @@
 .section {
   background: #fff;
-  padding: 3rem 0; /* Padding vertical conservé, padding horizontal supprimé */
+  padding: 3rem 1rem;
   box-sizing: border-box;
 }
 
-/* Grille responsive avec centrage et largeur max */
 .grid {
   display: grid !important;
-  grid-template-columns: repeat(1, 1fr) !important;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
   gap: 1.5rem !important;
-  max-width: 100% !important; /* Pour occuper toute la largeur */
-  margin-left: 0 !important;   /* Suppression du centrage par marges auto */
-  margin-right: 0 !important;
+  max-width: 112rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   box-sizing: border-box;
-  padding-left: 0;   /* Suppression du padding horizontal */
-  padding-right: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-/* Responsive col count */
-@media (min-width: 640px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-@media (min-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-}
-@media (min-width: 1280px) {
-  .grid {
-    grid-template-columns: repeat(6, 1fr) !important;
-  }
-}
-
-/* Cartes */
 .card {
   background: #fff;
   border-radius: 1.5rem;
@@ -52,7 +33,6 @@
   width: auto;
 }
 
-/* Hover cartes */
 .card:focus-visible,
 .card:hover {
   border-color: #FF8C42;
@@ -60,7 +40,6 @@
   outline: none;
 }
 
-/* Icônes wrapper */
 .iconWrapper {
   display: flex;
   align-items: center;
@@ -74,7 +53,6 @@
   transition: transform 0.2s;
 }
 
-/* Hover icônes */
 .card:hover .iconWrapper,
 .card:focus-visible .iconWrapper {
   transform: scale(1.08);
@@ -84,26 +62,23 @@
   filter: drop-shadow(0 2px 12px #f76d3c55);
 }
 
-/* Titres cartes */
 .cardTitle {
   font-weight: 700;
   font-size: 1.1rem;
   color: #1a1a1a;
   margin-bottom: 0.5rem;
   text-align: left;
-  padding-left: 0.5rem; /* léger décalage */
+  padding-left: 0.5rem;
 }
 
-/* Description cartes */
 .cardDesc {
   color: #444;
   font-size: 1rem;
   opacity: 0.92;
   text-align: left;
-  padding-left: 0.5rem; /* léger décalage */
+  padding-left: 0.5rem;
 }
 
-/* Highlight */
 .highlight {
   position: absolute;
   left: 0;
@@ -116,8 +91,35 @@
   transition: opacity 0.2s;
 }
 
-/* Hover highlight */
 .card:hover .highlight,
 .card:focus-visible .highlight {
   opacity: 1;
+}
+
+/* Responsive landscape and mobile */
+@media (max-width: 900px) and (orientation: landscape) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+    gap: 1rem !important;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .card {
+    padding: 1.5rem 0.75rem 1rem 0.75rem;
+    min-height: 140px;
+  }
+
+  .cardTitle, .cardDesc {
+    padding-left: 0.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }

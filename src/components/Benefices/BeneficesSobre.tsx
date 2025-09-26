@@ -27,10 +27,9 @@ const benefices = [
 export default function BeneficesSobre() {
   return (
     <section className={styles.section}>
-      {/* Définition des gradients SVG */}
       <svg width="0" height="0" style={{ position: "absolute" }}>
         <defs>
-          {gradients.map(g => (
+          {gradients.map((g) => (
             <linearGradient id={g.id} key={g.id} x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor={g.from} />
               <stop offset="100%" stopColor={g.to} />
@@ -42,8 +41,8 @@ export default function BeneficesSobre() {
         <h2 className="calculateur-ia-title mb-10 text-3xl font-bold text-center">
           Bénéfices Concrets &amp; Premium
         </h2>
-        {/* Grille responsive avec CSS module */}
-        <div className={styles.grid}>
+
+        <div className={styles.gridResponsive}>
           {benefices.map((b, i) => {
             const Icon = icons[i];
             return (

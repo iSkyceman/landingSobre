@@ -2,15 +2,16 @@
 
 .section {
   background: #fff9f5;
-  padding: 48px 0 60px 0;
+  padding: clamp(3rem, 5vw, 4rem) 0 clamp(3rem, 5vw, 4rem) 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 clamp(1rem, 3vw, 2rem);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -19,8 +20,8 @@
 
 /* TITRE & ICONES */
 .title {
-  margin-top: 2.5rem;
-  font-size: 2.5rem;
+  margin-top: clamp(2rem, 3vw, 2.5rem);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
   font-weight: 900;
   margin-bottom: 14px;
   display: flex;
@@ -38,13 +39,17 @@
   transition: transform 0.6s cubic-bezier(.77,0,.18,1), opacity 0.6s;
 }
 @keyframes fadeInTitle {
-  to { opacity: 1; transform: translateY(0) scale(1.04);}
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1.04);
+  }
 }
 
 .icon {
   color: #F76D3C;
   font-size: 1.35em;
 }
+
 .subtitle {
   font-size: 1.18rem;
   color: #384057;
@@ -57,16 +62,16 @@
 .grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: clamp(16px, 3vw, 32px);
   justify-content: center;
-  margin: 36px 0 0 0;
+  margin-top: clamp(24px, 3vw, 36px);
 }
 .card {
   background: #fff;
   border-radius: 22px;
-  box-shadow: 0 2px 24px rgba(247,109,60,0.08);
-  padding: 32px 26px 24px 26px;
-  min-width: 290px;
+  box-shadow: 0 2px 24px rgba(247, 109, 60, 0.08);
+  padding: clamp(20px, 3vw, 32px) clamp(15px, 2vw, 26px) clamp(16px, 2vw, 24px) clamp(15px, 2vw, 26px);
+  min-width: 260px;
   max-width: 340px;
   flex: 1 1 280px;
   display: flex;
@@ -75,15 +80,16 @@
   position: relative;
   transition: box-shadow 0.18s;
   border: 1.5px solid #FFB86C22;
+  cursor: pointer;
 }
 .card:hover {
-  box-shadow: 0 6px 32px rgba(247,109,60,0.16);
+  box-shadow: 0 6px 32px rgba(247, 109, 60, 0.16);
   border-color: #FF8C42;
 }
 
 /* PRIX & BADGES */
 .price {
-  font-size: 1.5em;
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
   font-weight: 800;
   color: #F76D3C;
   margin: 10px 0 8px 0;
@@ -110,11 +116,11 @@
 /* SELECT (tranches taille) */
 .select {
   width: 100%;
-  padding: 9px 12px;
+  padding: 12px 16px;
   border-radius: 1.2rem;
   border: 2px solid #FF8C42;
   margin-bottom: 12px;
-  font-size: 1.05em;
+  font-size: clamp(1rem, 2.5vw, 1.05em);
   font-weight: 600;
   background: #f7fafd;
   color: #181c2f;
@@ -229,7 +235,6 @@
 .ctaMain {
   min-width: 0;
   max-width: 100%;
-  width: auto;
   background: linear-gradient(90deg, #FFB86C 0%, #FF8C42 60%, #F76D3C 100%);
   color: #fff;
   font-weight: 800;
@@ -240,7 +245,7 @@
   cursor: pointer;
   box-shadow: 0 2px 18px 0 #F76D3C22;
   transition: background 0.18s, box-shadow 0.18s, transform 0.16s;
-  white-space: nowrap;      /* force UNE ligne, tous les boutons alignés */
+  white-space: nowrap; /* force UNE ligne */
   word-break: break-word;
   overflow-wrap: break-word;
   outline: none;
@@ -282,7 +287,9 @@
 }
 
 /* LIGNES UTILITAIRES */
-.nobr { white-space: nowrap; }
+.nobr {
+  white-space: nowrap;
+}
 
 /* MODALE/TUNNEL */
 .modalBg {
@@ -296,8 +303,12 @@
   animation: fadeIn 0.25s;
 }
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .modal {
   background: #fff;
@@ -315,8 +326,14 @@
   overflow-y: auto;
 }
 @keyframes slideIn {
-  from { transform: translateY(40px); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 .modalHeader {
   display: flex;
@@ -330,9 +347,19 @@
 .modalClose {
   background: transparent;
   border: none;
-  color: #fff;
   font-size: 1.7em;
+  position: absolute;
+  top: 18px;
+  right: 30px;
   cursor: pointer;
+  color: #ff8c42;
+  opacity: 0.65;
+  z-index: 100;
+  transition: color 0.2s;
+}
+.modalClose:hover {
+  color: #f76d3c;
+  opacity: 1;
 }
 .modalBody {
   padding: 28px 28px 0 28px;
@@ -343,11 +370,29 @@
 
 /* RESPONSIVE */
 @media (max-width: 700px) {
-  .container { padding: 0 4px; }
-  .grid { flex-direction: column; gap: 18px; }
-  .card { padding: 16px 6px; min-width: 0; }
-  .modal { max-width: 99vw; }
-  .modalBody { padding: 18px 8px 0 8px; }
-  .form { padding: 12px 4vw 6px 4vw; border-radius: 12px; }
-  .ctaMain { font-size: 1em; padding: 12px 12px; }
+  .container {
+    padding: 0 4px;
+  }
+  .grid {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .card {
+    padding: 16px 6px;
+    min-width: 0;
+  }
+  .modal {
+    max-width: 99vw;
+  }
+  .modalBody {
+    padding: 18px 8px 0 8px;
+  }
+  .form {
+    padding: 12px 4vw 6px 4vw;
+    border-radius: 12px;
+  }
+  .ctaMain {
+    font-size: 1em;
+    padding: 12px 12px;
+  }
 }

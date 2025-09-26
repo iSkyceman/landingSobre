@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import { FaCertificate, FaChartLine, FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaCertificate, FaChartLine } from "react-icons/fa";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 
 const titleVariants: Variants = {
@@ -17,10 +17,29 @@ const titleVariants: Variants = {
   },
 };
 
+function useOrientation() {
+  const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
+
+  useEffect(() => {
+    function checkOrientation() {
+      const match = window.matchMedia(
+        "(orientation: landscape) and (max-width: 900px)"
+      );
+      setIsLandscapeMobile(match.matches);
+    }
+    checkOrientation();
+    window.addEventListener("resize", checkOrientation);
+    return () => window.removeEventListener("resize", checkOrientation);
+  }, []);
+
+  return isLandscapeMobile;
+}
+
 export default function HeaderHero() {
   const [pos, setPos] = useState({ x: 50, y: 50 });
   const ref = useRef<HTMLElement>(null);
   const [isVisible] = useState(true);
+  const isLandscapeMobile = useOrientation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,15 +66,18 @@ export default function HeaderHero() {
 
   const handleMouseLeave = () => setPos({ x: 50, y: 50 });
 
+  const horizontalMargin = isLandscapeMobile ? "1rem" : "max(3vw, 2rem)";
+  const headerMinHeight = isLandscapeMobile ? "70vh" : "100vh";
+
   return (
     <header
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-screen overflow-hidden"
-      style={{ cursor: "pointer" }}
+      className="relative w-full overflow-hidden"
+      style={{ cursor: "pointer", minHeight: headerMinHeight }}
     >
-      {/* Image background */}
+      {/* Background image */}
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -84,8 +106,8 @@ export default function HeaderHero() {
             transition={{ duration: 0.8 }}
             className="relative z-20 flex flex-col items-start w-full max-w-7xl"
             style={{
-              marginLeft: "max(3vw, 2rem)",
-              marginRight: "max(3vw, 2rem)",
+              marginLeft: horizontalMargin,
+              marginRight: horizontalMargin,
               paddingTop: "6rem",
               paddingBottom: "2rem",
             }}
@@ -107,14 +129,14 @@ export default function HeaderHero() {
               />
             </motion.div>
 
-            {/* Container anti-débordement pour titre + texte */}
+            {/* Content container */}
             <div
               className="w-full max-w-full"
               style={{
                 boxSizing: "border-box",
                 overflow: "hidden",
-                paddingLeft: "0",
-                paddingRight: "0",
+                paddingLeft: 0,
+                paddingRight: 0,
               }}
             >
               <motion.h1
@@ -164,7 +186,7 @@ export default function HeaderHero() {
               </motion.p>
             </div>
 
-            {/* CTA */}
+            {/* Call to action button */}
             <motion.button
               type="button"
               className="flex justify-center items-center gap-3 bg-gradient-to-r from-orange-500 via-orange-400 to-yellow-400 hover:from-orange-600 hover:to-yellow-500 text-white font-extrabold py-3 px-7 rounded-full shadow-2xl uppercase tracking-wider animate-btn-pop transition-all duration-200 text-base sm:text-lg md:text-xl hover:scale-105 focus:ring-2 focus:ring-orange-200 mb-12 max-w-md"
@@ -188,7 +210,7 @@ export default function HeaderHero() {
               </motion.span>
             </motion.button>
 
-            {/* Cartes */}
+            {/* Bottom cards */}
             <div className="flex flex-row items-start w-full max-w-3xl mt-12 landscape:flex-wrap landscape:overflow-x-auto">
               <motion.div
                 key="audit-predictif"
@@ -327,9 +349,9 @@ export default function HeaderHero() {
                 }
               }
             `}</style>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
-  );
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
 }

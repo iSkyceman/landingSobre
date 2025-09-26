@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation';
-import styles from './AdminDossiers.module.css';
+import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import styles from "./AdminDossiers.module.css";
+import { getDossiers, setDossiers, supprimerDossier as delDossier, supprimerSelection as delSelection } from "./services/DataService";
 
 type Dossier = {
   reference: string;
@@ -15,28 +16,33 @@ type Dossier = {
   sujets?: { [key: string]: string };
   observation?: string;
   provenance?: string;
-  contrat?: string;  // Contrat HTML complet
+  contrat?: string;
 };
 
 export default function AdminDossiers() {
-  const [dossiers, setDossiers] = useState<Dossier[] | null>(null);
+  const [dossiers, setDossiersState] = useState<Dossier[] | null>(null);
   const [modalContent, setModalContent] = useState<string | null>(null);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const router = useRouter();
+  const tableWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const isAdmin = localStorage.getItem('isAdmin');
+    const isAdmin = localStorage.getItem("isAdmin");
     if (!isAdmin) {
-      router.replace('/login');
+      router.replace("/login");
     } else {
-      const saved = localStorage.getItem("dossiers");
-      setDossiers(saved ? JSON.parse(saved) : []);
+      getDossiers().then(setDossiersState);
     }
   }, [router]);
 
-  // Toggle sélection individuelle
+  useEffect(() => {
+    if (tableWrapperRef.current) {
+      tableWrapperRef.current.scrollLeft = 0;
+    }
+  }, [dossiers]);
+
   function toggleSelection(ref: string) {
-    setSelected(prev => {
+    setSelected((prev) => {
       const newSelected = new Set(prev);
       if (newSelected.has(ref)) {
         newSelected.delete(ref);
@@ -47,63 +53,68 @@ export default function AdminDossiers() {
     });
   }
 
-  // Toggle sélection tous/désélection tous
   function toggleSelectAll() {
     if (!dossiers) return;
     if (selected.size === dossiers.length) {
       setSelected(new Set());
     } else {
-      setSelected(new Set(dossiers.map(d => d.reference)));
+      setSelected(new Set(dossiers.map((d) => d.reference)));
     }
   }
 
-  // Supprimer un dossier
-  function supprimerDossier(ref: string) {
+  async function supprimerDossier(ref: string) {
     if (!window.confirm("Supprimer ce dossier ?")) return;
-    if (dossiers) {
-      const updated = dossiers.filter(d => d.reference !== ref);
-      setDossiers(updated);
-      localStorage.setItem("dossiers", JSON.stringify(updated));
-      setSelected(prev => {
-        const newSelected = new Set(prev);
-        newSelected.delete(ref);
-        return newSelected;
-      });
-    }
+    const updated = await delDossier(ref);
+    setDossiersState(updated);
+    setSelected((prev) => {
+      const newSelected = new Set(prev);
+      newSelected.delete(ref);
+      return newSelected;
+    });
   }
 
-  // Supprimer la sélection multiple
-  function supprimerSelection() {
+  async function supprimerSelection() {
     if (selected.size === 0) return;
-    if (!window.confirm(`Supprimer ${selected.size} dossier${selected.size > 1 ? "s" : ""} ?`)) return;
-    if (dossiers) {
-      const updated = dossiers.filter(d => !selected.has(d.reference));
-      setDossiers(updated);
-      localStorage.setItem("dossiers", JSON.stringify(updated));
-      setSelected(new Set());
-    }
+    if (!window.confirm(`Supprimer ${selected.size} dossier${selected.size > 1 ? "s" : ""} ?`))
+      return;
+    const updated = await delSelection(selected);
+    setDossiersState(updated);
+    setSelected(new Set());
   }
 
-  // Export CSV
   function exportCSV() {
     if (!dossiers || dossiers.length === 0) return;
     const sep = ";";
     const headers = [
-      "N° dossier", "Offre", "Nom", "Email", "SIREN", "Effectif", "Prix", "Date", "Sujets", "Observation", "Provenance"
+      "N° dossier",
+      "Offre",
+      "Nom",
+      "Email",
+      "SIREN",
+      "Effectif",
+      "Prix",
+      "Date",
+      "Sujets",
+      "Observation",
+      "Provenance",
     ];
-    const rows = dossiers.map(d => [
-      d.reference,
-      d.offre?.nom || "",
-      d.nom || "",
-      d.email || "",
-      d.siren || "",
-      d.effectif || "",
-      d.prix ?? "",
-      d.date ? new Date(d.date).toLocaleString() : "",
-      d.sujets ? Object.values(d.sujets).join(" / ") : "",
-      d.observation || "",
-      d.provenance || "?"
-    ].map(cell => `"${(cell ?? "").toString().replace(/"/g, '""')}"`).join(sep));
+    const rows = dossiers.map((d) =>
+      [
+        d.reference,
+        d.offre?.nom || "",
+        d.nom || "",
+        d.email || "",
+        d.siren || "",
+        d.effectif || "",
+        d.prix ?? "",
+        d.date ? new Date(d.date).toLocaleString() : "",
+        d.sujets ? Object.values(d.sujets).join(" / ") : "",
+        d.observation || "",
+        d.provenance || "?",
+      ]
+        .map((cell) => `"${(cell ?? "").toString().replace(/"/g, '""')}"`)
+        .join(sep)
+    );
     const csv = [headers.join(sep), ...rows].join("\r\n");
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
@@ -126,8 +137,8 @@ export default function AdminDossiers() {
       <div style={{ marginBottom: 20 }}>
         <button
           onClick={() => {
-            localStorage.removeItem('isAdmin');
-            router.push('/');
+            localStorage.removeItem("isAdmin");
+            router.push("/");
           }}
           className={styles.adminBtn}
           style={{ background: "#999", marginBottom: 10 }}
@@ -136,7 +147,9 @@ export default function AdminDossiers() {
         </button>
       </div>
 
-      <div style={{ marginBottom: 18, display: "flex", alignItems: "center", gap: "15px" }}>
+      <div
+        style={{ marginBottom: 18, display: "flex", alignItems: "center", gap: "15px" }}
+      >
         <button
           onClick={exportCSV}
           disabled={dossiers.length === 0}
@@ -159,12 +172,46 @@ export default function AdminDossiers() {
       </div>
 
       {modalContent && (
-        <div className={styles.modalOverlay} onClick={() => setModalContent(null)} style={{
-          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-          backgroundColor: 'rgba(0,0,0,0.4)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 4000
-        }}>
-          <div style={{backgroundColor: '#fff', padding: 30, borderRadius: 10, maxWidth: '90%', maxHeight: '90%', overflowY: 'auto', position: 'relative'}} onClick={e => e.stopPropagation()}>
-            <button onClick={() => setModalContent(null)} style={{position: 'absolute', top: 10, right: 15, fontSize: 24, border: 'none', background: 'none', cursor: 'pointer'}}>
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setModalContent(null)}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0,0,0,0.4)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 4000,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#fff",
+              padding: 30,
+              borderRadius: 10,
+              maxWidth: "90%",
+              maxHeight: "90%",
+              overflowY: "auto",
+              position: "relative",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setModalContent(null)}
+              style={{
+                position: "absolute",
+                top: 10,
+                right: 15,
+                fontSize: 24,
+                border: "none",
+                background: "none",
+                cursor: "pointer",
+              }}
+            >
               ×
             </button>
             <div dangerouslySetInnerHTML={{ __html: modalContent }} />
@@ -173,9 +220,10 @@ export default function AdminDossiers() {
       )}
 
       {dossiers.length === 0 && <p>Aucun dossier enregistré.</p>}
+
       {dossiers.length > 0 && (
-        <div style={{ overflowX: 'auto' }}>
-          <table className={styles.table}>
+        <div ref={tableWrapperRef} className={styles.tableWrapper}>
+          <table className={styles.tableAdmin} style={{ minWidth: "1200px" }}>
             <thead>
               <tr className={styles.theadMain}>
                 <th>
@@ -203,7 +251,9 @@ export default function AdminDossiers() {
             </thead>
             <tbody>
               {dossiers.map((dossier) => {
-                const sujetsList = dossier.sujets ? Object.values(dossier.sujets).filter(s => s && s.trim() !== "") : [];
+                const sujetsList = dossier.sujets
+                  ? Object.values(dossier.sujets).filter((s) => s && s.trim() !== "")
+                  : [];
                 return (
                   <tr key={dossier.reference} className={styles.tbodyRow}>
                     <td>
@@ -219,52 +269,80 @@ export default function AdminDossiers() {
                     <td>{dossier.nom || ""}</td>
                     <td>{dossier.email || "—"}</td>
                     <td>
-                      <a href={`https://annuaire-entreprises.data.gouv.fr/entreprise/${dossier.siren}`} target="_blank" rel="noopener noreferrer" style={{ color: "#0051ff", textDecoration: "underline" }}>
+                      <a
+                        href={`https://annuaire-entreprises.data.gouv.fr/entreprise/${dossier.siren}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: "#0051ff", textDecoration: "underline" }}
+                      >
                         {dossier.siren}
                       </a>
                     </td>
                     <td>{dossier.effectif}</td>
                     <td>{dossier.prix ?? "—"}</td>
                     <td>{dossier.date ? new Date(dossier.date).toLocaleString() : ""}</td>
-                    <td>{sujetsList.length > 0 ? (
-                      <span className={styles.infobulleRoot} tabIndex={0}>
-                        {sujetsList.length} sujet{(sujetsList.length > 1 ? "s" : "")}
-                        <span className={styles.infobulleBox}>
-                          {sujetsList.map((r, i) => <div key={i}>{r}</div>)}
-                        </span>
-                      </span>
-                    ) : "—"}</td>
-                    <td>{dossier.observation && dossier.observation.trim() !== "" ? (
-                      <span className={styles.infobulleRoot} tabIndex={0}>
-                        Voir
-                        <span className={styles.infobulleBox} style={{whiteSpace: 'pre-line', maxWidth: 340}}>
-                          {dossier.observation}
-                        </span>
-                      </span>
-                    ) : "—"}</td>
                     <td>
-                  {dossier.contrat ? (
-                  <button onClick={() => setModalContent(dossier.contrat ?? null)} style={{ cursor: 'pointer' }}>
-                  Voir contrat
-                  </button>
-                  ) : "—"}
-                  </td>
+                      {sujetsList.length > 0 ? (
+                        <span className={styles.infobulleRoot} tabIndex={0}>
+                          {sujetsList.length} sujet{(sujetsList.length > 1 ? "s" : "")}
+                          <span className={styles.infobulleBox}>
+                            {sujetsList.map((r, i) => (
+                              <div key={i}>{r}</div>
+                            ))}
+                          </span>
+                        </span>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
                     <td>
-                      <span style={{
-                        color:
-                          dossier.provenance === "NosOffresSobre" ? "#FF8C42" :
-                          dossier.provenance === "NosOffresItech" ? "#0051ff" :
-                          dossier.provenance === "CalculateurItech" ? "#00eaff" :
-                          dossier.provenance === "CalculateurSobre" ? "#F76D3C" :
-                          dossier.provenance === "abosDataPlusItech" ? "#4e50ff" :
-                          "#888",
-                        fontWeight: 600
-                      }}>
+                      {dossier.observation && dossier.observation.trim() !== "" ? (
+                        <span className={styles.infobulleRoot} tabIndex={0}>
+                          Voir
+                          <span className={styles.infobulleBox} style={{ whiteSpace: "pre-line", maxWidth: 340 }}>
+                            {dossier.observation}
+                          </span>
+                        </span>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
+                    <td>
+                      {dossier.contrat ? (
+                        <button onClick={() => setModalContent(dossier.contrat ?? null)} style={{ cursor: "pointer" }}>
+                          Voir contrat
+                        </button>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
+                    <td>
+                      <span
+                        style={{
+                          color:
+                            dossier.provenance === "NosOffresSobre"
+                              ? "#FF8C42"
+                              : dossier.provenance === "NosOffresItech"
+                              ? "#0051ff"
+                              : dossier.provenance === "CalculateurItech"
+                              ? "#00eaff"
+                              : dossier.provenance === "CalculateurSobre"
+                              ? "#F76D3C"
+                              : dossier.provenance === "abosDataPlusItech"
+                              ? "#4e50ff"
+                              : "#888",
+                          fontWeight: 600,
+                        }}
+                      >
                         {dossier.provenance || "?"}
                       </span>
                     </td>
                     <td>
-                      <button onClick={() => supprimerDossier(dossier.reference)} className={`${styles.adminBtn} ${styles.Delete}`} title="Supprimer ce dossier">
+                      <button
+                        onClick={() => supprimerDossier(dossier.reference)}
+                        className={`${styles.adminBtn} ${styles.Delete}`}
+                        title="Supprimer ce dossier"
+                      >
                         🗑️ Supprimer
                       </button>
                     </td>
@@ -278,3 +356,4 @@ export default function AdminDossiers() {
     </main>
   );
 }
+
