@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./AdminDossiers.module.css";
-import { getDossiers, setDossiers, supprimerDossier as delDossier, supprimerSelection as delSelection } from "./services/DataService";
+import { getDossiers, setDossiers, supprimerDossier as delDossier, supprimerSelection as delSelection } from "../../services/DataService";
 
 type Dossier = {
   reference: string;
