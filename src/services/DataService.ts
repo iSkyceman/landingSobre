@@ -1,5 +1,5 @@
-// services/DataService.ts
-import type { Dossier } from '../app/admin-dossiers/page'; // adapte le chemin si besoin
+// src/services/DataService.ts
+import type { Dossier } from '../types/dossier';
 
 export async function getDossiers(): Promise<Dossier[]> {
   if (typeof window === 'undefined') return [];

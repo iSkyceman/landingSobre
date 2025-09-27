@@ -1,26 +1,14 @@
-"use client";
+'use client';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./AdminDossiers.module.css";
-import { getDossiers, setDossiers, supprimerDossier as delDossier, supprimerSelection as delSelection } from "../../services/DataService";
-
-type Dossier = {
-  reference: string;
-  offre: { nom: string };
-  nom: string;
-  email?: string;
-  siren: string;
-  effectif: string;
-  prix?: string;
-  date: string;
-  sujets?: { [key: string]: string };
-  observation?: string;
-  provenance?: string;
-  contrat?: string;
-};
+import { getDossiers, supprimerDossier as delDossier, supprimerSelection as delSelection } from "@services/DataService";
+import type { Dossier } from "@models/dossier";
 
 export default function AdminDossiers() {
-  const [dossiers, setDossiersState] = useState<Dossier[] | null>(null);
+  const [dossiers, setDossiersState] = useState<Dossier[]>([]);
   const [modalContent, setModalContent] = useState<string | null>(null);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const router = useRouter();
@@ -31,7 +19,7 @@ export default function AdminDossiers() {
     if (!isAdmin) {
       router.replace("/login");
     } else {
-      getDossiers().then(setDossiersState);
+      getDossiers().then((dossiers) => setDossiersState(dossiers));
     }
   }, [router]);
 
@@ -129,7 +117,9 @@ export default function AdminDossiers() {
     }, 100);
   }
 
-  if (dossiers === null) return null;
+  if (dossiers.length === 0) {
+    return <p>Aucun dossier enregistré.</p>;
+  }
 
   return (
     <main style={{ padding: 20, maxWidth: 1200, margin: "auto" }}>
@@ -146,7 +136,6 @@ export default function AdminDossiers() {
           🔒 Déconnexion
         </button>
       </div>
-
       <div
         style={{ marginBottom: 18, display: "flex", alignItems: "center", gap: "15px" }}
       >
@@ -157,7 +146,6 @@ export default function AdminDossiers() {
         >
           Exporter CSV
         </button>
-
         <button
           onClick={supprimerSelection}
           disabled={selected.size === 0}
@@ -165,12 +153,10 @@ export default function AdminDossiers() {
         >
           Supprimer la sélection
         </button>
-
         <span style={{ color: "#888", fontSize: "0.97em" }}>
           {dossiers.length} dossier{dossiers.length > 1 ? "s" : ""}
         </span>
       </div>
-
       {modalContent && (
         <div
           className={styles.modalOverlay}
@@ -218,9 +204,6 @@ export default function AdminDossiers() {
           </div>
         </div>
       )}
-
-      {dossiers.length === 0 && <p>Aucun dossier enregistré.</p>}
-
       {dossiers.length > 0 && (
         <div ref={tableWrapperRef} className={styles.tableWrapper}>
           <table className={styles.tableAdmin} style={{ minWidth: "1200px" }}>
@@ -356,4 +339,3 @@ export default function AdminDossiers() {
     </main>
   );
 }
-

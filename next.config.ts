@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
       '@utils': path.resolve(__dirname, 'src/utils'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
       '@styles': path.resolve(__dirname, 'src/styles'),
+      '@services': path.resolve(__dirname, 'src/services'),
+      '@models': path.resolve(__dirname, 'src/types')  // parfaitement identique à tsconfig.json
     };
     return config;
   },
@@ -18,8 +20,10 @@ const nextConfig: NextConfig = {
       '@utils': 'src/utils',
       '@hooks': 'src/hooks',
       '@styles': 'src/styles',
-    },
-  },
+      '@services': 'src/services',
+      '@models': 'src/types' // idem
+    }
+  }
 };
 
 export default nextConfig;
