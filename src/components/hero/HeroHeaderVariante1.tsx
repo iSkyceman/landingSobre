@@ -156,7 +156,7 @@ export default function HeaderHero() {
               >
                 Transformez votre entreprise
                 <span className="block" style={{ color: "white" }}>
-                  avec l’IA humaine
+                  avec l’IA avancé
                 </span>
               </motion.h1>
               <motion.p

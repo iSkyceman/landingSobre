@@ -176,7 +176,7 @@ export default function HeaderHero() {
           style={{ fontSize: "clamp(1.4rem, 5vw, 2.8rem)", lineHeight: 1.15 }}
           tabIndex={0}
         >
-          Transformez votre entreprise avec <GlitchText>l’IA humaine</GlitchText>
+          Transformez votre entreprise avec <GlitchText>l’IA avancé</GlitchText>
         </h1>
 
         {/* Texte descriptif */}

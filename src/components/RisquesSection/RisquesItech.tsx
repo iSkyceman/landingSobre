@@ -27,7 +27,7 @@ const icons = [
 const risques = [
   {
     title: "Perte de compétitivité",
-    desc: "Perdre 15 % de productivité/an face aux entreprises adoptant l&apos;IA",
+    desc: "Perdre 15 % de productivité/an face aux entreprises adoptant l'IA",
   },
   {
     title: "Pannes imprévues",
@@ -35,7 +35,7 @@ const risques = [
   },
   {
     title: "Retard sur vos concurrents",
-    desc: "Vos concurrents prendront de l&apos;avance stratégique",
+    desc: "Vos concurrents prendront de l'avance stratégique",
   },
   {
     title: "Mises réglementaires",
@@ -47,7 +47,7 @@ const risques = [
   },
   {
     title: "Obsolescence accélérée",
-    desc: "Perte de pertinence face à l&apos;évolution technologique rapide",
+    desc: "Perte de pertinence face à l'évolution technologique rapide",
   },
 ];
 
