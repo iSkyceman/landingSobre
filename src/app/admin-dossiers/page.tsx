@@ -5,12 +5,16 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./AdminDossiers.module.css";
 import { getDossiers, supprimerDossier as delDossier, supprimerSelection as delSelection } from "@services/DataService";
+import { syncAllDossiers } from "@services/SyncService";
 import type { Dossier } from "@models/dossier";
 
 export default function AdminDossiers() {
   const [dossiers, setDossiersState] = useState<Dossier[]>([]);
   const [modalContent, setModalContent] = useState<string | null>(null);
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(false);
+  const [syncLoading, setSyncLoading] = useState(false);
+  const [syncStatus, setSyncStatus] = useState<string>("");
   const router = useRouter();
   const tableWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -28,6 +32,26 @@ export default function AdminDossiers() {
       tableWrapperRef.current.scrollLeft = 0;
     }
   }, [dossiers]);
+
+  // FONCTION DE SYNCHRONISATION AVEC L'APP PRINCIPALE
+  async function synchroniserDossiers() {
+    if (!window.confirm("Synchroniser tous les dossiers vers l'application principale ?")) return;
+    
+    setSyncLoading(true);
+    setSyncStatus("⏳ Synchronisation en cours...");
+    
+    try {
+      await syncAllDossiers();
+      setSyncStatus("✅ Synchronisation terminée avec succès !");
+      setTimeout(() => setSyncStatus(""), 5000); // Efface le message après 5s
+    } catch (error) {
+      console.error('Erreur synchronisation:', error);
+      setSyncStatus("❌ Erreur lors de la synchronisation");
+      setTimeout(() => setSyncStatus(""), 5000);
+    } finally {
+      setSyncLoading(false);
+    }
+  }
 
   function toggleSelection(ref: string) {
     setSelected((prev) => {
@@ -124,6 +148,8 @@ export default function AdminDossiers() {
   return (
     <main style={{ padding: 20, maxWidth: 1200, margin: "auto" }}>
       <h1>Interface de gestion des dossiers</h1>
+      
+      {/* SECTION BOUTONS PRINCIPAUX */}
       <div style={{ marginBottom: 20 }}>
         <button
           onClick={() => {
@@ -135,7 +161,39 @@ export default function AdminDossiers() {
         >
           🔒 Déconnexion
         </button>
+        
+        {/* NOUVEAU BOUTON DE SYNCHRONISATION */}
+        <button
+          onClick={synchroniserDossiers}
+          disabled={syncLoading || dossiers.length === 0}
+          className={dossiers.length && !syncLoading ? styles.adminBtn : `${styles.adminBtn} ${styles.Disabled}`}
+          style={{ 
+            background: syncLoading ? "#ccc" : "#00ff7f", 
+            marginBottom: 10, 
+            marginLeft: 10,
+            opacity: syncLoading ? 0.7 : 1
+          }}
+        >
+          {syncLoading ? "⏳ Synchronisation..." : "🔄 Synchroniser vers l'App Principale"}
+        </button>
       </div>
+
+      {/* STATUT DE SYNCHRONISATION */}
+      {syncStatus && (
+        <div style={{
+          padding: "10px 15px",
+          marginBottom: 15,
+          borderRadius: "8px",
+          backgroundColor: syncStatus.includes("✅") ? "rgba(0, 255, 127, 0.1)" : "rgba(255, 107, 107, 0.1)",
+          border: syncStatus.includes("✅") ? "1px solid #00ff7f" : "1px solid #ff6b6b",
+          color: syncStatus.includes("✅") ? "#00ff7f" : "#ff6b6b",
+          fontWeight: "500"
+        }}>
+          {syncStatus}
+        </div>
+      )}
+
+      {/* SECTION ACTIONS */}
       <div
         style={{ marginBottom: 18, display: "flex", alignItems: "center", gap: "15px" }}
       >
@@ -157,6 +215,8 @@ export default function AdminDossiers() {
           {dossiers.length} dossier{dossiers.length > 1 ? "s" : ""}
         </span>
       </div>
+
+      {/* MODAL POUR CONTRAT */}
       {modalContent && (
         <div
           className={styles.modalOverlay}
@@ -204,6 +264,8 @@ export default function AdminDossiers() {
           </div>
         </div>
       )}
+
+      {/* TABLEAU DES DOSSIERS */}
       {dossiers.length > 0 && (
         <div ref={tableWrapperRef} className={styles.tableWrapper}>
           <table className={styles.tableAdmin} style={{ minWidth: "1200px" }}>

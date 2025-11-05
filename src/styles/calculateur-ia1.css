@@ -474,3 +474,9 @@
     padding: 1em 0.5em;
   }
 }
+.no-scroll {
+  overflow: hidden !important;
+  height: 100vh !important;
+  position: fixed;
+  width: 100%;
+}

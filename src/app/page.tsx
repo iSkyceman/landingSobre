@@ -22,12 +22,12 @@ import FooterSobre from "@components/Footer/FooterSobre";
 import FooterItech from "@components/Footer/FooterItech";
 
 // Tape explicitement la constante pour autoriser 1 ou 2
-const VARIANTE: 1 | 2 = 1; // 2 = i-tech, 1 = sobre 
+const VARIANTE: 1 | 2 = 2; // 2 = i-tech, 1 = sobre 
 
 export const metadata = {
   title: "iSkyce Industrie 5.0 – IA & Data pour l’industrie",
   description:
-    "Boostez votre performance industrielle grâce à l’IA avancé  : +15% de rendement, -20% de coûts, 40% de réduction CO₂. Diagnostic IA personnalisé, résultats en 72h.",
+    "Boostez votre performance industrielle grâce à l'IA avancé : +15% de rendement, -20% de coûts, 40% de réduction CO₂. Diagnostic IA personnalisé, résultats en 72h.",
   openGraph: {
     title: "iSkyce Industrie 5.0",
     description: "Landing page IA, data, automatisation et offres sur-mesure.",
