@@ -1,4 +1,4 @@
-// src/services/SyncService.ts - VERSION CORRIGÉE
+// src/services/SyncService.ts - VERSION COMPLÈTEMENT CORRIGÉE
 import type { Dossier } from '../types/dossier';
 
 // URL de ton API principale - CORRIGÉE
@@ -19,11 +19,15 @@ export interface ClientData {
   provenance: string;
 }
 
-// Fonction pour transformer un Dossier en ClientData pour l'API
+// Fonction pour transformer un Dossier en ClientData pour l'API - CORRIGÉE
 function transformDossierToClient(dossier: Dossier): ClientData {
+  // CORRECTION CRITIQUE : Gestion sécurisée de l'offre
+  const offreName = dossier.offre?.nom || 
+                   (typeof dossier.offre === 'string' ? dossier.offre : 'Diagnostic Express');
+  
   return {
     dossierNumber: dossier.reference,
-    offre: dossier.offre.nom,
+    offre: offreName, // CORRIGÉ : offreName au lieu de dossier.offre.nom
     username: dossier.nom || 'Non renseigné',
     email: dossier.email || '',
     siren: dossier.siren || '',
@@ -32,7 +36,7 @@ function transformDossierToClient(dossier: Dossier): ClientData {
     date: dossier.date,
     sujets: dossier.sujets ? Object.values(dossier.sujets).filter(s => s) : [],
     observation: dossier.observation,
-    contrat: false, // À adapter selon ta logique
+    contrat: false,
     provenance: dossier.provenance || 'Landing Page'
   };
 }
@@ -44,7 +48,7 @@ export async function syncDossierToMainApp(dossier: Dossier): Promise<boolean> {
     
     console.log('🔄 Envoi vers API:', clientData);
     
-    const response = await fetch(`${API_BASE_URL}/landing/sync-client`, { // CORRIGÉ: /sync-client
+    const response = await fetch(`${API_BASE_URL}/landing/sync-client`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
