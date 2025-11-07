@@ -1,4 +1,4 @@
-// src/services/SyncService.ts - VERSION CORRIGÉE
+// src/services/SyncService.ts - VERSION CORRIGÉE POUR DATAPLUS
 import type { Dossier } from '../types/dossier';
 
 // URL de ton API principale - CORRIGÉE
@@ -21,9 +21,13 @@ export interface ClientData {
 
 // Fonction pour transformer un Dossier en ClientData pour l'API
 function transformDossierToClient(dossier: Dossier): ClientData {
+  // ✅ CORRECTION : Gestion spéciale pour Data+
+  const isDataPlus = dossier.reference.includes('DATAPLUS');
+  const offreName = isDataPlus ? 'DataPlus' : (dossier.offre?.nom || 'Non spécifiée');
+  
   return {
     dossierNumber: dossier.reference,
-    offre: dossier.offre.nom,
+    offre: offreName,
     username: dossier.nom || 'Non renseigné',
     email: dossier.email || '',
     siren: dossier.siren || '',
@@ -32,7 +36,7 @@ function transformDossierToClient(dossier: Dossier): ClientData {
     date: dossier.date,
     sujets: dossier.sujets ? Object.values(dossier.sujets).filter(s => s) : [],
     observation: dossier.observation,
-    contrat: false, // À adapter selon ta logique
+    contrat: isDataPlus, // ✅ TRUE pour Data+, false pour les autres
     provenance: dossier.provenance || 'Landing Page'
   };
 }
@@ -42,9 +46,15 @@ export async function syncDossierToMainApp(dossier: Dossier): Promise<boolean> {
   try {
     const clientData = transformDossierToClient(dossier);
     
+    // ✅ CORRECTION : Validation adaptée pour Data+
+    if (!clientData.dossierNumber || !clientData.username || !clientData.email) {
+      console.error('❌ Champs requis manquants pour:', clientData.dossierNumber);
+      return false;
+    }
+    
     console.log('🔄 Envoi vers API:', clientData);
     
-    const response = await fetch(`${API_BASE_URL}/landing/sync-client`, { // CORRIGÉ: /sync-client
+    const response = await fetch(`${API_BASE_URL}/landing/sync-client`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -79,10 +89,18 @@ export async function syncAllDossiers(): Promise<void> {
 
     const dossiers: Dossier[] = JSON.parse(saved);
     let successCount = 0;
+    let dataPlusCount = 0;
 
     console.log(`🔄 Début synchronisation de ${dossiers.length} dossiers...`);
 
     for (const dossier of dossiers) {
+      // ✅ CORRECTION : Log spécial pour Data+
+      const isDataPlus = dossier.reference.includes('DATAPLUS');
+      if (isDataPlus) {
+        console.log(`📊 Traitement Data+ spécial: ${dossier.reference}`);
+        dataPlusCount++;
+      }
+      
       const success = await syncDossierToMainApp(dossier);
       if (success) successCount++;
       
@@ -91,10 +109,12 @@ export async function syncAllDossiers(): Promise<void> {
     }
 
     console.log(`✅ Synchronisation terminée: ${successCount}/${dossiers.length} dossiers synchronisés`);
+    console.log(`📊 Dont ${dataPlusCount} abonnement(s) Data+`);
     
     // Notification pour l'utilisateur
     if (successCount > 0) {
-      alert(`✅ ${successCount} dossier(s) synchronisé(s) avec succès vers l'application principale!`);
+      const dataPlusMsg = dataPlusCount > 0 ? ` (dont ${dataPlusCount} Data+)` : '';
+      alert(`✅ ${successCount} dossier(s) synchronisé(s) avec succès vers l'application principale!${dataPlusMsg}`);
     } else {
       alert('❌ Aucun dossier n\'a pu être synchronisé. Vérifiez la console.');
     }
@@ -111,4 +131,4 @@ export function useAutoSync() {
     syncAllDossiers,
     syncDossierToMainApp
   };
-} 
+}
